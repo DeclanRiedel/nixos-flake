@@ -1,5 +1,7 @@
 { pkgs, ... }:
 {
+
+
 programs = {
   zsh = {
     enable = true;
@@ -8,7 +10,7 @@ programs = {
   ohMyZsh = {
     enable = true;
     plugins = [ "git" "history" ];
-  };
+    };  
   };
 };
 

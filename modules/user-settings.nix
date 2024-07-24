@@ -1,10 +1,10 @@
-{
+{ pkgs, ... }: {
 users.users.declan = {
   isNormalUser = true;
   home = "/home/declan";
   extraGroups = [ "wheel" "networkmanager" ];
   uid = 1000;
-  #shell = zsh;
+  shell = pkgs.zsh;
   };
 
 services.automatic-timezoned.enable = true;
