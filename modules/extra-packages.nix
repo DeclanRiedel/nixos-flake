@@ -8,9 +8,9 @@
  services.gvfs.enable = true;
 
 environment.systemPackages = with pkgs; [
-  vscode
+  vscode-fhs
   floorp
-  discord
+    #discord
   discord-screenaudio
   #xwaylandvideobridge #if discord-screenaudio not work 
   obsidian
