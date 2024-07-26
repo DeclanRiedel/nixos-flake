@@ -1,0 +1,111 @@
+{
+    // Choose the order of the modulesaround
+    "modules-left": ["hyprland/workspaces", "custom/media"],
+    "modules-center": ["hyprland/window"],
+    "modules-right": ["tray", "clock", "custom/pacman", "backlight", "network", "pulseaudio", "battery" ],
+
+     "hyprland/workspaces": {
+         "disable-scroll": true,
+         "all-outputs": true,
+         "warp-on-scroll": false,
+	 "format": " {icon} ",
+         "format-icons": {
+	     "1": "1",
+	     "2": "2",
+	     "3": "3",
+	     "4": "4",
+	     "5": "5",
+	     "6": "6",
+	     "7": "7",
+	     "8": "8",
+	     "9": "9"
+         }
+     },
+
+     "hyprland/window": {
+       "max-length": 40,
+     },
+    "keyboard-state": {
+        "numlock": true,
+        "capslock": true,
+        "format": "{name} {icon}",
+        "format-icons": {
+            "locked": "",
+            "unlocked": ""
+        }
+    },
+
+    "tray": {
+        "spacing": 6 
+    },
+    
+    "custom/pacman": {
+        "format": "{icon} {}",
+        "return-type": "json",
+        "format-icons": {
+          "pending-updates": " ",
+          "updated": ""
+        },
+        "exec-if": "which waybar-updates",
+        "exec": "waybar-updates"
+    },
+
+    "clock": {
+        // "timezone": "Africa/Windhoek",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%m-%d-%Y}",
+	"format": "{:%I:%M %p}"
+    },
+    "hyprland/language": {
+    	"format": "󰌌  {}",
+    	"format-en": "en",
+	"format-fr": "fr",
+	"format-it": "it"
+    },
+
+    "backlight": {
+        // "device": "acpi_video1",
+        "format": "{icon} {percent}%",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+
+    "network": {
+    	"interface": "enp34s0",
+	"interval": 3,
+    	"format": " {bandwidthDownBytes}"
+    },
+
+    "battery": {
+        "states": {
+            "warning": 15,
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+	"format-warning": "󰂃 {capacity}%",
+        "format-alt": "{icon} {time}",
+        "format-icons": ["󰁺", "󰁻", "󰁽", "󰁽", "󰁿", "󰂁", "󰁹"]
+    },
+
+    "pulseaudio": {
+        "on-click": "pavucontrol",
+	"format": "{icon} {volume}%",
+	"format-muted": " ",
+	"format-icons": {
+	"default": [" ", " ", " "]
+	},
+    },
+
+    "custom/media": {
+        "format": "{icon} {}",
+        "return-type": "json",
+        "max-length": 40,
+        "format-icons": {
+            "spotify": " ",
+            "default": "🎜 "
+        },
+        "escape": true,
+        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
+        // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+    }
+}
+

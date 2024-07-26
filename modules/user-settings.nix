@@ -7,7 +7,8 @@ users.users.declan = {
   shell = pkgs.zsh;
   };
 
-services.automatic-timezoned.enable = true;
+  time.timeZone = "Africa/Windhoek";
+  #services.automatic-timezoned.enable = true;
 
 i18n.defaultLocale = "en_US.UTF-8";
 
