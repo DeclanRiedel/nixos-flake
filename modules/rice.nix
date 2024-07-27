@@ -1,14 +1,14 @@
 { pkgs, ... }: {
   ##Display Manager
-  environment.systemPackages = with pkgs; [ sddm-chili-theme where-is-my-sddm-theme ];
+  #environment.systemPackages = with pkgs; [ sddm-chili-theme where-is-my-sddm-theme ];
 
-  services.displayManager.sddm = {
-    enable = true;
-    theme = "chili";
-    settings.theme = {
-      #      faces 
-    };
-  };
+  # services.displayManager.sddm = {
+  #  enable = true;
+  #  theme = "chili";
+  #  settings.theme = {
+  #    #      faces 
+  #  };
+  #};
 
   programs.waybar.enable = true;
 

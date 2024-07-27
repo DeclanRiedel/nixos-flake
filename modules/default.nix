@@ -7,7 +7,5 @@
     ./extra-packages.nix
     ./fonts.nix
     ./rice.nix
-    #./mpd.nix
-    #./postgres-conf.nix
   ];
 }
