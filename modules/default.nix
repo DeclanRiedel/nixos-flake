@@ -7,5 +7,8 @@
     ./extra-packages.nix
     ./fonts.nix
     ./rice.nix
+    ./music.nix
+    ./postgres-docker.nix
+    ./stylix.nix
   ];
 }

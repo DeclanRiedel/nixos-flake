@@ -1,7 +1,7 @@
 { pkgs, ... }: {
-  ##Display Manager
-  #environment.systemPackages = with pkgs; [ sddm-chili-theme where-is-my-sddm-theme ];
+  ## sddm but it sometimes doesnt start hyprland or makes me enter passwd twice
 
+  #environment.systemPackages = with pkgs; [ sddm-chili-theme where-is-my-sddm-theme ];
   # services.displayManager.sddm = {
   #  enable = true;
   #  theme = "chili";
@@ -10,7 +10,14 @@
   #  };
   #};
 
-  programs.waybar.enable = true;
+  services.xserver.displayManager.lightdm.greeters.slick.enable = true;
+
+  #hypr stuff
+  programs.hyprlock.enable = true;
+  services.hypridle.enable = true;
+
+  programs.waybar.enable =
+    true; # copy of config inside ../home-manager/configs/waybar
 
   #services.displayManager.sddm = {
   # enable = true;
@@ -30,7 +37,5 @@
   #autoLogin.enable = true;
   # };
   #};
-
-  programs.hyprland = { enable = true; };
 
 }

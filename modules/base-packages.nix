@@ -1,4 +1,5 @@
 { pkgs, ... }: {
+  ##zsh also defined as hm module
   programs = {
     zsh = {
       enable = true;
@@ -11,16 +12,27 @@
     };
   };
 
+  programs.hyprland.enable = true;
+
+  services.gnome.gnome-keyring.enable = true;
+  programs.seahorse.enable = true;
+
+
   ##system base packages - unfree from flake or defualt.nix?
   environment.systemPackages = with pkgs; [
     neovim
+    dunst
     #writeshellscriptbin
 
     #logout screensaver
     wlogout
+    #
+    pavucontrol
+    pamixer
 
     #clipboard 
     wl-clipboard
+    clipman
     cliphist
     wl-clip-persist
 
@@ -28,25 +40,33 @@
     grim # screenshot tool
     slurp # define grim ss size
     swappy # screenshot editor
-    hyprpicker # colorpicker
+
+    ##hypr
+    hyprpicker
+    # hypridle
+    #hyprlock
+    hyprshot
+    hyprpaper
+    hyprshade
+    hyprutils
+    hyperfine
 
     mpv
     imv
 
     ranger
-    lf
-    ueberzug # help display img?
+    #lf
+    #ueberzug # help display img?
     zathura
 
     ##kinda ricing?
     gammastep # weird config
-    libnotify # -> daemon sup eww?
-    hyprpaper # -> config under hyprland somehow
+    #libnotify # -> daemon sup eww?
     brightnessctl
     swww
     kitty
-    eww
-    wofi # rofi? dmenu my pref?
+    #eww
+    fuzzel
     dropbox
     nh
     xwayland

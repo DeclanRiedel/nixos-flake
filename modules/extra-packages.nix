@@ -11,12 +11,14 @@
     vscode-fhs
     floorp
     #discord
+    webcord
+    fractal
     discord-screenaudio
     #xwaylandvideobridge #if discord-screenaudio not work 
     obsidian
     qbittorrent-enhanced
     lorien
-    #cmus
+    cmus
     #music-player
     vlc
     texliveFull

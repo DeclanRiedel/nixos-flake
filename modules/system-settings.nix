@@ -25,14 +25,16 @@
   };
   services.blueman.enable = true;
 
-  services.xserver.enable = true; # ??? why ???
+  services.xserver.enable = true;
 
   ## sound
 
-  #sound.enable = true;
+  #sound.enable = true; -deprecated?
   security.rtkit.enable = true;
+  
   services.pipewire = {
     enable = true;
+    wireplumber.enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
@@ -51,15 +53,15 @@
     options = "delete-older-than 14d";
   };
 
-  #system = {
-  #autoUpgrade = {
-  #  enable = true;
-  #  operation = "boot";
-  #  flake = "~/.dotfiles";
-  #dates = "weekly";
-  #channels?
-  #};
+  system = {
+    autoUpgrade = {
+      enable = true;
+      operation = "boot";
+      flake = "~/.dotfiles";
+      dates = "weekly";
+      #channels?
+    };
 
-  #};
+  };
   #}
 }

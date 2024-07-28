@@ -6,19 +6,27 @@
   home.username = "declan";
   home.homeDirectory = "/home/declan";
   home.stateVersion = "24.05"; # dont touch !!!
-  
+
   home.packages = with pkgs; [ fastfetch ];
 
-  #  programs.ranger = {
-  #  enable = true;
-  #  extraConfig = " set preview_images true \n set preview_images_method kitty "; # formatting matters
-  #};
+  imports = [ 
+    ./hyprlock.nix 
+    ./hypridle.nix 
+    ./hyprland.nix
+    ./waybar.nix
+    ./fuzzel.nix
+  ];
 
-  home.file = { };
+  programs.ranger = {
+    enable = true;
+    extraConfig =
+      " set preview_images true \n set preview_images_method kitty "; # formatting matters
+  };
 
   ##bash 
   programs.bash = { enable = true; };
 
+  # zsh is enabled twice - which used?? both?
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
@@ -42,8 +50,8 @@
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
-      enableBashIntegration = true;
-    settings = pkgs.lib.importTOML ./configs/starship.toml;
+    enableBashIntegration = true;
+    settings = pkgs.lib.importTOML ./starship.toml;
   };
 
   home.sessionVariables = { EDITOR = "nvim"; };
