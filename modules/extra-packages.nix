@@ -10,6 +10,7 @@
   environment.systemPackages = with pkgs; [
     vscode-fhs
     floorp
+    networkmanagerapplet
     #discord
     webcord
     fractal

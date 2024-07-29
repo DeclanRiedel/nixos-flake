@@ -23,7 +23,7 @@
   };
 
   stylix.image =
-      ../_wall/legoarkhambatman-flipped.jpg;
+      ../_wall/namibwalldune.png;
 
   stylix.targets.nixvim = {
     enable = false;

@@ -17,7 +17,6 @@
   services.gnome.gnome-keyring.enable = true;
   programs.seahorse.enable = true;
 
-
   ##system base packages - unfree from flake or defualt.nix?
   environment.systemPackages = with pkgs; [
     neovim
@@ -29,7 +28,7 @@
     #
     pavucontrol
     pamixer
-
+    udiskie
     #clipboard 
     wl-clipboard
     clipman

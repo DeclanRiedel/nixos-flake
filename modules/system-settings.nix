@@ -1,4 +1,4 @@
-{ lib, nixpkgs, ... }: {
+{ lib, nixpkgs, pkgs, ... }: {
   nixpkgs.config.allowUnfree = lib.mkForce true;
 
   #systemd bootloader 
@@ -8,6 +8,26 @@
     timeout = 2;
     systemd-boot.configurationLimit = lib.mkDefault 8;
   };
+
+  # services.autofs = {
+  #  enable = true;
+  #  autoMaster = let
+  #mapConf = pkgs.writeText "auto" ''
+  # kernel    -ro,soft,intr       ftp.kernel.org:/pub/linux
+  # boot      -fstype=ext2        :/dev/hda1
+  # windoze   -fstype=smbfs       ://windoze/c
+  # removable -fstype=ext2        :/dev/hdd
+  # cd        -fstype=iso9660,ro  :/dev/hdc
+  # floppy    -fstype=auto        :/dev/fd0
+  # server    -rw,hard,intr       / -ro myserver.me.org:/ \
+  #                               /usr myserver.me.org:/usr \
+  #                               /home myserver.me.org:/home
+  #'';
+  #in ''
+  #/auto file:${mapConf}
+  #'';
+
+  #};
 
   networking = {
     networkmanager.enable = true;
@@ -31,7 +51,7 @@
 
   #sound.enable = true; -deprecated?
   security.rtkit.enable = true;
-  
+
   services.pipewire = {
     enable = true;
     wireplumber.enable = true;
