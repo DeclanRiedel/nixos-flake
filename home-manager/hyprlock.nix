@@ -3,7 +3,7 @@
     ".config/hypr/hyprlock.conf".text = ''
       background {
           monitor =
-          path = /home/declan/Downloads/legoarkahmjoker-flipped.jpg # only png supported for now
+          path = /home/declan/.dotfiles/nixos-flake/_wall/on9mabz3veg51.png   # only png supported for now
       }
 
       input-field {

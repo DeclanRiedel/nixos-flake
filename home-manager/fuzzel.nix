@@ -1,32 +1,28 @@
-{ config, lib, ... }:
+{
+  home.file = {
+    ".config/fuzzel/fuzzel.ini".text = ''
+       # See also man 5 fuzzel.ini
 
-with config.lib.stylix.colors;
+      [main]
+      prompt = "🚀  "
+      width = 30 
+      vertical-pad = 13
+      line-height = 18
+      # Add extra "exec" fields for Nautilus named "文件" in Chinese so can no be
+      # fuzzy searched.
+      fields = filename,name,generic,exec
 
-let
-  opacity =
-    lib.toHexString (builtins.ceil (config.stylix.opacity.popups * 255));
+      [border]
+      width = 0
 
-in {
-  options.stylix.targets.fuzzel.enable =
-    config.lib.stylix.mkEnableTarget "Fuzzel" true;
-
-  config.programs.fuzzel.settings =
-    lib.mkIf (config.stylix.enable && config.stylix.targets.fuzzel.enable) {
-      colors = {
-        background = "${base00-hex}${opacity}";
-        text = "${base05-hex}ff";
-        match = "${base0A-hex}ff";
-        selection = "${base03-hex}ff";
-        selection-text = "${base05-hex}ff";
-        selection-match = "${base0A-hex}ff";
-        border = "${base0D-hex}ff";
-      };
-
-      main = {
-        font = "${config.stylix.fonts.sansSerif.name}:size=${
-            toString config.stylix.fonts.sizes.popups
-          }";
-        dpi-aware = "no";
-      };
-    };
+      # Picked from https://www.nordtheme.com/.
+      [colors]
+      background = 4c566add
+      selection = 2e3440ff
+      text = d8dee9ff
+      selection-text = eceff4ff
+      match = 81a1c1ff
+      selection-match = 88c0d0ff
+    '';
+  };
 }
