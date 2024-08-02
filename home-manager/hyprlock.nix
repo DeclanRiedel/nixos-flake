@@ -3,7 +3,7 @@
     ".config/hypr/hyprlock.conf".text = ''
       background {
           monitor =
-          path = /home/declan/Media/Pictures/176430-4179872021.jpg; # only png supported for now
+          path = /home/declan/.dotfiles/nixos-flake/wall/0kxiDR-1594099428.jpg
       }
 
       input-field {
@@ -40,7 +40,7 @@
           monitor =
           #clock
           text = cmd[update:1000] echo "$TIME"
-          color = rgba(0, 0, 0, 1.0)
+          color = rgba(200, 200, 200, 1.0)
           font_size = 55
           font_family = Fira Semibold
           position = 75, 70
@@ -53,7 +53,7 @@
       label {
           monitor =
           text = $USER
-          color = rgba(0, 0, 0, 1.0)
+          color = rgba(200, 200, 200, 1.0)
           font_size = 20
           font_family = Fira Semibold
           position = 85, 160
@@ -64,8 +64,8 @@
       }
 
       image {
-          monitor =
-          path = /home/declan/Media/Pictures/1107977.jpg
+          monitor = 
+          path = /home/declan/.gnome2/cheese/media/2024-07-31-132720.jpg
           size = 280 # lesser side if not 1:1 ratio
           rounding = -1 # negative values mean circle
           border_size = 4
@@ -79,4 +79,3 @@
       } '';
   };
 }
-
