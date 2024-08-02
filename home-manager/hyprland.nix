@@ -142,7 +142,7 @@
 
        
                  bind = $mainMod, G, exec, grim -g "$(slurp -d)" ~/Media/Screenshots/$(date +'%s_grim.png)
-                 #bind = $mainMod, H, exec, wl-screenrec ~/Recordings
+                 bind = $mainMod, H, exec, wl-screenrec ~/Recordings
 
                  bind = $mainMod, F, togglefloating, 
                  bind = $mainMod, I, pseudo, # dwindle

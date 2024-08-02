@@ -1,5 +1,4 @@
 {
-
   home.file = {
     ".config/waybar/config".text = ''
       {
@@ -126,117 +125,117 @@
     '';
 
     ".config/waybar/style.css".text = ''
-      /** https://github.com/catppuccin/waybar **/
       @import "mocha.css";
+       * {
+          font-family: Iosevka Nerd Font;
+          font-weight: bold;
+          font-size: 14px;
+          min-height: 0;
+          padding: 0;
+          margin: 0;
+          border-radius: 0;
+        }
 
-      * {
-        font-family: Iosevka Nerd Font;
-        font-weight: bold;
-        font-size: 14px;
-        min-height: 0;
-        padding: 0;
-        margin: 0;
-        border-radius: 0;
-      }
 
-      window#waybar {
-        background-color: rgba(30, 30, 46, 0.5);
-        transition-property: background-color;
-        transition-duration: 0.5s;
-      }
+    window#waybar {
+  background-color: rgba(30, 30, 46, 0);
+  transition-property: background-color;
+  transition-duration: 0.5s;
+  }
 
-      #workspaces {
-        border-radius: 0.75rem;
-        margin: 5px;
-        background-color: @base;
-        margin-left: 1rem;
-      }
 
-      #workspaces button {
-        min-width: 2em;
-        color: @text;
-        border-radius: 0.75rem;
-      }
+        #workspaces {
+          border-radius: 0.75rem;
+          margin: 5px;
+          background-color: rgba(36, 40, 59, 0.7);
+          margin-left: 1rem;
+        }
 
-      #workspaces button.active {
-        background-color: @rosewater;
-        margin: 2px 2px;
-        color: @base;
-      }
+        #workspaces button {
+          min-width: 2em;
+          color: @text;
+          border-radius: 0.75rem;
+        }
 
-      #workspaces button.urgent {
-        color: @red;
-      }
+        #workspaces button.active {
+          background-color: @rosewater;
+          margin: 2px 2px;
+          color: @base;
+        }
 
-      #window,
-      #tray,
-      #language,
-      #network,
-      #custom-media,
-      #backlight,
-      #clock,
-      #battery,
-      #custom-pacman,
-      #pulseaudio {
-        background-color: @base;
-        margin: 5px 0;
-        padding: 0rem 0.75rem 0rem;
-      }
-      #backlight {
-        color: @red;
-      }
+        #workspaces button.urgent {
+          color: @red;
+        }
 
-      #custom-media {
-        background-color: @green;
-        color: @base;
-        border-radius: 1rem;
-        margin-left: 4rem;
-      }
+        #window,
+        #tray,
+        #language,
+        #network,
+        #custom-media,
+        #backlight,
+        #clock,
+        #battery,
+        #custom-pacman,
+        #pulseaudio {
+          background-color: rgba(36, 40, 59, 0.7);
+          margin: 5px 0;
+          padding: 0rem 0.75rem 0rem;
+        }
+        #backlight {
+          color: @red;
+        }
 
-      #window {
-        color: @mauve;
-        border-radius: 1rem;
-      }
+        #custom-media {
+          background-color: rgba(158, 206, 106, 0.7);
+          color: @base;
+          border-radius: 1rem;
+          margin-left: 4rem;
+        }
 
-      window#waybar.empty #window {
-        background-color: transparent;
-      }
-      #language {
-        color: @yellow;
-      }
+        #window {
+          color: @mauve;
+          border-radius: 1rem;
+        }
 
-      #clock {
-        color: @peach;
-        border-radius: 1rem 0px 0px 1rem;
-        margin-left: 1rem;
-      }
+        window#waybar.empty #window {
+          background-color: transparent;
+        }
+        #language {
+          color: @yellow;
+        }
 
-      #custom-pacman {
-        color: @teal;
-      }
+        #clock {
+          color: @peach;
+          border-radius: 1rem 0px 0px 1rem;
+          margin-left: 1rem;
+        }
 
-      #network {
-        color: @teal;
-      }
+        #custom-pacman {
+          color: @teal;
+        }
 
-      #battery.warning:not(.charging) {
-        color: @red;
-      }
+        #network {
+          color: @teal;
+        }
 
-      #pulseaudio {
-        color: @yellow;
-      }
+        #battery.warning:not(.charging) {
+          color: @red;
+        }
 
-      #battery {
-        color: @green;
-        border-radius: 0px 1rem 1rem 0px;
-        margin-right: 1rem;
-      }
+        #pulseaudio {
+          color: @yellow;
+        }
 
-      #tray {
-        border-radius: 1rem;
-      }
-    '';
+        #battery {
+          color: @green;
+          border-radius: 0px 1rem 1rem 0px;
+          margin-right: 1rem;
+        }
+
+        #tray {
+          border-radius: 1rem;
+        }
+             '';
     ".config/waybar/mocha.css".text = ''
       /*
       *
@@ -244,7 +243,7 @@
       * Adapted from Catppuccin Latte
       *
       */
-      @define-color base   #24283b;
+      @define-color base   #24283b; 
       @define-color mantle #1f2335;
       @define-color crust  #1a1b26;
 

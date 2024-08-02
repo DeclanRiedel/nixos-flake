@@ -20,9 +20,9 @@
   ##system base packages - unfree from flake or defualt.nix?
   environment.systemPackages = with pkgs; [
     neovim
-    dunst
+    #dunst
     #writeshellscriptbin
-
+    libnotify
     #logout screensaver
     wlogout
     #
@@ -39,7 +39,7 @@
     grim # screenshot tool
     slurp # define grim ss size
     swappy # screenshot editor
-
+gnome.cheese
     ##hypr
     hyprpicker
     # hypridle
@@ -64,7 +64,7 @@
     brightnessctl
     swww
     kitty
-    #eww
+  eww
     fuzzel
     dropbox
     nh
