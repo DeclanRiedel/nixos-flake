@@ -11,6 +11,7 @@
 
                  exec-once = waybar
                  exec-once = hypridle
+                 exec-once = playerctld daemon
                  exec-once = swww-daemon & sleep 0.1 && swww img ~/Media/Pictures/1107
                  exec-once = sleep 0.3 && dropbox
 
@@ -37,8 +38,8 @@
                  general {
                      # See https://wiki.hyprland.org/Configuring/Variables/ for more
 
-                     gaps_in = 2
-                     gaps_out = 6
+                     gaps_in = 1.5
+                     gaps_out = 4
                      border_size = 2
                      col.active_border = rgba(7fffd4ee) rgba(ff7f50ee) 90deg
                      col.inactive_border = rgba(595959aa)
@@ -55,7 +56,7 @@
                  decoration {
                      # See https://wiki.hyprland.org/Configuring/Variables/ for more
 
-                     rounding = 10
+                     rounding = 8
                      active_opacity = 1
                      inactive_opacity = 1
                      windowrulev2 = opacity 0.9 override,class:^(kitty)
@@ -153,6 +154,14 @@
                  bind = $mainMod, right, movefocus, r
                  bind = $mainMod, up, movefocus, u
                  bind = $mainMod, down, movefocus, d
+                 
+
+                 # Playerctl for headphone buttons
+            bind = ,XF86AudioPlay, exec, playerctl play-pause
+            bind = ,XF86AudioPause, exec, playerctl play-pause
+            bind = ,XF86AudioNext, exec, playerctl next
+            bind = ,XF86AudioPrev, exec, playerctl previous
+
 
                  bind = $mainMod SHIFT, right, resizeactive, 5 0
                  bind = $mainMod SHIFT, left, resizeactive, -5 0

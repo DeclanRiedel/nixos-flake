@@ -49,7 +49,7 @@ gnome.cheese
     hyprshade
     hyprutils
     hyperfine
-
+playerctl
     mpv
     imv
 

@@ -22,6 +22,8 @@
     cmus
     #music-player
     vlc
+    dpkg
+    whatsapp-for-linux
     texliveFull
   ];
 }
