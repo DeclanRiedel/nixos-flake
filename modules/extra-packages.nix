@@ -19,8 +19,9 @@
     obsidian
     qbittorrent-enhanced
     lorien
+    gnome.gnome-disk-utility
     cmus
-    #music-player
+    music-player
     vlc
     dpkg
     whatsapp-for-linux
