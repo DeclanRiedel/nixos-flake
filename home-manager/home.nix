@@ -9,13 +9,15 @@
 
   home.packages = with pkgs; [ fastfetch ];
 
-  imports = [ 
-    ./hyprlock.nix 
-    ./hypridle.nix 
-    ./hyprland.nix
-    ./waybar.nix
-    ./fuzzel.nix
-  ];
+  imports =
+    [ ./hyprlock.nix ./hypridle.nix ./hyprland.nix ./waybar.nix ./fuzzel.nix ];
+
+  systemd.user.services.mpris-proxy = {
+    Unit.Description = "mpris-proxy";
+    Unit.After = ["network.target" "sound.target"];
+    Service.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
+    Install.WantedBy = ["default.target"];
+  };
 
   programs.ranger = {
     enable = true;
