@@ -9,26 +9,6 @@
     systemd-boot.configurationLimit = lib.mkDefault 8;
   };
 
-  # services.autofs = {
-  #  enable = true;
-  #  autoMaster = let
-  #mapConf = pkgs.writeText "auto" ''
-  # kernel    -ro,soft,intr       ftp.kernel.org:/pub/linux
-  # boot      -fstype=ext2        :/dev/hda1
-  # windoze   -fstype=smbfs       ://windoze/c
-  # removable -fstype=ext2        :/dev/hdd
-  # cd        -fstype=iso9660,ro  :/dev/hdc
-  # floppy    -fstype=auto        :/dev/fd0
-  # server    -rw,hard,intr       / -ro myserver.me.org:/ \
-  #                               /usr myserver.me.org:/usr \
-  #                               /home myserver.me.org:/home
-  #'';
-  #in ''
-  #/auto file:${mapConf}
-  #'';
-
-  #};
-
   networking = {
     networkmanager.enable = true;
     hostName = "machine";
@@ -45,7 +25,7 @@
   };
   services.blueman.enable = true;
 
-  services.xserver.enable = true;
+  services.xserver.enable = true; # xorg
 
   ## sound
 
@@ -65,7 +45,7 @@
   services.printing.enable = true;
 
   ## touchpad support? hyprland does it already?
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   nix.gc = {
     automatic = true;
@@ -83,5 +63,4 @@
     };
 
   };
-  #}
 }

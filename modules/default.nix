@@ -1,5 +1,6 @@
 {
   imports = [
+    ./zsh.nix
     ./user-settings.nix
     ./system-settings.nix
     ./fhs.nix

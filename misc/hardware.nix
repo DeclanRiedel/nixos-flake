@@ -13,26 +13,30 @@
   #  services.power-profiles-daemon.enable = true;
   hardware.enableRedistributableFirmware = true;
 
-  services.tlp = {
-      enable = true;
-      settings = {
-        CPU_SCALING_GOVERNOR_ON_AC = "performance";
-        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-
-        CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-        CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-
-        CPU_MIN_PERF_ON_AC = 0;
-        CPU_MAX_PERF_ON_AC = 100;
-        CPU_MIN_PERF_ON_BAT = 0;
-        CPU_MAX_PERF_ON_BAT = 20;
-
-       #Optional helps save long term battery health
-       START_CHARGE_THRESH_BAT0 = 40; # 40 and bellow it starts to charge
-       STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
-
-      };
-};
+  services.system76-scheduler.settings.cfsProfiles.enable = true;   # Better scheduling for CPU cycles - thanks System76!!!
+  services.power-profiles-daemon.enable = false;                    # Disable GNOMEs power management
+  services.tlp = {                                                  # Enable TLP (better than gnomes internal power manager)
+    enable = true;
+    settings = { # sudo tlp-stat or tlp-stat -s or sudo tlp-stat -p
+      CPU_BOOST_ON_AC = 1;
+      CPU_BOOST_ON_BAT = 0;
+      CPU_HWP_DYN_BOOST_ON_AC = 1;
+      CPU_HWP_DYN_BOOST_ON_BAT = 0;
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_power";
+      CPU_SCALING_MIN_FREQ_ON_AC = 400000;  # 400 MHz
+      CPU_SCALING_MAX_FREQ_ON_AC = 4200000; # 4,2 GHz
+      START_CHARGE_THRESH_BAT0 = 75;
+      STOP_CHARGE_THRESH_BAT0 = 81;
+    };
+  };
+  ## swap
+  swapDevices = [{
+    device = "/var/lib/swapfile";
+    size = 8 * 1024;
+  }];
 
   ## end 
   boot.initrd.availableKernelModules =
@@ -51,8 +55,6 @@
     fsType = "vfat";
     options = [ "fmask=0022" "dmask=0022" ];
   };
-
-  swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

@@ -1,34 +1,21 @@
-{ pkgs, ... }: {
-  ##zsh also defined as hm module
-  programs = {
-    zsh = {
-      enable = true;
-      zsh-autoenv.enable = true;
-      syntaxHighlighting.enable = true;
-      ohMyZsh = {
-        enable = true;
-        plugins = [ "git" "history" ];
-      };
-    };
-  };
-
+{ lib, pkgs, ... }: {
   programs.hyprland.enable = true;
+
+  programs.chromium.enable = lib.mkForce false; #stylix has this enabled by default
 
   services.gnome.gnome-keyring.enable = true;
   programs.seahorse.enable = true;
 
-  ##system base packages - unfree from flake or defualt.nix?
   environment.systemPackages = with pkgs; [
     neovim
     #dunst
     #writeshellscriptbin
     libnotify
-    #logout screensaver
     wlogout
-    #
     pavucontrol
     pamixer
     udiskie
+
     #clipboard 
     wl-clipboard
     clipman
@@ -39,32 +26,30 @@
     grim # screenshot tool
     slurp # define grim ss size
     swappy # screenshot editor
-gnome.cheese
+    cheese
+
     ##hypr
     hyprpicker
-    # hypridle
+    #hypridle
     #hyprlock
     hyprshot
     hyprpaper
     hyprshade
     hyprutils
     hyperfine
-playerctl
+    playerctl
     mpv
     imv
 
     ranger
-    #lf
-    #ueberzug # help display img?
     zathura
 
-    ##kinda ricing?
     gammastep # weird config
     #libnotify # -> daemon sup eww?
     brightnessctl
     swww
     kitty
-  eww
+    eww
     fuzzel
     dropbox
     nh

@@ -10,16 +10,26 @@
   environment.systemPackages = with pkgs; [
     vscode-fhs
     floorp
+
     networkmanagerapplet
-    #discord
-    webcord
+    zellij
+    stacer
+    btop
+    fcitx5
+    kodi
+    betterbird
+    flameshot
+    audacity
+    discord
+    webcord # better vc
     fractal
-    discord-screenaudio
-    #xwaylandvideobridge #if discord-screenaudio not work 
+    discord-screenaudio # working screenshare
+
+    xwaylandvideobridge # if discord-screenaudio not work
     obsidian
     qbittorrent-enhanced
     lorien
-    gnome.gnome-disk-utility
+    gnome-disk-utility
     cmus
     music-player
     vlc

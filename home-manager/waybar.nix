@@ -1,4 +1,5 @@
 {
+
   home.file = {
     ".config/waybar/config".text = ''
                         {

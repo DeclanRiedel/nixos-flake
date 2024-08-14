@@ -20,10 +20,11 @@
     sddm = {
       enable = true;
       settings = {
-        Theme = { 
-        FacesDir = "/home/declan/.dotfiles/nixos-flake/wall/faces";
+        Theme = {
+          FacesDir =
+            "/home/declan/.dotfiles/nixos-flake/wall/faces"; # what the fuck??
         };
-        };
+      };
       wayland.enable = true;
       theme = "chili";
     };

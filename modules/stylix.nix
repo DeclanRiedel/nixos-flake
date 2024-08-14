@@ -22,22 +22,13 @@
 
   };
 
-  stylix.image = ../wall/1365923-hd-comic-book-wallpapers-1920x1080-for-mobile.jpg;
+  stylix.image =
+    ../wall/1365923-hd-comic-book-wallpapers-1920x1080-for-mobile.jpg;
   stylix.targets.nixvim = {
     enable = false;
     #transparent_bg.main = true;
     #transparent_bg.sign_column = true;
   };
 
-  stylix.targets.lightdm = { enable = true; };
-
-  #plymouth - but do i even want it?
-  #stylix.targets.plymouth = {
-  #  enable = true;
-  #logo = "";
-  #logoAnimated = true;
-  #};
-
   stylix.polarity = "dark";
-
 }
