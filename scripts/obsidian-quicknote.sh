@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #Change directory to ~/Dropbox/ObsidianDropbox/newNotes or exit if unsuccessful
-cd ~/Dropbox/ObsidianDropbox/newNotes || exit
+cd ~/Dropbox/ObsidianDropbox/quick-notes || exit
 
 # Ensure an argument is provided
 if [ -z "$1" ]; then

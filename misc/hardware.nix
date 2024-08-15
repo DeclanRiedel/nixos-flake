@@ -6,7 +6,7 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  ## laptop specific customs
+  #intel cpu overheating protection
   services.thermald.enable = true;
 
   powerManagement.powertop.enable = true;
@@ -32,13 +32,14 @@
       STOP_CHARGE_THRESH_BAT0 = 81;
     };
   };
-  ## swap
+
+  ## swap enabled
   swapDevices = [{
     device = "/var/lib/swapfile";
     size = 8 * 1024;
   }];
 
-  ## end 
+  ## system scanned defaults below
   boot.initrd.availableKernelModules =
     [ "xhci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];

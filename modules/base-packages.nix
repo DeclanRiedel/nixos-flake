@@ -1,19 +1,28 @@
-{ lib, pkgs, ... }: {
+{ pkgs, ... }: {
   programs.hyprland.enable = true;
 
-  programs.chromium.enable = lib.mkForce false; #stylix has this enabled by default
-
+  #gnome key managers
   services.gnome.gnome-keyring.enable = true;
   programs.seahorse.enable = true;
 
   environment.systemPackages = with pkgs; [
     neovim
+
+    #notifications
     #dunst
-    #writeshellscriptbin
     libnotify
+    eww
+
+    #ricing
     wlogout
+
+    #sound
     pavucontrol
     pamixer
+    playerctl
+    mpv
+
+    #disk
     udiskie
 
     #clipboard 
@@ -22,41 +31,47 @@
     cliphist
     wl-clip-persist
 
+    #screencapture
     wl-screenrec
     grim # screenshot tool
     slurp # define grim ss size
     swappy # screenshot editor
-    cheese
+    cheese # webcam app
+    imv # img viewer
 
     ##hypr
     hyprpicker
-    #hypridle
-    #hyprlock
     hyprshot
     hyprpaper
     hyprshade
     hyprutils
     hyperfine
-    playerctl
-    mpv
-    imv
-
-    ranger
-    zathura
-
-    gammastep # weird config
-    #libnotify # -> daemon sup eww?
-    brightnessctl
-    swww
-    kitty
-    eww
-    fuzzel
-    dropbox
-    nh
     xwayland
 
-    ## cli tools
-    # xdg?
+    #filemanager
+    ranger
+
+    #pdf viewer
+    zathura
+
+    #brightness
+    gammastep # weird config
+    brightnessctl
+
+    #wallpaper
+    swww
+
+    #terminal
+    kitty
+
+    #app launcher
+    fuzzel
+
+    #fuck dropbox
+    dropbox
+
+    #nixhelper
+    nh
 
     gnugrep
     ripgrep

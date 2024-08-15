@@ -1,7 +1,7 @@
 {
   home.file = {
     ".config/fuzzel/fuzzel.ini".text = ''
-       # See also man 5 fuzzel.ini
+      # See also man 5 fuzzel.ini
 
       [main]
       prompt = "🚀  "
@@ -15,7 +15,6 @@
       [border]
       width = 0
 
-      # Picked from https://www.nordtheme.com/.
       [colors]
       background = 4c566add
       selection = 2e3440ff

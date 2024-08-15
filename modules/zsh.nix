@@ -3,12 +3,20 @@
     zsh = {
       enable = true;
       zsh-autoenv.enable = true;
+      enableAutosuggestions = true;
       syntaxHighlighting.enable = true;
       enableBashCompletion = true;
+
+      #history = {
+      #  expireDuplicatesFirst = true;
+      #  extended = true;
+      #};
+
       ohMyZsh = {
         enable = true;
         plugins = [ "git" "history" ];
       };
+
       shellAliases = {
         ls = "ls -l";
         lst = "lsd --tree";

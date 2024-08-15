@@ -1,7 +1,9 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }: {
 
   ## thunar
 
+  programs.chromium.enable =
+    lib.mkForce false; # stylix has this enabled by default
   programs.thunar.enable = true;
   programs.xfconf.enable = true;
   services.tumbler.enable = true;

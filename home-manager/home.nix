@@ -2,7 +2,6 @@
 
 {
   # Home Manager needs a bit of information about you and the paths it should
-  # manage.
   home.username = "declan";
   home.homeDirectory = "/home/declan";
   home.stateVersion = "24.05"; # dont touch !!!
@@ -17,7 +16,7 @@
     Unit.After = ["network.target" "sound.target"];
     Service.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
     Install.WantedBy = ["default.target"];
-  };
+  }; #blueooth audio buttons
 
   programs.ranger = {
     enable = true;
@@ -28,15 +27,16 @@
   ##bash 
   programs.bash = { enable = true; };
 
-  # zsh is enabled twice - which used?? both?
-  programs.zsh = {
+
+  #zsh - history + starship (doesnt conflict with zsh.nix)
+programs.zsh = {
     enable = true;
-    autosuggestion.enable = true;
     history = {
-      expireDuplicatesFirst = true;
       extended = true;
     };
+    enableCompletion = true;
   };
+
   ##kitty
   programs.kitty = {
     enable = true;

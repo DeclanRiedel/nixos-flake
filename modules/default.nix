@@ -9,6 +9,7 @@
     ./fonts.nix
     ./rice.nix
     ./sddm.nix
+    ./sddm-avatar.nix
     ./music.nix
     ./postgres-docker.nix
     ./stylix.nix
