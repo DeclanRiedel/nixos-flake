@@ -9,7 +9,7 @@
   home.packages = with pkgs; [ fastfetch ];
 
   imports =
-    [ ./hyprlock.nix ./hypridle.nix ./hyprland.nix ./waybar.nix ./fuzzel.nix ];
+    [./zsh.nix ./hyprlock.nix ./hypridle.nix ./hyprland.nix ./waybar.nix ./fuzzel.nix ];
 
   systemd.user.services.mpris-proxy = {
     Unit.Description = "mpris-proxy";

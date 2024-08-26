@@ -23,7 +23,7 @@
         update = "sudo nixos-rebuild switch --flake ~/.dotfiles/nixos-flake";
         c = "clear";
         n = "nvim";
-        ndev = "nix develop .  && zsh";
+        ndev = "nix develop . -c $SHELL";
         ## custom scripts 
         dshgen = "~/.dotfiles/nixos-flake/scripts/devshell-flake-gen.sh";
         jn = "~/.dotfiles/nixos-flake/scripts/daily-journal.sh";

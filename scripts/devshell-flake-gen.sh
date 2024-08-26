@@ -1,31 +1,38 @@
 #!/usr/bin/env bash
 
-# Directory where templates are stored
-TEMPLATE_DIR="/home/declan/Devel/dev-templates"
-
 # Check if the argument is provided
 if [ "$1" = "" ]; then
-    echo "Usage: $0 --<env>"
+    echo "Usage: $0 <env>"
     exit 1
 fi
 
-# Extract the environment variable from the argument
-ENV=$(echo "$1" | sed 's/^--//')
+# Use the environment variable directly from the argument
+ENV="$1"
 
-# Check if the specified environment directory exists
-if [ ! -d "$TEMPLATE_DIR/$ENV" ]; then
-    echo "Invalid environment: $ENV"
-    echo "Valid environments are:"
-    for dir in "$TEMPLATE_DIR"/*; do
-        if [ -d "$dir" ]; then
-            option=$(basename "$dir")
-            echo "  --$option"
-        fi
-    done
+# Create a temporary directory
+TEMP_DIR=$(mktemp -d)
+echo "Created temporary directory: $TEMP_DIR"
+
+# Change to the temporary directory
+cd "$TEMP_DIR" || exit 1
+
+# Download the flake files
+if ! nix flake init --template github:declanriedel/dev-templates#$ENV; then
+    echo "Error: Failed to initialize flake for environment $ENV"
+    rm -rf "$TEMP_DIR"
     exit 1
 fi
 
-# Run the nix flake init command
-nix flake init --template github:declanriedel/dev-templates#$ENV
+echo "Flake files downloaded successfully."
 
-# Run the ndev command
+# Run nix develop in the temporary directory
+if ! nix develop; then
+    echo "Error: Failed to run nix develop for environment $ENV"
+    rm -rf "$TEMP_DIR"
+    exit 1
+fi
+
+# Clean up temporary directory (this will run after nix develop exits)
+rm -rf "$TEMP_DIR"
+
+zsh
