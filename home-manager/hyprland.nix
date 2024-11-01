@@ -3,7 +3,7 @@
 
 # Monitor Configuration
 monitor = eDP-1, highres, auto, 1
-monitor = HDMI-A-1, 1920x1080@60, auto, 2, mirror, eDP-1
+monitor = HDMI-A-1, 1920x1080@144, auto, 2, mirror, eDP-1
 
 # XWayland Configuration
 xwayland {

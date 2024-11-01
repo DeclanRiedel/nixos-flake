@@ -12,7 +12,11 @@
   environment.systemPackages = with pkgs; [
     vscode-fhs
     floorp
-
+  
+    blender
+    unityhub
+    gimp
+    
     networkmanagerapplet
     zellij
     stacer
@@ -26,9 +30,11 @@
     webcord # better vc
     fractal
     discord-screenaudio # working screenshare
-
+    steam
     xwaylandvideobridge # if discord-screenaudio not work
     obsidian
+    waydroid
+    appimage-run 
     qbittorrent-enhanced
     lorien
     gnome-disk-utility
