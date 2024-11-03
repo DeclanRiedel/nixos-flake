@@ -3,7 +3,7 @@
     zsh = {
       enable = true;
       zsh-autoenv.enable = true;
-      enableAutosuggestions = true;
+      autosuggestions.enable = true;
       syntaxHighlighting.enable = true;
       enableBashCompletion = true;
 
