@@ -69,6 +69,7 @@
 
     #fuck dropbox
     dropbox
+    firefox
 
     #nixhelper
     nh
