@@ -16,6 +16,7 @@
     yt-dlp
     socat
     jq
+    atomicparsley
 
     blender
     unityhub
