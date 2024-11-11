@@ -12,11 +12,15 @@
   environment.systemPackages = with pkgs; [
     vscode-fhs
     floorp
-  
+
+    yt-dlp
+    socat
+    jq
+
     blender
     unityhub
     gimp
-    
+
     networkmanagerapplet
     zellij
     stacer
@@ -34,7 +38,7 @@
     xwaylandvideobridge # if discord-screenaudio not work
     obsidian
     waydroid
-    appimage-run 
+    appimage-run
     qbittorrent-enhanced
     lorien
     gnome-disk-utility

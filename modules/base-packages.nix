@@ -9,7 +9,7 @@
     neovim
 
     #notifications
-    #dunst
+    dunst
     libnotify
     eww
 
