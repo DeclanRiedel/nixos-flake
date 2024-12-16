@@ -66,10 +66,10 @@ decoration {
         passes = 1
     }
 
-    drop_shadow = yes
-    shadow_range = 4
-    shadow_render_power = 3
-    col.shadow = rgba(1a1a1aee)
+#    drop_shadow = yes
+#    shadow_range = 4
+#    shadow_render_power = 3
+#    col.shadow = rgba(1a1a1aee)
 }
 
 # Animation Configuration
@@ -122,6 +122,7 @@ bind = $mainMod, K, exec, hyprlock
 bind = $mainMod, R, exec, fuzzel
 bind = $mainMod, G, exec, grim -g "$(slurp -d)" ~/Media/Screenshots/$(date +'%s_grim.png)"
 bind = $mainMod, H, exec, wl-screenrec ~/Recordings
+bind = $mainMod, Y, exec, ~/.dotfiles/nixos-flake/scripts/youtube-downloader.sh 
 
 # Floating and Tiling Bindings
 bind = $mainMod, F, togglefloating
