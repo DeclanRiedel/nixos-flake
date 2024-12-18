@@ -25,7 +25,7 @@
   };
   services.blueman.enable = true;
 
-  services.xserver.enable = true; # xorg
+  services.xserver.enable = false; # xorg
 
   ## sound
 

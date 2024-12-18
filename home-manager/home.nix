@@ -53,7 +53,7 @@ programs.zsh = {
     enable = true;
     enableZshIntegration = true;
     enableBashIntegration = true;
-    settings = pkgs.lib.importTOML ./starship.toml;
+    settings = pkgs.lib.importTOML ../config/starship.toml;
   };
 
   home.sessionVariables = { EDITOR = "nvim"; };

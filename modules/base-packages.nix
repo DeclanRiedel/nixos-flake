@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   programs.hyprland.enable = true;
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   #gnome key managers
   services.gnome.gnome-keyring.enable = true;
@@ -12,6 +13,7 @@
     dunst
     libnotify
     eww
+    xwayland
 
     #ricing
     wlogout
@@ -46,7 +48,6 @@
     hyprshade
     hyprutils
     hyperfine
-    xwayland
 
     #filemanager
     ranger

@@ -9,10 +9,19 @@
           recursiveBlurLoops = 5;
           recursiveBlurRadius = 5;
           background =
-            ../wall/1365923-hd-comic-book-wallpapers-1920x1080-for-mobile.jpg;
+            ../wall/sddm-wall.jpg;
         };
       })
     ];
+
+  environment.etc."wayland-sessions/Hyprland.desktop".text = ''
+    [Desktop Entry]
+    Name=Hyprland
+    Comment=Tiling wayland compositor
+    Exec=Hyprland
+    Type=Application
+    Keywords=wm;tiling
+  '';
 
   services.displayManager = {
     # startx.enable = false;

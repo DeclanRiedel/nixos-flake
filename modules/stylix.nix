@@ -23,7 +23,7 @@
   };
 
   stylix.image =
-    ../wall/1365923-hd-comic-book-wallpapers-1920x1080-for-mobile.jpg;
+    ../wall/sddm-wall.jpg;
   stylix.targets.nixvim = {
     enable = false;
     #transparent_bg.main = true;

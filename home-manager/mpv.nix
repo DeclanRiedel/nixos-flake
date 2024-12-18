@@ -1,9 +1,6 @@
 {
- home.file = {
-    ".config/mpv.conf".text = 
-      ''
- input-ipc-server=/tmp/mpvsocket
-    '';
-};
+  home.file.".config/mpv.conf" = {
+    source = ../config/mpv.conf;
+    force = true;
+  };
 }
-

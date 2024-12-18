@@ -1,0 +1,121 @@
+    @import "mocha.css";
+     * {
+        font-family: Iosevka Nerd Font;
+        font-weight: bold;
+        font-size: 14px;
+        min-height: 0;
+        padding: 0;
+        margin: 0;
+        border-radius: 0;
+      }
+
+
+  window#waybar {
+background-color: rgba(30, 30, 46, 0);
+transition-property: background-color;
+transition-duration: 0.5s;
+}
+
+
+      #workspaces {
+        border-radius: 0.75rem;
+        margin: 5px;
+        background-color: rgba(36, 40, 59, 0.7);
+        margin-left: 0.25rem;
+      }
+
+      #workspaces button {
+        min-width: 2em;
+        color: @text;
+        border-radius: 0.75rem;
+      }
+
+      #workspaces button.active {
+        background-color: @rosewater;
+        margin: 2px 2px;
+        color: @base;
+      }
+
+      #workspaces button.urgent {
+        color: @red;
+      }
+
+      #window,
+      #mpris,
+      #tray,
+      #language,
+      #network,
+      #custom-media,
+      #backlight,
+      #clock,
+      #idle_inhibitor,
+      #battery,
+      #custom-pacman,
+      #pulseaudio {
+        background-color: rgba(36, 40, 59, 0.7);
+        margin: 5px 0;
+        padding: 0rem 0.75rem 0rem;
+      }
+      #backlight {
+        color: @red;
+      }
+
+      #custom-media {
+        background-color: rgba(158, 206, 106, 0.7);
+        color: @base;
+        border-radius: 1rem;
+        margin-left: 4rem;
+      }
+
+      #window {
+        color: @mauve;
+        border-radius: 1rem;
+      }
+
+      #mpris {
+      color: @mauve;
+      border-radius: 1rem;
+      }
+
+      window#waybar.empty #window {
+        background-color: transparent;
+      }
+      #language {
+        color: @yellow;
+      }
+
+      #clock {
+        color: @peach;
+        border-radius: 1rem 0px 0px 1rem;
+        margin-left: 1rem;
+      }
+
+      #custom-pacman {
+        color: @teal;
+      }
+
+      #network {
+        color: @teal;
+      }
+
+      #idle_inhibitor {
+      color: @red;
+      }
+
+      #battery.warning:not(.charging) {
+        color: @red;
+      }
+
+      #pulseaudio {
+        color: @yellow;
+      }
+
+      #battery {
+        color: @green;
+        border-radius: 0px 1rem 1rem 0px;
+        margin-right: 0.25rem;
+      }
+
+      #tray {
+        border-radius: 1rem;
+      }
