@@ -24,10 +24,11 @@
         c = "clear";
         n = "nvim";
         ndev = "nix develop . -c $SHELL";
+        todo = "nvim ~/Dropbox/zettelkasten/8\\ -\\ Lists/1\\ -\\ Todo.md";
         ## custom scripts 
         dshgen = "~/.dotfiles/nixos-flake/scripts/devshell-flake-gen.sh";
-        jn = "~/.dotfiles/nixos-flake/scripts/daily-journal.sh";
-        on = "~/.dotfiles/nixos-flake/scripts/obsidian-quicknote.sh";
+        jn = "~/.dotfiles/nixos-flake/scripts/obsidian-daily.sh";
+        on = "~/.dotfiles/nixos-flake/scripts/obsidian-note.sh";
       };
     };
   };

@@ -36,6 +36,8 @@
     kodi
     #betterbird
     flameshot
+    bitwarden-cli
+    bitwarden-desktop
     audacity
     discord
     webcord # better vc
