@@ -5,10 +5,10 @@
     ## snippets...
     luasnip = {
       enable = true;
-      extraConfig = {
-        enable_autosnippets = true;
-        # store_selection_keys = "<Tab>";
-      };
+      #extraConfig = {
+      #  enable_autosnippets = true;
+      #  # store_selection_keys = "<Tab>";
+      #};
     }; # not configured
 
     cmp-buffer = { enable = true; };

@@ -4,6 +4,8 @@
 
     clangd-extensions.enable = true;
 
+    web-devicons.enable = true;
+
     lsp = {
       enable = true;
 
@@ -35,7 +37,7 @@
 
         ols.enable = true;
 
-        lua-ls.enable = true;
+        lua_ls.enable = true;
 
         cssls.enable = true;
         html.enable = true;
@@ -46,11 +48,14 @@
         sqls.enable = true;
         texlab.enable = true;
 
-        hls.enable = true;
+        hls = {
+          enable = true;
+          installGhc = true;
+        };
 
         gopls.enable = true;
 
-        rust-analyzer = {
+        rust_analyzer = {
           enable = true;
           installCargo = true;
           installRustc = true;

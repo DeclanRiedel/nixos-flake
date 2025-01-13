@@ -22,8 +22,8 @@
       settings = {
         dir = "~/Dropbox/zettelkasten";
         log_level = 1;
+        conceallevel = 2;
         new_notes_location = "current_dir";
-        #new_notes_location = "~/Dropbox/ObsidianDropbox/unsorted_newNotes";
         completions.nvim_cmp = true;
         templates.subdir = "~/Dropbox/zettelkasten/5 - Template";
       };
@@ -39,7 +39,7 @@
     friendly-snippets.enable = true;
     oil.enable = true;
     #lazygit.enable = true;
-    surround.enable = true;
+    vim-surround.enable = true;
 
     # dressing.enable = true;
     indent-blankline.enable = true;
@@ -52,7 +52,6 @@
     alpha.enable = true;
     #alpha.theme = "startify";
     alpha.theme = "dashboard";
-    alpha.iconsEnabled = true;
 
     # noice.enable = true;
     vim-css-color.enable = true;
@@ -60,7 +59,7 @@
 
     #plugins.startup.enable = true;
 
-    nvim-colorizer.enable = true;
+    colorizer.enable = true;
     flash.enable = true; # like leap but better, much better.
 
     #sniprun = {
