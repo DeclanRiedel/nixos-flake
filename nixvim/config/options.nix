@@ -9,7 +9,7 @@
     splitbelow = true;
     splitright = true;
     scrolloff = 4;
-#    wrapscan = 0;
+    #    wrapscan = 0;
 
     autoindent = true;
     clipboard = "unnamedplus";

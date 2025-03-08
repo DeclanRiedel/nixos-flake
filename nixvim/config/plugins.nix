@@ -20,8 +20,8 @@
     obsidian = {
       enable = true;
       settings = {
+        ui = { enable = false; };
         dir = "~/Dropbox/zettelkasten";
-        log_level = 1;
         conceallevel = 2;
         new_notes_location = "current_dir";
         completions.nvim_cmp = true;

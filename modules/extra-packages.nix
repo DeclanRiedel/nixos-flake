@@ -24,9 +24,14 @@
     atomicparsley
     git-lfs
 
-    blender
     unityhub
     gimp
+
+    godot_4
+    audacity
+    material-maker
+    blender
+    jetbrains.rider
 
     networkmanagerapplet
     zellij
@@ -38,7 +43,6 @@
     flameshot
     bitwarden-cli
     bitwarden-desktop
-    audacity
     discord
     webcord # better vc
     fractal

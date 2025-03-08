@@ -8,15 +8,22 @@
 
   home.packages = with pkgs; [ fastfetch ];
 
-  imports =
-    [./zsh.nix ./hyprlock.nix ./hypridle.nix ./hyprland.nix ./waybar.nix ./fuzzel.nix ];
+  imports = [
+    ./zsh.nix
+    ./hyprlock.nix
+    ./hypridle.nix
+    ./hyprland.nix
+    ./waybar.nix
+    ./fuzzel.nix
+    ./tmux.nix
+  ];
 
   systemd.user.services.mpris-proxy = {
     Unit.Description = "mpris-proxy";
-    Unit.After = ["network.target" "sound.target"];
+    Unit.After = [ "network.target" "sound.target" ];
     Service.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
-    Install.WantedBy = ["default.target"];
-  }; #blueooth audio buttons
+    Install.WantedBy = [ "default.target" ];
+  }; # blueooth audio buttons
 
   programs.ranger = {
     enable = true;
@@ -27,13 +34,10 @@
   ##bash 
   programs.bash = { enable = true; };
 
-
   #zsh - history + starship (doesnt conflict with zsh.nix)
-programs.zsh = {
+  programs.zsh = {
     enable = true;
-    history = {
-      extended = true;
-    };
+    history = { extended = true; };
     enableCompletion = true;
   };
 

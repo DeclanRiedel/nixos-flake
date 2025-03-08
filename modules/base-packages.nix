@@ -8,7 +8,7 @@
 
   environment.systemPackages = with pkgs; [
     neovim
-
+    tmux
     #notifications
     dunst
     libnotify
