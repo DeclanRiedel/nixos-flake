@@ -1,6 +1,12 @@
-{lib, pkgs, ...}: {
+{ lib, pkgs, ... }: {
 
-virtualisation.docker.enable = true;
+  virtualisation = {
+    #docker.enable = true;
+    podman = {
+      enable = true;
+      dockerCompat = true;
+    };
+  };
 
   services.postgresql = {
     enable = true;

@@ -27,6 +27,12 @@
     unityhub
     gimp
 
+    distrobox
+    distrobox-tui
+    podman
+    podman-tui
+    docker
+
     godot_4
     audacity
     material-maker

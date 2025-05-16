@@ -8,12 +8,15 @@
 
   environment.systemPackages = with pkgs; [
     neovim
-    tmux
+    #tmux remove because its option
     #notifications
     dunst
     libnotify
     eww
     xwayland
+    waypipe
+    wayvnc
+    wlroots
 
     #ricing
     wlogout

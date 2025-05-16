@@ -8,8 +8,7 @@
           blur = true;
           recursiveBlurLoops = 5;
           recursiveBlurRadius = 5;
-          background =
-            ../wall/sddm-wall.jpg;
+          background = ../wall/sddm-wall.jpg;
         };
       })
     ];
@@ -18,8 +17,8 @@
     [Desktop Entry]
     Name=Hyprland
     Comment=Tiling wayland compositor
-    Exec=Hyprland
-    Type=Application
+    Exec="Hyprland"
+    Type=Application"
     Keywords=wm;tiling
   '';
 

@@ -15,7 +15,7 @@
     ./hyprland.nix
     ./waybar.nix
     ./fuzzel.nix
-    ./tmux.nix
+    # ./tmux.nix
   ];
 
   systemd.user.services.mpris-proxy = {

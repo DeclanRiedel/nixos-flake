@@ -20,6 +20,7 @@
     enable = true;
     settings = {
       PasswordAuthentication = false;
+      X11Forwarding = true;
       PermitRootLogin = "no";
     };
   };
@@ -32,7 +33,7 @@
   };
   services.blueman.enable = true;
 
-  services.xserver.enable = false; # xorg
+  services.xserver.enable = true; # xorg
 
   ## sound
 
