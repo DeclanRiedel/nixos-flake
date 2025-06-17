@@ -71,8 +71,7 @@
     #app launcher
     fuzzel
 
-    #fuck dropbox
-    dropbox
+    dropbox # actually kinda nice - no longer using though
     firefox
 
     #nixhelper

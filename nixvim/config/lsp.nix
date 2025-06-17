@@ -15,6 +15,12 @@
           autostart = true;
         };
 
+        asm_lsp.enable = true;
+        astro.enable = true;
+        arduino_language_server.enable = true;
+        eslint.enable = true;
+        nextls.enable = true;
+
         jsonls.enable = true;
 
         clangd = {
