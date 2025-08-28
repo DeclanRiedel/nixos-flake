@@ -13,7 +13,7 @@ ghostty config
     - remove close confirm 
     - size popup on start
 
-tmux config + plugins
+tmux config + plugins (auto resurrect if that exists) + rice to make nicer + neovim integration (already have plugin)
 
 hyprpaper 
 hyprcursor 

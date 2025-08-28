@@ -13,6 +13,6 @@
     #./music.nix
     ./postgres-docker.nix
     ./stylix.nix
-    #./tmux.nix
+    ./tmux.nix
   ];
 }
