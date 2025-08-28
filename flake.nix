@@ -27,6 +27,7 @@
           modules = [
             ./misc/config.nix
             ./modules/default.nix
+            ./server/default.nix
             inputs.stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             {

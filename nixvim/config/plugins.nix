@@ -21,11 +21,11 @@
       enable = true;
       settings = {
         ui = { enable = false; };
-        dir = "~/Dropbox/zettelkasten";
+        dir = "~/obsidian";
         conceallevel = 2;
         new_notes_location = "current_dir";
         completions.nvim_cmp = true;
-        templates.subdir = "~/Dropbox/zettelkasten/5 - Template";
+        templates.subdir = "~/obsidian/03_Misc/02_Templates/FullNote.md";
       };
     };
 

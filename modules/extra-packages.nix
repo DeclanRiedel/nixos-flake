@@ -17,6 +17,7 @@
   environment.systemPackages = with pkgs; [
     vscode-fhs
     floorp
+    #vieb #doesn't meet security requirements for browsers
     code-cursor
     yt-dlp
     socat
@@ -24,6 +25,7 @@
     atomicparsley
     git-lfs
 
+    windsurf
     unityhub
     gimp
 
@@ -37,7 +39,7 @@
     audacity
     material-maker
     blender
-    jetbrains.rider
+    #jetbrains.rider
 
     networkmanagerapplet
     zellij
@@ -54,7 +56,7 @@
     fractal
     discord-screenaudio # working screenshare
     steam
-    xwaylandvideobridge # if discord-screenaudio not work
+    #xwaylandvideobridge # if discord-screenaudio not work
     obsidian
     waydroid
     #appimage-run

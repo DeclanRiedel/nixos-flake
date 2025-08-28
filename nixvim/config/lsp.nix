@@ -47,16 +47,17 @@
 
         cssls.enable = true;
         html.enable = true;
-        htmx.enable = true;
+        
+        htmx.enable = false;
         cmake.enable = true;
-        zls.enable = true;
+        zls.enable = false;
 
         sqls.enable = true;
         texlab.enable = true;
 
         hls = {
-          enable = true;
-          installGhc = true;
+          enable = false;
+          installGhc = false;
         };
 
         gopls.enable = true;

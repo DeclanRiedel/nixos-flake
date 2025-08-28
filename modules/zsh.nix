@@ -1,5 +1,5 @@
 {
-  programs = {
+programs = {
     zsh = {
       enable = true;
       zsh-autoenv.enable = true;
@@ -24,11 +24,11 @@
         c = "clear";
         n = "nvim";
         ndev = "nix develop . -c $SHELL";
-        todo = "nvim ~/Dropbox/zettelkasten/8\\ -\\ Lists/1\\ -\\ Todo.md";
+        todo = "nvim ~/obsidian/03_Misc/Todo.md";
         ## custom scripts 
-        dshgen = "~/.dotfiles/nixos-flake/scripts/devshell-flake-gen.sh";
-        jn = "~/.dotfiles/nixos-flake/scripts/obsidian-daily.sh";
-        on = "~/.dotfiles/nixos-flake/scripts/obsidian-note.sh";
+         dshgen = "../scripts/devshell-flake-gen.sh";
+         jn = "../scripts/obsidian-daily.sh";
+         on = "../scripts/obsidian-note.sh";
       };
     };
   };

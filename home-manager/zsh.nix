@@ -1,5 +1,5 @@
 {
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
     #used for x11 forwarding on windows?
     export DISPLAY=:0.0
 

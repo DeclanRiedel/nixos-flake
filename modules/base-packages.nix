@@ -3,7 +3,7 @@
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   #gnome key managers
-  services.gnome.gnome-keyring.enable = true;
+  #services.gnome.gnome-keyring.enable = true;
   programs.seahorse.enable = true;
 
   environment.systemPackages = with pkgs; [
@@ -95,7 +95,7 @@
     zenith
     zoxide
     scc
-    thefuck
+    #thefuck
     eza # ls but better
     duf
     bat

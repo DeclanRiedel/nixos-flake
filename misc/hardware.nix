@@ -64,7 +64,7 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  networking.firewall.allowedTCPPorts = [ 4321 22 5900 ];
+  networking.firewall.allowedTCPPorts = [ 4321 22 5900 80 443 ];
   # networking.interfaces.enp1s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp2s0.useDHCP = lib.mkDefault true;
 

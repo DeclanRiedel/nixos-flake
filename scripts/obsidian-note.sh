@@ -10,7 +10,7 @@ fi
 title="$*"
 
 # Define the base directory for your notes
-base_dir="$HOME/Dropbox/zettelkasten/6 - Main Notes"
+base_dir="$HOME/obsidian/00_Notes/Unsorted/"
 
 # Construct the full file path with the title
 file_path="$base_dir/$title.md"
