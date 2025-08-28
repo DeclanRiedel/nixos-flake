@@ -1,2 +1,5 @@
-{ imports = [ #./declanriedel-dev.nix ]; }
+{
+  imports = [ # ./declanriedel-dev.nix
+  ];
+}
 

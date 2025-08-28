@@ -16,7 +16,7 @@
     binfmt = true;
   };
 
-  environment.systemPackage = with pkgs; [
+  environment.systemPackages = with pkgs; [
     # notifications
     dunst
     libnotify
@@ -26,6 +26,9 @@
 
     # spotify probably only subscription that deserves to be paid 
     mpv
+    spotify
+    spotify-player
+    spotify-cli-linux
     #cmus
     vlc
     ffmpeg
@@ -120,10 +123,11 @@
 
     ## MISC 
     #steam
+    texliveFull
     dpkg # .deb pkg thing that apt is a frontend for
-    texlivefull
 
-  ] ++ (with inputs; [     #hyprcursor theme
-    rose-pine-hyprcursor.packages.${pkgs.system}.default
-]); ##could use libmkif but this is fine, although weird since no other inputs. 
+  ]; 
+    #++ (with inputs; [     #hyprcursor theme
+      #rose-pine-hyprcursor.packages.${pkgs.system}.default
+    #]); ##could use libmkif but this is fine, although weird since no other inputs. 
 }

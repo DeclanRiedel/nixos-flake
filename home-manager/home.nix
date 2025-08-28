@@ -15,6 +15,7 @@
     ./hyprland.nix
     ./waybar.nix
     ./fuzzel.nix
+    ./ghostty.nix
     # ./tmux.nix
   ];
 
@@ -41,16 +42,16 @@
     enableCompletion = true;
   };
 
-  ##kitty
-  programs.kitty = {
-    enable = true;
-    settings = {
-      confirm_os_window_close = 2;
-      scrollback_lines = 10000;
-      enable_audio_bell = false;
-      update_check_interval = 0;
-    };
-  };
+  ###kitty
+  #programs.kitty = {
+  #  enable = true;
+  #  settings = {
+  #    confirm_os_window_close = 2;
+  #    scrollback_lines = 10000;
+  #    enable_audio_bell = false;
+  #    update_check_interval = 0;
+  #  };
+  #};
 
   ## starship 
   programs.starship = {
