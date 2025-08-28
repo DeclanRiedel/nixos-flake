@@ -6,13 +6,14 @@
     ./fhs.nix
     ./base-packages.nix
     ./extra-packages.nix
+    ./legacy-packages.nix
     ./fonts.nix
     ./rice.nix
     ./sddm.nix
     ./sddm-avatar.nix
-    ./music.nix
+    #./music.nix
     ./postgres-docker.nix
     ./stylix.nix
-    ./tmux.nix
+    #./tmux.nix
   ];
 }

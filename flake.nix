@@ -8,6 +8,13 @@
     stylix.url = "github:danth/stylix";
     nixvim.url = "github:nix-community/nixvim";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    hyprland.url = "github:hyprwm/hyprland?ref=v0.36.0";
+  };
+
+  rose-pine-hyprcursor = {
+    url = "github:ndom91/rose-pine-hyprcursor";
+    inputs.nixpkgs.follows = "nixpkgs";
+    inputs.hyprlang.follows = "hyprland/hyprlang";
   };
 
   outputs = inputs@{ nixpkgs, home-manager, nixvim, flake-parts, ... }:

@@ -1,73 +1,129 @@
-{ lib, pkgs, ... }: {
+{ pkgs, lib, ... }: {
 
-  ## thunar
-
+  # force disable chromium
   programs.chromium.enable =
     lib.mkForce false; # stylix has this enabled by default
+
+  ## thunar filemanager
   programs.thunar.enable = true;
   programs.xfconf.enable = true;
   services.tumbler.enable = true;
   services.gvfs.enable = true;
 
+  #idk what this is below
   programs.appimage = {
     enable = true;
     binfmt = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    vscode-fhs
+  environment.systemPackage = with pkgs; [
+    # notifications
+    dunst
+    libnotify
+    eww
+    # logout menu (i don't even use this its just for rice)
+    wlogout
+
+    # spotify probably only subscription that deserves to be paid 
+    mpv
+    #cmus
+    vlc
+    ffmpeg
+
+    cheese # webcam camera app
+    swappy # ss editor (macos snappy clone)
+
+    #gammastep #time based brightness 
+
+    # browsers
     floorp
-    #vieb #doesn't meet security requirements for browsers
-    code-cursor
-    yt-dlp
-    socat
-    jq
-    atomicparsley
+    ## for development
+    firefox-devedition
+    #chromium force enabled by stylix (manual override top of file)
+    #safari
+    #microsoft-edge
+    #vieb #too unsafe for nixos lmao
+
+    #dropbox #no longer use but its good 
+
+    #monitoring shit
+    glances
+    gping # graph version of ping
+    hyperfine
+    btop # i like most
+    cpufetch
+    fastfetch
+    speedtest-cli
+
+    #git extra shit
+    lazygit
+    diff-so-fancy
     git-lfs
 
-    windsurf
-    unityhub
-    gimp
-
-    distrobox
-    distrobox-tui
-    podman
-    podman-tui
-    docker
-
-    godot_4
-    audacity
-    material-maker
-    blender
+    #editors
+    vscode-fhs
+    #code-cursor
+    #windsurf
     #jetbrains.rider
 
-    networkmanagerapplet
-    zellij
+    #gamdev related
+    #unityhub
+    #godot_4
+    #material-maker
+    blender
+
+    #apps
+    audacity
+    gimp
+    inkscape
+    krita
+
+    ## vm & containers
+    #distrobox
+    #distrobox-tui
+    #podman
+    #podman-tui
+    docker
+    #waydroid
+
+    #extra-utils
+    yt-dlp
+    atomicparsley
+    #zellij - prefer tmux
     stacer
-    btop
     fcitx5
-    kodi
-    #betterbird
-    flameshot
+    #kodi #wtf is kodi?
     bitwarden-cli
     bitwarden-desktop
-    discord
-    webcord # better vc
-    fractal
-    discord-screenaudio # working screenshare
-    steam
-    #xwaylandvideobridge # if discord-screenaudio not work
-    obsidian
-    waydroid
-    #appimage-run
-    qbittorrent-enhanced
-    lorien
     gnome-disk-utility
-    cmus
-    #music-player
-    vlc
-    dpkg
+
+    # like a 'better' nmtui 
+    networkmanagerapplet
+
+    #discord: they all fucking suck on wayland, either vc doesnt work or screenshare doesn't work
+    #discord
+    #webcord
+    #discord-screenaudio 
+    #xwaylandvideobridge #for discord but i dont think maintained
+
+    fractal
+    #betterbird #email, i dont use
     whatsapp-for-linux
-    texliveFull
-  ];
+
+    #notes
+    obsidian
+    lorien
+
+    #appimage-run #what is correct way to do this?
+
+    qbittorrent-enhanced
+
+    ## MISC 
+    #steam
+    dpkg # .deb pkg thing that apt is a frontend for
+    texlivefull
+
+  ] ++ (with inputs; [     #hyprcursor theme
+    rose-pine-hyprcursor.packages.${pkgs.system}.default
+]); ##could use libmkif but this is fine, although weird since no other inputs. 
 }

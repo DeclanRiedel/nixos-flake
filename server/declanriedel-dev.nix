@@ -8,7 +8,8 @@
       enableACME =
         true; # Enables automatic Let's Encrypt certificate generation
       forceSSL = true;
-      root = "/home/declan/.dotfiles/nixos-flake/server/declanriedel/";
+      root =
+        "/home/declan/.dotfiles/nixos-flake/server/src/portfolio/";
     };
   };
 

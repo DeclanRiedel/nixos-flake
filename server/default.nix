@@ -1,6 +1,2 @@
-{
-  imports = [
-    #./declanriedel.nix
-  ];
-}
+{ imports = [ #./declanriedel-dev.nix ]; }
 

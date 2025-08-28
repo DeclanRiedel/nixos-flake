@@ -1,113 +1,75 @@
 { pkgs, ... }: {
-  programs.hyprland.enable = true;
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  ##########################################################
+  ##  Core Packages that I rely on, more or less          ##
+  ##########################################################
 
-  #gnome key managers
-  #services.gnome.gnome-keyring.enable = true;
-  programs.seahorse.enable = true;
+  programs.hyprland.enable = true;
+
+  # settings
+  environment.sessionVariables.NIXOS_OZONE_WL =
+    "1"; # hints electron to use wayland
+
+  # if above doesn't work:   environment.sessionVariables.ELECTRON_OZONE_PLATFORM_HINT = "auto";
+
+  # idk what to label this section but I'm sure more will be added.
+  programs.seahorse.enable = true; # pick between above and gnome-keyring
 
   environment.systemPackages = with pkgs; [
-    neovim
-    #tmux remove because its option
-    #notifications
-    dunst
-    libnotify
-    eww
+    neovim # doesn't nixvim install it?
+    ghostty
+    udiskie
+    # probably needed
     xwayland
     waypipe
-    wayvnc
     wlroots
+    wayvnc # so shit tbh but idk of an alt
 
-    #ricing
-    wlogout
+    # clipboard
+    wl-clipboard
+    wl-clip-persist
+    clipman # clipboard manager for wl-clipboard
+    cliphist # clipboard history
+    #screen capture
+    wl-screenrec
+    imv # cli img viewers # does ghostty handle for me?
 
-    #sound
+    #audio
     pavucontrol
     pamixer
     playerctl
-    mpv
 
-    #disk
-    udiskie
-
-    #clipboard 
-    wl-clipboard
-    clipman
-    cliphist
-    wl-clip-persist
-
-    #screencapture
-    wl-screenrec
-    grim # screenshot tool
-    slurp # define grim ss size
-    swappy # screenshot editor
-    cheese # webcam app
-    imv # img viewer
-
-    ##hypr
-    hyprpicker
+    #Hypr-ecosystem
+    #hyprpanel - maybe better than waybar?
     hyprshot
-    hyprpaper
-    hyprshade
+    hyprpicker
+    hyprpaper # replace swww
+    hyprshade # supposed to replace gammastep?
     hyprutils
-    hyperfine
 
-    #filemanager
-    ranger
-
-    #pdf viewer
+    ranger # fileman > yazi & others
     zathura
-
-    #brightness
-    gammastep # weird config
     brightnessctl
 
-    #wallpaper
-    swww
+    fuzzel # nicer rofi - find one that luanches to browser cause those are kinda cool
 
-    #terminal
-    kitty
+    nh # nix-helper
 
-    #app launcher
-    fuzzel
-
-    dropbox # actually kinda nice - no longer using though
-    firefox
-
-    #nixhelper
-    nh
-
-    gnugrep
+    #useful utils
     ripgrep
     wget
     fzf
-    git
+    socat # SOcket Cat
+    jq # json query
+    git # +lazygit +diff-so-fancy
     unzip
-    w3m-nox
-    tldr
-    lazygit
-    hyperfine
-    procs # ps but better
-    cht-sh # ??
-    gping
-    glances
-    htop
-    zenith
-    zoxide
-    scc
-    #thefuck
-    eza # ls but better
-    duf
-    bat
-    diff-so-fancy
-    rm-improved
-    tre-command
-    bandwhich
-    navi
-    ffmpeg
-    cpufetch
-    lsd
-    speedtest-cli
+    man
+    tldr # show cmd use cases instead of man
+    procs # replaces ps
+    zoxide # replace cd
+    scc # code counter & runtime estimator
+    lsd # eza? does eza have --tree
+    bat # better cat
+    rm-improved # rip?
   ];
-
 }
+
