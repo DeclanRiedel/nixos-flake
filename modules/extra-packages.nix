@@ -105,6 +105,7 @@
     networkmanagerapplet
 
     #discord: they all fucking suck on wayland, either vc doesnt work or screenshare doesn't work
+    vesktop # supposed best discord client + working screenshare for wayland
     #discord
     #webcord
     #discord-screenaudio 

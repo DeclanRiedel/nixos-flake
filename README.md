@@ -12,11 +12,8 @@ wall/ => wallpapers for home, sddm & hyprlock
 
 ## todo:
 ghostty config
-    - bg from hyprland
-    - fonts
     - keybinds
-    - remove close confirm 
-    - size popup on start
+do I want glyphs in my font? idk, fix tokyonight theme to fit stylix/base16 font colours inside ghostty conf
 
 tmux config + plugins (auto resurrect if that exists) + rice to make nicer + neovim integration (already have plugin)
 
@@ -24,4 +21,18 @@ hyprcursor
 nixvim yearly config
 waybar vs hyprpanel better tray for waybar // overhaul 
 replace fuzzel with rofi => search, kv item-icon_path, tmux_sessions etc
-investigate stow vs how nixos works 
+investigate stow vs how nixos works
+
+
+
+
+## font from kitty
+kitty --debug-font-fallback 
+[0.198] Text fonts:
+[0.198]   Normal: DejaVuSansMono: /nix/store/q768mcf5k3qxx6nva7vvbkrd9hffxvwn-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansMono.ttf:0
+Features: ()
+[0.198]   Bold: DejaVuSansMono-Bold: /nix/store/q768mcf5k3qxx6nva7vvbkrd9hffxvwn-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansMono-Bold.ttf:0
+Features: ()
+[0.198]   Italic: DejaVuSansMono-Oblique: /nix/store/q768mcf5k3qxx6nva7vvbkrd9hffxvwn-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansMono-Oblique.ttf:0
+Features: ()
+[0.198]   Bold-Italic: DejaVuSansMono-BoldOblique: /nix/store/q768mcf5k3qxx6nva7vvbkrd9hffxvwn-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansMono-BoldOblique.ttf:0
