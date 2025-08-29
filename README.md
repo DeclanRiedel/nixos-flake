@@ -20,10 +20,8 @@ ghostty config
 
 tmux config + plugins (auto resurrect if that exists) + rice to make nicer + neovim integration (already have plugin)
 
-hyprpaper 
 hyprcursor 
 nixvim yearly config
-sddm avatar
 waybar vs hyprpanel better tray for waybar // overhaul 
-hardware.nix 
-
+replace fuzzel with rofi => search, kv item-icon_path, tmux_sessions etc
+investigate stow vs how nixos works 

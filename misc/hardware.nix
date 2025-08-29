@@ -30,8 +30,8 @@
       CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_power";
       CPU_SCALING_MIN_FREQ_ON_AC = 400000; # 400 MHz
       CPU_SCALING_MAX_FREQ_ON_AC = 4200000; # 4,2 GHz
-      START_CHARGE_THRESH_BAT0 = 75;
-      STOP_CHARGE_THRESH_BAT0 = 81;
+      START_CHARGE_THRESH_BAT0 = 80;
+      STOP_CHARGE_THRESH_BAT0 = 90;
     };
   };
 
@@ -64,7 +64,7 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  networking.firewall.allowedTCPPorts = [ 4321 22 5900 80 443 ];
+  networking.firewall.allowedTCPPorts = [ 4321 22 5900 ]; #80 443 already in server/ 
   # networking.interfaces.enp1s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp2s0.useDHCP = lib.mkDefault true;
 

@@ -32,6 +32,7 @@
     #cmus
     vlc
     ffmpeg
+    atomicparsley
 
     cheese # webcam camera app
     swappy # ss editor (macos snappy clone)
@@ -91,11 +92,11 @@
 
     #extra-utils
     yt-dlp
-    atomicparsley
+    fd
+    gh
     #zellij - prefer tmux
-    stacer
+    #stacer
     fcitx5
-    #kodi #wtf is kodi?
     bitwarden-cli
     bitwarden-desktop
     gnome-disk-utility
@@ -126,8 +127,8 @@
     texliveFull
     dpkg # .deb pkg thing that apt is a frontend for
 
-  ]; 
-    #++ (with inputs; [     #hyprcursor theme
-      #rose-pine-hyprcursor.packages.${pkgs.system}.default
-    #]); ##could use libmkif but this is fine, although weird since no other inputs. 
+  ];
+  #++ (with inputs; [     #hyprcursor theme
+  #rose-pine-hyprcursor.packages.${pkgs.system}.default
+  #]); ##could use libmkif but this is fine, although weird since no other inputs. 
 }

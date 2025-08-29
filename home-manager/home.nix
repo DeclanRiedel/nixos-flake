@@ -12,11 +12,11 @@
     ./zsh.nix
     ./hyprlock.nix
     ./hypridle.nix
+    ./hyprpaper.nix
     ./hyprland.nix
     ./waybar.nix
     ./fuzzel.nix
     ./ghostty.nix
-    # ./tmux.nix
   ];
 
   systemd.user.services.mpris-proxy = {

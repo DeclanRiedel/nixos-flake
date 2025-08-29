@@ -57,6 +57,8 @@
     #useful utils
     ripgrep
     wget
+    doppler
+    fd
     fzf
     socat # SOcket Cat
     jq # json query
