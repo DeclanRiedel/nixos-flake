@@ -22,13 +22,12 @@
         lst = "eza -T --icons";
         lsg = "eza -g --icons";
         lsd = "eza -g -D -T";
-        lsgit = "eza --git-ignore -T --icons"
-        cat = "bat"
-
+        lsgit = "eza --git-ignore -T --icons";
+        cat = "bat";
         update = "sudo nixos-rebuild switch --flake ~/.dotfiles/nixos-flake";
         c = "clear";
         n = "nvim";
-        vim = "nvim"
+        vim = "nvim";
         ndev = "nix develop . -c $SHELL";
         todo = "nvim ~/obsidian/03_Misc/Todo.md";
         ## custom scripts 
