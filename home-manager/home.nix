@@ -61,7 +61,10 @@
     settings = pkgs.lib.importTOML ../config/starship.toml;
   };
 
-  home.sessionVariables = { EDITOR = "nvim"; };
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    SHELL = "zsh";
+  };
 
   programs.home-manager.enable = true;
 }

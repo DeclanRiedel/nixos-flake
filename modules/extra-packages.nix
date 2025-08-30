@@ -61,7 +61,7 @@
 
     #git extra shit
     lazygit
-    diff-so-fancy
+    diff-so-fancy # delta?
     git-lfs
 
     #editors
@@ -94,6 +94,9 @@
     yt-dlp
     fd
     gh
+    hexyl
+    ncdu # replaces du (interactive)
+    dust # replaces du
     #zellij - prefer tmux
     #stacer
     fcitx5

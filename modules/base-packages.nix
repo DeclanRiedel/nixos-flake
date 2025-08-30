@@ -46,7 +46,7 @@
     hyprshade # supposed to replace gammastep?
     hyprutils
 
-    ranger # fileman > yazi & others
+    ranger # fileman > yazi & others #i think yazi has oil.nvim integration? idk might switch if it's actually better
     zathura
     brightnessctl
 
@@ -56,11 +56,18 @@
 
     #useful utils
     ripgrep
+    httpie # replaces curl
     wget
+    pandoc # document converter
+
+    # test
     doppler
+    direnv
+    # ^^^
     fd
     fzf
     socat # SOcket Cat
+    yq # jq for yaml/toml etc
     jq # json query
     git # +lazygit +diff-so-fancy
     unzip
@@ -69,7 +76,7 @@
     procs # replaces ps
     zoxide # replace cd
     scc # code counter & runtime estimator
-    lsd # eza? does eza have --tree
+    eza # replaces lsd since its faster and can sort file names case-sensitively
     bat # better cat
     rm-improved # rip?
   ];
