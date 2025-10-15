@@ -13,6 +13,7 @@
 
   # idk what to label this section but I'm sure more will be added.
   programs.seahorse.enable = true; # pick between above and gnome-keyring
+  #programs.nixvim.enable = true;
 
   environment.systemPackages = with pkgs; [
     neovim # doesn't nixvim install it?

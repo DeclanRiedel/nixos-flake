@@ -23,7 +23,13 @@ waybar vs hyprpanel better tray for waybar // overhaul
 replace fuzzel with rofi => search, kv item-icon_path, tmux_sessions etc
 investigate stow vs how nixos works
 
-
+## to rice;
+grub
+zathura
+tmux
+yazi/ranger
+fuzzel 
+put nixvim in flake as home-manager managed
 
 
 ## font from kitty

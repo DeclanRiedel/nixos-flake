@@ -20,5 +20,15 @@
         fi
         nix flake new --template "https://flakehub.com/f/the-nix-way/dev-templates/*#$1" "$2"
     }
+    # to have nix-shell respect $SHELL 
+    alias nix-shell='nix-shell --run $SHELL'
+    nix() {
+    if [[ $1 == "develop" ]]; then
+      shift
+      command nix develop -c $SHELL "$@"
+    else
+      command nix "$@"
+    fi
+  }
   '';
 }

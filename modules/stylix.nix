@@ -23,12 +23,15 @@
   };
 
   stylix.image =
-    ../wall/sddm-wall.jpg;
-  stylix.targets.nixvim = {
-    enable = false;
-    #transparent_bg.main = true;
-    #transparent_bg.sign_column = true;
+    ../wall/sddm-wall.jpg; # i still don't know why this sets the sddm wall
+
+  stylix.targets = {
+    nixvim.enable = false;
+    #ghostty.enable = false;
+    #dunst.enable = false;
   };
 
+  # fonts for more consistent typography?
+  # can tarfet floorp but that seems very unnecessary
   stylix.polarity = "dark";
 }

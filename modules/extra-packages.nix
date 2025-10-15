@@ -66,6 +66,8 @@
 
     #editors
     vscode-fhs
+    jetbrains.pycharm-community
+    zed-editor-fhs
     #code-cursor
     #windsurf
     #jetbrains.rider
@@ -81,6 +83,7 @@
     gimp
     inkscape
     krita
+    mailspring
 
     ## vm & containers
     #distrobox

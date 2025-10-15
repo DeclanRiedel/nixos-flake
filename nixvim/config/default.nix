@@ -1,14 +1,12 @@
 {
   imports = [
-#    ./bufferline.nix
-
     ./options.nix
     ./plugins.nix
     ./keymaps.nix
 
     ./git.nix
     ./trouble.nix
-    ./wilder.nix
+    #./wilder.nix
 
     ./cmp.nix
     ./lsp.nix
@@ -18,6 +16,7 @@
   ];
 
   globals.mapleader = " ";
+  globals.maplocalleader = " ";
 
   colorschemes.tokyonight = {
     enable = true;

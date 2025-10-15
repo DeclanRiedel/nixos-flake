@@ -1,10 +1,10 @@
 { lib, pkgs, ... }: {
 
   virtualisation = {
-    #docker.enable = true;
+    docker.enable = true;
     podman = {
       enable = true;
-      dockerCompat = true;
+      #dockerCompat = true;
     };
   };
 

@@ -1,5 +1,6 @@
 {
   globals.mapleader = " ";
+  globals.maplocalleader = " ";
 
   keymaps = [
     {
@@ -8,6 +9,15 @@
       key = "<space>n"; # this line is changed
       mode = "n";
       options = { desc = "Toggle Tree View."; };
+    }
+    {
+      mode = "";
+      key = "<Space>";
+      action = "<Nop>";
+      options = {
+        silent = true;
+        noremap = true;
+      };
     }
     {
       #info

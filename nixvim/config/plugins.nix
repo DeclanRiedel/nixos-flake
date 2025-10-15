@@ -16,18 +16,21 @@
         view_method = "zathura";
       };
     };
-
-    obsidian = {
-      enable = true;
-      settings = {
-        ui = { enable = false; };
-        dir = "~/obsidian";
-        conceallevel = 2;
-        new_notes_location = "current_dir";
-        completions.nvim_cmp = true;
-        templates.subdir = "~/obsidian/03_Misc/02_Templates/FullNote.md";
-      };
-    };
+    #obsidian = {
+    #  enable = true;
+    #  settings = {
+    #    ui = { enable = false; };
+    #    dir = "~/Zettelkasten/";
+    #    dir = "~/Zettelkasten/";
+    #    #conceallevel = 2;
+    #    new_notes_location = "~/Zettelkasten/00_Notes/Unsorted";
+    #    completions = {
+    #      min_chars = 2;
+    #      nvim_cmp = true;
+    #    };
+    #    templates.subdir = "~/Zettelkasten/03_Misc/02_Templates/FullNote.md";
+    #  };
+    #};
 
     zen-mode.enable = true;
 
@@ -40,18 +43,17 @@
     oil.enable = true;
     #lazygit.enable = true;
     vim-surround.enable = true;
-
     # dressing.enable = true;
     indent-blankline.enable = true;
     lualine.enable = true;
     # lightline.enable = true;
-    toggleterm.enable = true;
+    toggleterm.enable = true; # <leader>~ for toggleterm
     which-key.enable = true;
 
     ## startup theme...
-    alpha.enable = true;
-    #alpha.theme = "startify";
-    alpha.theme = "dashboard";
+    #alpha.enable = true;
+    alpha.theme = "startify";
+    #alpha.theme = "dashboard";
 
     # noice.enable = true;
     vim-css-color.enable = true;
