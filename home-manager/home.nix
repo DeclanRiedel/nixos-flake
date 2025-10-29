@@ -36,10 +36,13 @@
   programs.bash = { enable = true; };
 
   #zsh - history + starship (doesnt conflict with zsh.nix)
-  programs.zsh = {
+    programs.zsh = {
     enable = true;
-    history = { extended = true; };
+    history.extended = true;
     enableCompletion = true;
+    #shellAliases = {
+    #  nvim = "/run/current-system/sw/bin/nvim";
+    #};
   };
 
   ###kitty
@@ -67,4 +70,9 @@
   };
 
   programs.home-manager.enable = true;
+
+  programs.nixvim = {
+    enable = true;
+    imports = [ ../nixvim/config/default.nix ];
+  };
 }

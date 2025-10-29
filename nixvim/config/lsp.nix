@@ -37,7 +37,7 @@
 
         ruff.enable = true;
 
-        pyright.enable = true;
+        #pyright.enable = true;
 
         bashls.enable = true;
 
@@ -49,7 +49,7 @@
         html.enable = true;
         
         htmx.enable = false;
-        cmake.enable = true;
+        cmake.enable = false;
         zls.enable = false;
 
         sqls.enable = true;

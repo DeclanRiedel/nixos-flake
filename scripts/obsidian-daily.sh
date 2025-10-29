@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # Define directories and template path
-JOURNAL_DIR="$HOME/obsidian/03_Misc/01_Journal/"
+JOURNAL_DIR="$HOME/Zettelkasten/03_Misc/01_Journal/"
 
-TEMPLATE_FILE="$HOME/obsidian/03_Misc/02_Templates/Daily.md"
+TEMPLATE_FILE="$HOME/Zettelkasten/03_Misc/02_Templates/Daily.md"
 
 # Get current date in DD-MM-YYYY format
 TODAY=$(date +%d-%m-%Y)

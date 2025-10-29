@@ -29,7 +29,7 @@
         n = "nvim";
         vim = "nvim";
         ndev = "nix develop . -c $SHELL";
-        todo = "nvim ~/obsidian/03_Misc/Todo.md";
+        todo = "nvim ~/Zettelkasten/03_Misc/Todo.md";
         ## custom scripts 
         dshgen = "../scripts/devshell-flake-gen.sh";
         jn = "../scripts/obsidian-daily.sh";

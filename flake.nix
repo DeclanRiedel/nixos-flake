@@ -13,16 +13,9 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, nixvim, flake-parts, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, nixvim, ... }:
     let
       system = "x86_64-linux";
-      nixvimLib = nixvim.lib.${system};
-      nixvim' = nixvim.legacyPackages.${system};
-      nixvimModule = {
-        pkgs = nixpkgs.legacyPackages.${system};
-        module = import ./nixvim/config/default.nix;
-      };
-      nvim = nixvim'.makeNixvimWithModule nixvimModule;
     in {
       nixosConfigurations = {
         machine = nixpkgs.lib.nixosSystem {
@@ -36,16 +29,15 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.declan = import ./home-manager/home.nix;
+              home-manager.users.declan = {
+                imports = [
+                  ./home-manager/home.nix
+                  nixvim.homeManagerModules.nixvim
+                ];
+              };
             }
           ];
         };
-      };
-
-      packages.${system} = { default = nvim; };
-
-      checks.${system} = {
-        default = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimModule;
       };
     };
 }

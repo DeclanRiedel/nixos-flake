@@ -51,7 +51,7 @@
     which-key.enable = true;
 
     ## startup theme...
-    #alpha.enable = true;
+    alpha.enable = true;
     alpha.theme = "startify";
     #alpha.theme = "dashboard";
 

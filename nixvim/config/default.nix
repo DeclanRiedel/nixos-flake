@@ -1,4 +1,4 @@
-{
+{self, ... }: {
   imports = [
     ./options.nix
     ./plugins.nix

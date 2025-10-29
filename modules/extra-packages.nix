@@ -69,7 +69,7 @@
     jetbrains.pycharm-community
     zed-editor-fhs
     #code-cursor
-    #windsurf
+    windsurf
     #jetbrains.rider
 
     #gamdev related
