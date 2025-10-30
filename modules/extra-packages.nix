@@ -41,6 +41,7 @@
 
     # browsers
     floorp
+    gemini-cli
     ## for development
     firefox-devedition
     #chromium force enabled by stylix (manual override top of file)
