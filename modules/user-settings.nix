@@ -5,6 +5,7 @@
     extraGroups = [ "wheel" "networkmanager" ];
     uid = 1000;
     shell = pkgs.zsh;
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB36tS6T6hOQ+PlarOlfrF2uwbsSMD9EOBr5KpUo5Bay declan.riedel@protonmail.com" ];
   };
 
   time.timeZone = "Africa/Windhoek";

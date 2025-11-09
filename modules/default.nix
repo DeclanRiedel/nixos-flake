@@ -4,8 +4,9 @@
     ./user-settings.nix
     ./system-settings.nix
     ./fhs.nix
-    ./base-packages.nix
-    ./extra-packages.nix
+    ./packages.nix
+    #./base-packages.nix
+    #./extra-packages.nix
     ./legacy-packages.nix
     ./fonts.nix
     ./rice.nix
