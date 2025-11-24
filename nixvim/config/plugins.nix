@@ -17,26 +17,25 @@
       };
     };
     #obsidian = {
-    #  enable = true;
-    #  settings = {
-    #    ui = { enable = false; };
-    #    dir = "~/Zettelkasten/";
-    #    dir = "~/Zettelkasten/";
-    #    #conceallevel = 2;
-    #    new_notes_location = "~/Zettelkasten/00_Notes/Unsorted";
-    #    completions = {
-    #      min_chars = 2;
-    #      nvim_cmp = true;
-    #    };
-    #    templates.subdir = "~/Zettelkasten/03_Misc/02_Templates/FullNote.md";
-    #  };
+    # enable = true;
+      #settings = {
+      # ui = { enable = false; };
+      #  dir = "~/Zettelkasten/";
+      #  conceallevel = 2;
+      #  #new_notes_location = "~/Zettelkasten/00_Notes/Unsorted";
+      #  completions = {
+      #    min_chars = 2;
+      #    nvim_cmp = true;
+      #  };
+      #  templates.subdir = "~/Zettelkasten/03_Misc/02_Templates/FullNote.md";
+    # };
     #};
 
     zen-mode.enable = true;
 
     #neocord.enable = true; #this is very weird no?
 
-    #tmux-navigator.enable = true;
+    tmux-navigator.enable = true;
     dap.enable = true;
 
     friendly-snippets.enable = true;

@@ -3,6 +3,8 @@
   ##  Core Packages that I rely on, more or less          ##
   ##########################################################
 
+ nixpkgs.config = { allowUnfree = true;};
+
   programs.hyprland.enable = true;
 
   # settings
@@ -157,11 +159,14 @@
 
     #editors
     vscode-fhs
-    jetbrains.pycharm-community
-    zed-editor-fhs
-    #code-cursor
-    windsurf
-    #jetbrains.rider
+    #jetbrains.pycharm-community
+    #zed-editor-fhs
+    code-cursor
+    #windsurf
+    
+    ### WORK STUFF
+    jetbrains.rider
+    dotnet-sdk_9
 
     #gamdev related
     #unityhub
