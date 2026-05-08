@@ -226,7 +226,7 @@
 
     ## MISC
     #steam
-    texliveFull
+    #texliveFull
     dpkg # .deb pkg thing that apt is a frontend for
   ];
   #++ (with inputs; [     #hyprcursor theme
