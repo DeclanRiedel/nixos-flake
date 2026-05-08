@@ -11,9 +11,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, nixvim, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, nixvim, disko, ... }:
     let
       system = "x86_64-linux";
     in {
@@ -24,6 +26,28 @@
             ./misc/config.nix
             ./modules/default.nix
             ./server/default.nix
+            inputs.stylix.nixosModules.stylix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.declan = {
+                imports = [
+                  ./home-manager/home.nix
+                  nixvim.homeManagerModules.nixvim
+                ];
+              };
+            }
+          ];
+        };
+
+        vostro = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./hosts/vostro/default.nix
+            ./hosts/vostro/disko.nix
+            disko.nixosModules.disko
+            ./modules/default.nix
             inputs.stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             {
