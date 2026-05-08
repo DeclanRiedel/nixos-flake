@@ -5,7 +5,7 @@
 
   system.stateVersion = "25.05";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  networking.hostName = "vostro";
+  networking.hostName = lib.mkForce "vostro";
 
   users.users.declan = {
     hashedPassword =
