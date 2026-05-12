@@ -1,15 +1,71 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, pkgsCodex, ... }:
+let
+  opencodeLatestVersion = "1.14.48";
+  opencodeLatest = pkgs.stdenvNoCC.mkDerivation {
+    pname = "opencode";
+    version = opencodeLatestVersion;
+
+    src = pkgs.fetchurl {
+      url = "https://github.com/anomalyco/opencode/releases/download/v${opencodeLatestVersion}/opencode-linux-x64.tar.gz";
+      hash = "sha256-0GEl3gdK+cF75kkTfivvWbd0x2aBMLAIb5vZm6Z7r4I=";
+    };
+
+    baselineSrc = pkgs.fetchurl {
+      url = "https://github.com/anomalyco/opencode/releases/download/v${opencodeLatestVersion}/opencode-linux-x64-baseline.tar.gz";
+      hash = "sha256-14l6eBTGUryTmsVrNRg/lot34zF4p6LX725k6vD3aOQ=";
+    };
+
+    dontUnpack = true;
+    nativeBuildInputs = with pkgs; [ patchelf ];
+
+    installPhase = ''
+      runHook preInstall
+
+      mkdir -p $out/bin $out/lib/opencode/linux-x64 $out/lib/opencode/linux-x64-baseline
+      tar -xzf $src -C $out/lib/opencode/linux-x64
+      tar -xzf $baselineSrc -C $out/lib/opencode/linux-x64-baseline
+      patchelf --set-interpreter ${pkgs.glibc}/lib/ld-linux-x86-64.so.2 $out/lib/opencode/linux-x64/opencode
+      patchelf --set-interpreter ${pkgs.glibc}/lib/ld-linux-x86-64.so.2 $out/lib/opencode/linux-x64-baseline/opencode
+
+      cat > $out/bin/opencode <<'EOF'
+      #!${pkgs.runtimeShell}
+      export PATH=${lib.makeBinPath [ pkgs.ripgrep ]}:$PATH
+      if grep -qw avx2 /proc/cpuinfo 2>/dev/null; then
+        exec @out@/lib/opencode/linux-x64/opencode "$@"
+      fi
+      exec @out@/lib/opencode/linux-x64-baseline/opencode "$@"
+      EOF
+      substituteInPlace $out/bin/opencode --replace-fail @out@ $out
+      chmod +x $out/bin/opencode
+
+      runHook postInstall
+    '';
+
+    meta = with lib; {
+      description = "AI coding agent built for the terminal";
+      homepage = "https://opencode.ai";
+      license = licenses.mit;
+      mainProgram = "opencode";
+      platforms = [ "x86_64-linux" ];
+    };
+  };
+in {
   ##########################################################
   ##  Core Packages that I rely on, more or less          ##
   ##########################################################
 
- nixpkgs.config = { allowUnfree = true;};
-
   programs.hyprland.enable = true;
 
   # settings
-  environment.sessionVariables.NIXOS_OZONE_WL =
-    "1"; # hints electron to use wayland
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1"; # hints electron to use wayland
+    # Android SDK/emulator images make system rebuilds very large. Re-enable
+    # these with the androidSdk package below when Android work is active.
+    # ANDROID_HOME = "${androidSdk}/libexec/android-sdk";
+    # ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
+    DOTNET_ROOT = "${pkgs.dotnet-sdk_9.unwrapped}/share/dotnet";
+    JAVA_HOME = pkgs.jdk17.home;
+  };
 
   # if above doesn't work:   environment.sessionVariables.ELECTRON_OZONE_PLATFORM_HINT = "auto";
 
@@ -132,8 +188,10 @@
     #gammastep #time based brightness
 
     # browsers
-    floorp
+    floorp-bin
     gemini-cli
+    pkgsCodex.codex
+    opencodeLatest
     ## for development
     firefox-devedition
     #chromium force enabled by stylix (manual override top of file)
@@ -161,25 +219,28 @@
     vscode-fhs
     #jetbrains.pycharm-community
     #zed-editor-fhs
-    code-cursor
+    #code-cursor # large Electron editor; keep out of the boot-critical closure
     #windsurf
     
     ### WORK STUFF
-    jetbrains.rider
+    #jetbrains.rider # large proprietary IDE; install ad hoc when needed
     dotnet-sdk_9
+    #androidSdk # very large SDK/emulator closure
+    #android-tools
+    jdk17
 
     #gamdev related
     #unityhub
     #godot_4
     #material-maker
-    blender
+    #blender # large creative suite; avoid blocking rebuilds
 
     #apps
-    audacity
-    gimp
-    inkscape
-    krita
-    mailspring
+    #audacity
+    #gimp
+    #inkscape # was building locally and blocking nixos-rebuild
+    #krita
+    #mailspring
 
     ## vm & containers
     #distrobox
@@ -212,17 +273,17 @@
     #discord-screenaudio
     #xwaylandvideobridge #for discord but i dont think maintained
 
-    fractal
+    #fractal # Rust/GNOME app; was building locally and OOMing
     #betterbird #email, i dont use
-    whatsapp-for-linux
+    #karere # niche chat app; keep out of base system closure
 
     #notes
     obsidian
-    lorien
+    #lorien # old/niche drawing app; install ad hoc if needed
 
     #appimage-run #what is correct way to do this?
 
-    qbittorrent-enhanced
+    #qbittorrent-enhanced # niche variant; use normal qbittorrent if needed
 
     ## MISC
     #steam

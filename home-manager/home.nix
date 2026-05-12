@@ -36,13 +36,13 @@
   programs.bash = { enable = true; };
 
   #zsh - history + starship (doesnt conflict with zsh.nix)
-    programs.zsh = {
+  programs.zsh = {
     enable = true;
     history.extended = true;
     enableCompletion = true;
-    #shellAliases = {
-    #  nvim = "/run/current-system/sw/bin/nvim";
-    #};
+    shellAliases = {
+      codex = "codex --yolo";
+    };
   };
 
   ###kitty
@@ -62,6 +62,11 @@
     enableZshIntegration = true;
     enableBashIntegration = true;
     settings = pkgs.lib.importTOML ../config/starship.toml;
+  };
+
+  programs.worktrunk = {
+    enable = true;
+    enableZshIntegration = true;
   };
 
   home.sessionVariables = {

@@ -13,16 +13,32 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs-codex.url = "github:NixOS/nixpkgs/c6e5ca3c836a5f4dd9af9f2c1fc1c38f0fac988a";
+    worktrunk = {
+      url = "github:max-sixty/worktrunk";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, nixvim, disko, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, nixvim, nixpkgs-codex, worktrunk, ... }:
     let
       system = "x86_64-linux";
+      pkgsCodex = import nixpkgs-codex {
+        inherit system;
+        config.allowUnfree = true;
+      };
     in {
       nixosConfigurations = {
         machine = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
+            { _module.args.pkgsCodex = pkgsCodex; }
+            {
+              nixpkgs.config = {
+                allowUnfree = true;
+                android_sdk.accept_license = true;
+              };
+            }
             ./misc/config.nix
             ./modules/default.nix
             ./server/default.nix
@@ -34,7 +50,8 @@
               home-manager.users.declan = {
                 imports = [
                   ./home-manager/home.nix
-                  nixvim.homeManagerModules.nixvim
+                  nixvim.homeModules.nixvim
+                  worktrunk.homeModules.default
                 ];
               };
             }
@@ -44,9 +61,14 @@
         vostro = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
+            { _module.args.pkgsCodex = pkgsCodex; }
+            {
+              nixpkgs.config = {
+                allowUnfree = true;
+                android_sdk.accept_license = true;
+              };
+            }
             ./hosts/vostro/default.nix
-            ./hosts/vostro/disko.nix
-            disko.nixosModules.disko
             ./modules/default.nix
             inputs.stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
@@ -56,7 +78,8 @@
               home-manager.users.declan = {
                 imports = [
                   ./home-manager/home.nix
-                  nixvim.homeManagerModules.nixvim
+                  nixvim.homeModules.nixvim
+                  worktrunk.homeModules.default
                 ];
               };
             }
