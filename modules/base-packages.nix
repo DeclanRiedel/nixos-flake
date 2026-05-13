@@ -24,6 +24,7 @@
     waypipe
     wlroots
     wayvnc # so shit tbh but idk of an alt
+    wev # Wayland event viewer for identifying key names/codes
 
     # clipboard
     wl-clipboard
@@ -82,4 +83,3 @@
     rm-improved # rip?
   ];
 }
-
