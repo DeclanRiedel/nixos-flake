@@ -1,0 +1,9 @@
+.dotnet/
+.dotnet-home/
+.nuget/
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates

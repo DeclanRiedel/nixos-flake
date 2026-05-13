@@ -23,22 +23,31 @@
   outputs = inputs@{ self, nixpkgs, home-manager, nixvim, nixpkgs-codex, worktrunk, ... }:
     let
       system = "x86_64-linux";
+      pkgsUnfree = import nixpkgs {
+        inherit system;
+        config = {
+          allowUnfree = true;
+          android_sdk.accept_license = true;
+        };
+      };
       pkgsCodex = import nixpkgs-codex {
         inherit system;
         config.allowUnfree = true;
       };
     in {
+      templates = {
+        dotnet-maui = {
+          path = ./templates/dotnet-maui;
+          description = "NixOS .NET MAUI dev shell with project-local writable .NET workloads";
+        };
+      };
+
       nixosConfigurations = {
         machine = nixpkgs.lib.nixosSystem {
           inherit system;
+          pkgs = pkgsUnfree;
           modules = [
             { _module.args.pkgsCodex = pkgsCodex; }
-            {
-              nixpkgs.config = {
-                allowUnfree = true;
-                android_sdk.accept_license = true;
-              };
-            }
             ./misc/config.nix
             ./modules/default.nix
             ./server/default.nix
@@ -60,14 +69,9 @@
 
         vostro = nixpkgs.lib.nixosSystem {
           inherit system;
+          pkgs = pkgsUnfree;
           modules = [
             { _module.args.pkgsCodex = pkgsCodex; }
-            {
-              nixpkgs.config = {
-                allowUnfree = true;
-                android_sdk.accept_license = true;
-              };
-            }
             ./hosts/vostro/default.nix
             ./modules/default.nix
             inputs.stylix.nixosModules.stylix

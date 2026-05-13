@@ -13,7 +13,7 @@
 
     cmp-buffer = { enable = true; };
 
-    cmp-emoji = { enable = true; };
+    cmp-emoji = { enable = false; };
 
     cmp-path = { enable = true; };
 

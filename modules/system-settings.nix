@@ -1,5 +1,4 @@
 { lib, nixpkgs, pkgs, ... }: {
-  nixpkgs.config.allowUnfree = lib.mkForce true;
 
   #systemd bootloader 
   boot.loader = {
@@ -23,6 +22,9 @@
       X11Forwarding = true;
       PermitRootLogin = "no";
     };
+    extraConfig = ''
+      PermitRootLogin yes
+    '';
   };
 
   ## bluetooth
@@ -65,7 +67,7 @@
     autoUpgrade = {
       enable = true;
       operation = "boot";
-      flake = "~/.dotfiles";
+      flake = "/home/declan/.nixos";
       dates = "weekly";
       #channels?
     };

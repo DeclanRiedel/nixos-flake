@@ -1,4 +1,7 @@
 # each repo inside server/src/ should be ignored from flake and listed seperately below.
 server/src/portfolio/
 
+# nix build outputs
+result
+result-*
 

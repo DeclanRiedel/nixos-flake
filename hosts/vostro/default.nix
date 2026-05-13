@@ -3,7 +3,7 @@
 {
   imports = [ ./hardware-configuration.nix ];
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   networking.hostName = lib.mkForce "vostro";
 
@@ -15,5 +15,13 @@
     ];
   };
 
+  users.users.root = {
+    initialPassword = "asdf";
+    shell = pkgs.zsh;
+  };
   services.openssh.settings.PasswordAuthentication = lib.mkForce true;
+  services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
+  services.openssh.extraConfig = lib.mkAfter ''
+    PermitRootLogin yes
+  '';
 }

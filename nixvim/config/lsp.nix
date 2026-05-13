@@ -19,7 +19,8 @@
         astro.enable = true;
         arduino_language_server.enable = true;
         eslint.enable = true;
-        nextls.enable = true;
+        # next-ls was archived upstream and removed from nixpkgs.
+        nextls.enable = false;
 
         jsonls.enable = true;
 

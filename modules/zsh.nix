@@ -24,7 +24,7 @@
         lsd = "eza -g -D -T";
         lsgit = "eza --git-ignore -T --icons";
         cat = "bat";
-        update = "sudo nixos-rebuild switch --flake ~/.dotfiles/nixos-flake";
+        update = "sudo nixos-rebuild switch --flake ~/.nixos#vostro";
         c = "clear";
         n = "nvim";
         vim = "nvim";

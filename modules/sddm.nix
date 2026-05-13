@@ -17,8 +17,8 @@
     [Desktop Entry]
     Name=Hyprland
     Comment=Tiling wayland compositor
-    Exec="Hyprland"
-    Type=Application"
+    Exec=Hyprland
+    Type=Application
     Keywords=wm;tiling
   '';
 
