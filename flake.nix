@@ -34,6 +34,29 @@
         inherit system;
         config.allowUnfree = true;
       };
+      homeManagerModule = {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.users.declan = {
+          imports = [
+            ./home-manager/home.nix
+            nixvim.homeModules.nixvim
+            worktrunk.homeModules.default
+          ];
+        };
+      };
+      mkHost = modules:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          pkgs = pkgsUnfree;
+          modules = [
+            { _module.args.pkgsCodex = pkgsCodex; }
+          ] ++ modules ++ [
+            inputs.stylix.nixosModules.stylix
+            home-manager.nixosModules.home-manager
+            homeManagerModule
+          ];
+        };
     in {
       templates = {
         dotnet-maui = {
@@ -43,52 +66,16 @@
       };
 
       nixosConfigurations = {
-        machine = nixpkgs.lib.nixosSystem {
-          inherit system;
-          pkgs = pkgsUnfree;
-          modules = [
-            { _module.args.pkgsCodex = pkgsCodex; }
-            ./misc/config.nix
-            ./modules/default.nix
-            ./server/default.nix
-            inputs.stylix.nixosModules.stylix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.declan = {
-                imports = [
-                  ./home-manager/home.nix
-                  nixvim.homeModules.nixvim
-                  worktrunk.homeModules.default
-                ];
-              };
-            }
-          ];
-        };
+        machine = mkHost [
+          ./misc/config.nix
+          ./modules/default.nix
+          ./server/default.nix
+        ];
 
-        vostro = nixpkgs.lib.nixosSystem {
-          inherit system;
-          pkgs = pkgsUnfree;
-          modules = [
-            { _module.args.pkgsCodex = pkgsCodex; }
+        vostro = mkHost [
             ./hosts/vostro/default.nix
             ./modules/default.nix
-            inputs.stylix.nixosModules.stylix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.declan = {
-                imports = [
-                  ./home-manager/home.nix
-                  nixvim.homeModules.nixvim
-                  worktrunk.homeModules.default
-                ];
-              };
-            }
-          ];
-        };
+        ];
       };
     };
 }
