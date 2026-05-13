@@ -3,9 +3,10 @@
 This template is for using MAUI Android workloads on NixOS while keeping the
 mutable .NET SDK workload packs inside the project directory.
 
-The Nix shell provides Android SDK tools, JDK 17, native libraries, and an FHS
-environment. `maui-bootstrap` installs a writable .NET SDK into `.dotnet/` and
-then installs the `maui-android` workload there.
+The default Nix shell provides Android SDK build tools, JDK 17, native
+libraries, and an FHS environment. It does not put Android or MAUI workloads in
+the host system closure. `maui-bootstrap` installs a writable .NET SDK into
+`.dotnet/` and then installs the `maui-android` workload there.
 
 ## Use
 
@@ -25,9 +26,18 @@ nix develop .#emulator
 Run `maui-doctor` inside `nix develop` to print the active SDK, workload,
 Android SDK, and Java state.
 
+Override the project-local SDK channel or workload when you need to test a new
+.NET release:
+
+```sh
+DOTNET_CHANNEL=10.0 MAUI_WORKLOAD=maui-android maui-bootstrap
+```
+
 ## Notes
 
 - Linux is not a MAUI desktop target. This template focuses on Android builds.
+- The emulator shell is intentionally separate because Android system images
+  are much heavier than the build toolchain.
 - The stock `dotnet new maui` template includes iOS/Mac Catalyst target
   frameworks. Use `maui-new-android` on NixOS unless you manually edit the
   project before restore.

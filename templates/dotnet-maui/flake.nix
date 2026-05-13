@@ -36,16 +36,19 @@
       mauiBootstrap = pkgs.writeShellScriptBin "maui-bootstrap" ''
         set -euo pipefail
 
+        channel="''${DOTNET_CHANNEL:-${dotnetChannel}}"
+        workload="''${MAUI_WORKLOAD:-maui-android}"
+
         mkdir -p "$PWD/.dotnet" "$PWD/.dotnet-home" "$PWD/.nuget/packages"
 
         if [ ! -x "$PWD/.dotnet/dotnet" ]; then
           tmp="$(mktemp -d)"
           trap 'rm -rf "$tmp"' EXIT
           ${pkgs.curl}/bin/curl -fsSL https://dot.net/v1/dotnet-install.sh -o "$tmp/dotnet-install.sh"
-          ${pkgs.bash}/bin/bash "$tmp/dotnet-install.sh" --channel ${dotnetChannel} --install-dir "$PWD/.dotnet"
+          ${pkgs.bash}/bin/bash "$tmp/dotnet-install.sh" --channel "$channel" --install-dir "$PWD/.dotnet"
         fi
 
-        "$PWD/.dotnet/dotnet" workload install maui-android
+        "$PWD/.dotnet/dotnet" workload install "$workload"
         "$PWD/.dotnet/dotnet" workload list
       '';
 
