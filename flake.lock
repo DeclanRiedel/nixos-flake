@@ -314,7 +314,8 @@
         "nixpkgs-codex": "nixpkgs-codex",
         "nixvim": "nixvim",
         "stylix": "stylix",
-        "worktrunk": "worktrunk"
+        "worktrunk": "worktrunk",
+        "zed-thread-tui": "zed-thread-tui"
       }
     },
     "rust-overlay": {
@@ -498,6 +499,26 @@
       "original": {
         "owner": "max-sixty",
         "repo": "worktrunk",
+        "type": "github"
+      }
+    },
+    "zed-thread-tui": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778668327,
+        "narHash": "sha256-Dalol4331/G416uquJAP4GlToUqZpV1Ie4xhY2v7nfo=",
+        "owner": "DeclanRiedel",
+        "repo": "zed-thread-tui",
+        "rev": "5594580b65ad6ecce17ebc8556b94b9b7552abdc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DeclanRiedel",
+        "repo": "zed-thread-tui",
         "type": "github"
       }
     }

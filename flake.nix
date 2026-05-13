@@ -15,6 +15,10 @@
       url = "github:max-sixty/worktrunk";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zed-thread-tui = {
+      url = "github:DeclanRiedel/zed-thread-tui";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, nixvim, nixpkgs-codex, worktrunk, ... }:
@@ -34,6 +38,7 @@
       homeManagerModule = {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
+        home-manager.extraSpecialArgs = { inherit inputs; };
         home-manager.users.declan = {
           imports = [
             ./home-manager/home.nix

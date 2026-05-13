@@ -1,6 +1,6 @@
                   {
                       // Choose the order of the modulesaround
-                      "modules-left": ["hyprland/workspaces"],
+                      "modules-left": ["hyprland/workspaces", "custom/zed-thread-runner"],
                       "modules-center": ["mpris", "custom/spacer", "hyprland/window"],
                       "modules-right": ["tray", "clock","idle_inhibitor", "custom/pacman","network", "backlight", "pulseaudio", "battery" ],
 
@@ -69,6 +69,16 @@
                           "format-alt": "{:%m-%d-%Y}",
                   	"format": "{:%I:%M %p}"
                       },
+
+"custom/zed-thread-runner": {
+  "return-type": "json",
+  "interval": 2,
+  "exec": "$HOME/.config/waybar/zed-thread-summary",
+  "on-click": "ghostty -e zed-thread-runner",
+  "on-click-right": "zed-thread-runner --stop-all",
+  "on-click-middle": "zed-thread-runner --list-slots",
+  "tooltip": true
+},
 
 "custom/spacer": { 
 "format": " "
