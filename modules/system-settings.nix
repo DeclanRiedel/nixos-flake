@@ -67,9 +67,8 @@
     autoUpgrade = {
       enable = true;
       operation = "boot";
-      flake = "/home/declan/.nixos";
+      flake = "github:DeclanRiedel/nixos-flake";
       dates = "weekly";
-      #channels?
     };
 
   };
