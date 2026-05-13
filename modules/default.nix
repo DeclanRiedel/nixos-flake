@@ -4,7 +4,7 @@
     ./user-settings.nix
     ./system-settings.nix
     ./fhs.nix
-    ./packages.nix
+    ./packages
     #./base-packages.nix
     #./extra-packages.nix
     ./legacy-packages.nix
