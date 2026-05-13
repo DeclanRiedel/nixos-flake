@@ -1,7 +1,7 @@
 { inputs, pkgs, ... }:
 
 let
-  zedThreadRunner = inputs.zed-thread-tui.packages.${pkgs.system}.default;
+  zedThreadRunner = inputs.zed-thread-tui.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 {
   home.packages = [ zedThreadRunner ];

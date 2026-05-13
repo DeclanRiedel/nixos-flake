@@ -1,7 +1,7 @@
 { inputs, lib, pkgs, ... }:
 
 let
-  zedThreadRunner = inputs.zed-thread-tui.packages.${pkgs.system}.default;
+  zedThreadRunner = inputs.zed-thread-tui.packages.${pkgs.stdenv.hostPlatform.system}.default;
   slotCount = 9;
   slots = lib.range 1 slotCount;
   action = "$HOME/.local/bin/zed-thread-leader-action";

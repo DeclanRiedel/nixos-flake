@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, inputs, pkgs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -7,6 +7,8 @@
   home.stateVersion = "24.05"; # dont touch !!!
 
   home.packages = with pkgs; [ fastfetch ];
+
+  gtk.gtk4.theme = config.gtk.theme;
 
   imports = [
     ./zsh.nix
@@ -67,6 +69,9 @@
   programs.worktrunk = {
     enable = true;
     enableZshIntegration = true;
+    package = inputs.worktrunk.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (_old: {
+      cargoArtifacts = null;
+    });
   };
 
   home.sessionVariables = {
