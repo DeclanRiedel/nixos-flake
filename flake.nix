@@ -54,7 +54,41 @@
             homeManagerModule
           ];
         };
-    in {
+    in
+    {
+      formatter.${system} = pkgsUnfree.nixpkgs-fmt;
+
+      checks.${system} = {
+        format = pkgsUnfree.runCommand "nixos-format-check"
+          {
+            nativeBuildInputs = [ pkgsUnfree.nixpkgs-fmt ];
+            src = self;
+          } ''
+          cp -r "$src" source
+          chmod -R u+w source
+          nixpkgs-fmt --check source
+          touch "$out"
+        '';
+
+        deadnix = pkgsUnfree.runCommand "nixos-deadnix-check"
+          {
+            nativeBuildInputs = [ pkgsUnfree.deadnix ];
+            src = self;
+          } ''
+          deadnix --fail "$src"
+          touch "$out"
+        '';
+
+        statix = pkgsUnfree.runCommand "nixos-statix-check"
+          {
+            nativeBuildInputs = [ pkgsUnfree.statix ];
+            src = self;
+          } ''
+          statix check --config "$src" "$src"
+          touch "$out"
+        '';
+      };
+
       templates = {
         dotnet-maui = {
           path = ./templates/dotnet-maui;
@@ -70,8 +104,8 @@
         ];
 
         vostro = mkHost [
-            ./hosts/vostro/default.nix
-            ./modules/default.nix
+          ./hosts/vostro/default.nix
+          ./modules/default.nix
         ];
       };
     };

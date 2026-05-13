@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+_:
 
 {
   # Enable the Nginx service.

@@ -1,4 +1,4 @@
-{ lib, nixpkgs, pkgs, ... }: {
+{ lib, ... }: {
 
   #systemd bootloader 
   boot.loader = {

@@ -4,7 +4,7 @@
     force = true;
   };
 
- home.file.".config/waybar/style.css" = {
+  home.file.".config/waybar/style.css" = {
     source = ../config/waybar/style.css;
     force = true;
   };

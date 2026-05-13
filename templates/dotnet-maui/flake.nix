@@ -128,7 +128,8 @@
           fi
         '';
       }).env;
-    in {
+    in
+    {
       devShells.${system} = {
         default = mkMauiShell "dotnet-maui-fhs" androidBuild;
         emulator = mkMauiShell "dotnet-maui-emulator-fhs" androidEmulator;

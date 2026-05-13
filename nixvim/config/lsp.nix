@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+_: {
 
   plugins = {
 
@@ -48,7 +48,7 @@
 
         cssls.enable = true;
         html.enable = true;
-        
+
         htmx.enable = false;
         cmake.enable = false;
         zls.enable = false;
