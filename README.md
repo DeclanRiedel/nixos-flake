@@ -1,5 +1,58 @@
 # My nixos flake. It will never die.
 
+## Daily commands
+
+Check the flake before switching:
+
+```sh
+nix flake check
+```
+
+Rebuild the current host from this checkout:
+
+```sh
+sudo nixos-rebuild switch --flake .#$(hostname)
+```
+
+Build the Vostro config without switching:
+
+```sh
+nix build .#nixosConfigurations.vostro.config.system.build.toplevel
+```
+
+Update inputs and commit the lockfile:
+
+```sh
+nix flake update
+nix flake check
+git add flake.lock
+git commit -m "chore: update flake inputs"
+```
+
+Format Nix files:
+
+```sh
+nix fmt
+```
+
+## MAUI template
+
+Create a new project from the reusable MAUI Android shell:
+
+```sh
+nix flake init -t github:DeclanRiedel/nixos-flake#dotnet-maui
+nix develop
+maui-bootstrap
+maui-new-android MyMauiApp
+dotnet build MyMauiApp/MyMauiApp.csproj -f net9.0-android
+```
+
+Use the heavier emulator shell only when emulator images are needed:
+
+```sh
+nix develop .#emulator
+```
+
 ## Structure breakdown
 config/ => sourced config files destination, called from home-manager/ 
 home-manager/ => call config files using home-manager
