@@ -11,7 +11,7 @@ Check the flake before switching:
 Rebuild the current host from this checkout:
 
 ```sh
-sudo nixos-rebuild switch --flake .#$(hostname)
+./scripts/switch.sh
 ```
 
 Build the Vostro config without switching:
@@ -20,7 +20,7 @@ Build the Vostro config without switching:
 nix build .#nixosConfigurations.vostro.config.system.build.toplevel
 ```
 
-Generate local password hash files used by `hashedPasswordFile`:
+Generate encrypted password hash secrets:
 
 ```sh
 ./scripts/generate-secret-passwords.sh

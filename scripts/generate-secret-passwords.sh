@@ -3,13 +3,22 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-secrets_dir="secrets/passwords"
+if ! command -v mkpasswd >/dev/null 2>&1 ||
+  ! command -v sops >/dev/null 2>&1 ||
+  ! command -v ssh-to-age >/dev/null 2>&1; then
+  exec nix shell nixpkgs#sops nixpkgs#ssh-to-age nixpkgs#whois -c "$0" "$@"
+fi
+
+secrets_dir="secrets"
+sops_file="$secrets_dir/default.yaml"
+host_ssh_pub="/etc/ssh/ssh_host_ed25519_key.pub"
+
 mkdir -p "$secrets_dir"
-chmod 700 secrets "$secrets_dir"
+chmod 700 "$secrets_dir"
 
 hash_password() {
   local user="$1"
-  local output="$secrets_dir/$user.hash"
+  local secret_name="$2"
   local password
   local confirm
 
@@ -32,21 +41,28 @@ hash_password() {
     break
   done
 
-  mkpasswd -m sha-512 "$password" > "$output"
-  chmod 600 "$output"
-  printf 'Wrote %s\n' "$output"
+  printf '%s: "%s"\n' "$secret_name" "$(printf '%s\n' "$password" | mkpasswd -m sha-512 -s)"
 }
 
-if ! command -v mkpasswd >/dev/null 2>&1; then
-  printf 'mkpasswd is required. On NixOS, run: nix shell nixpkgs#whois\n' >&2
+if [[ ! -f "$host_ssh_pub" ]]; then
+  printf 'Missing host SSH public key: %s\n' "$host_ssh_pub" >&2
   exit 1
 fi
 
-users=("$@")
-if [[ "${#users[@]}" -eq 0 ]]; then
-  users=(declan root)
+if [[ "$#" -ne 0 ]]; then
+  printf 'Usage: %s\n' "$0" >&2
+  exit 1
 fi
 
-for user in "${users[@]}"; do
-  hash_password "$user"
-done
+recipient="$(ssh-to-age -i "$host_ssh_pub")"
+plain="$(mktemp)"
+trap 'rm -f "$plain"' EXIT
+
+{
+  hash_password declan declan-password
+  hash_password root root-password
+} > "$plain"
+
+sops --encrypt --age "$recipient" --filename-override "$sops_file" "$plain" > "$sops_file"
+chmod 600 "$sops_file"
+printf 'Wrote encrypted secrets to %s\n' "$sops_file"
