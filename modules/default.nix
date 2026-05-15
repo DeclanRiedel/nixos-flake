@@ -5,8 +5,6 @@
     ./system-settings.nix
     ./fhs.nix
     ./packages
-    #./base-packages.nix
-    #./extra-packages.nix
     ./legacy-packages.nix
     ./fonts.nix
     ./rice.nix
@@ -15,5 +13,6 @@
     ./postgres-docker.nix
     ./stylix.nix
     ./tmux.nix
+    ./vpn.nix
   ];
 }
