@@ -34,6 +34,27 @@
       " set preview_images true \n set preview_images_method kitty "; # formatting matters
   };
 
+  programs.git = {
+    enable = true;
+    settings = {
+      user = {
+        name = "Declan Riedel";
+        email = "DeclanRiedel@users.noreply.github.com";
+      };
+      init.defaultBranch = "main";
+      pull.rebase = false;
+      push.autoSetupRemote = true;
+    };
+  };
+
+  programs.gh = {
+    enable = true;
+    settings = {
+      git_protocol = "ssh";
+      prompt = "enabled";
+    };
+  };
+
   ##bash 
   programs.bash = { enable = true; };
 
