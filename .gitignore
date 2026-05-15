@@ -5,5 +5,6 @@ server/src/portfolio/
 result
 result-*
 
-# local secrets read by activation/switch
-secrets/
+# local plaintext secret material
+secrets/*
+!secrets/*.yaml

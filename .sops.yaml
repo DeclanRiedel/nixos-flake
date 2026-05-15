@@ -1,0 +1,6 @@
+keys:
+  - &vostro age1e8py0g8rhflnf2t75suqenjmzvw0llg3agjgzmvzljcpz5fl8ycsxlu5r9
+
+creation_rules:
+  - path_regex: secrets/[^/]+\.yaml$
+    age: *vostro

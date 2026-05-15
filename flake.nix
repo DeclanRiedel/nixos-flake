@@ -5,6 +5,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:danth/stylix";
     nixvim = {
       url = "github:nix-community/nixvim";
@@ -21,7 +23,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, nixvim, nixpkgs-codex, worktrunk, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, sops-nix, nixvim, nixpkgs-codex, worktrunk, ... }:
     let
       system = "x86_64-linux";
       pkgsUnfree = import nixpkgs {
@@ -54,6 +56,7 @@
           modules = [
             { _module.args.pkgsCodex = pkgsCodex; }
           ] ++ modules ++ [
+            sops-nix.nixosModules.sops
             inputs.stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             homeManagerModule
