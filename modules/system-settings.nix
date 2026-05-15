@@ -19,12 +19,10 @@
     enable = true;
     settings = {
       PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
       X11Forwarding = true;
       PermitRootLogin = "no";
     };
-    extraConfig = ''
-      PermitRootLogin yes
-    '';
   };
 
   ## bluetooth
@@ -56,20 +54,6 @@
 
   ## touchpad support? hyprland does it already?
   services.libinput.enable = true;
-
-  services.logind.settings.Login = {
-    HandleLidSwitch = "ignore";
-    HandleLidSwitchExternalPower = "ignore";
-    HandleLidSwitchDocked = "ignore";
-    IdleAction = "ignore";
-  };
-
-  systemd.targets = {
-    sleep.enable = false;
-    suspend.enable = false;
-    hibernate.enable = false;
-    hybrid-sleep.enable = false;
-  };
 
   nix.gc = {
     automatic = true;

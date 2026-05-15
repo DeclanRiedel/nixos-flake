@@ -13,6 +13,5 @@
     ./postgres-docker.nix
     ./stylix.nix
     ./tmux.nix
-    ./vpn.nix
   ];
 }

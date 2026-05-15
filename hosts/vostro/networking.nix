@@ -10,6 +10,8 @@
     dumpcap.enable = true;
   };
 
+  users.users.declan.extraGroups = [ "wireshark" ];
+
   environment.systemPackages = with pkgs; [
     wireguard-tools
     openvpn
