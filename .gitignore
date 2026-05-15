@@ -5,3 +5,5 @@ server/src/portfolio/
 result
 result-*
 
+# local secrets read by activation/switch
+secrets/

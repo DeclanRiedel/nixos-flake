@@ -5,7 +5,7 @@
 Check the flake before switching:
 
 ```sh
-nix flake check
+./scripts/check.sh
 ```
 
 Rebuild the current host from this checkout:
@@ -18,6 +18,12 @@ Build the Vostro config without switching:
 
 ```sh
 nix build .#nixosConfigurations.vostro.config.system.build.toplevel
+```
+
+Generate local password hash files used by `hashedPasswordFile`:
+
+```sh
+./scripts/generate-secret-passwords.sh
 ```
 
 Update inputs and commit the lockfile:

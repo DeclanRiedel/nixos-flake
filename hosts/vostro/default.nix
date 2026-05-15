@@ -8,15 +8,14 @@
   networking.hostName = lib.mkForce "vostro";
 
   users.users.declan = {
-    hashedPassword =
-      "$6$EzXJslYBXtQdQTaM$bFTRUVkaBwvFoENgMsRH54UgvYCwiEJiskSL5UgNFMx/Q12GnRxDHJjZ0e9PbrpGELscaNVg.Ppp86zCvO9e20";
+    hashedPasswordFile = "/home/declan/.nixos/secrets/passwords/declan.hash";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM6L3iyvr7PKLMkieNUsDVuywKC3xP12uobeMo5L8chv declan@declan-NucBox-K7-PLUS"
     ];
   };
 
   users.users.root = {
-    initialPassword = "asdf";
+    hashedPasswordFile = "/home/declan/.nixos/secrets/passwords/root.hash";
     shell = pkgs.zsh;
   };
   services.openssh.settings.PasswordAuthentication = lib.mkForce true;
