@@ -41,9 +41,30 @@ Format Nix files:
 nix fmt
 ```
 
-## MAUI template
+## Flake templates
 
-Create a new project from the reusable MAUI Android shell:
+This repo also exposes editable project templates:
+
+| Template | Use |
+| --- | --- |
+| `c-cpp` | C/C++ with GCC, Clang tools, CMake, Ninja, pkg-config, GDB, and Valgrind |
+| `dotnet` | .NET console, library, test, and F#-friendly SDK work |
+| `dotnet-android` | Android-only .NET workload projects on NixOS |
+| `dotnet-maui` | MAUI Android builds on NixOS with writable project-local workloads |
+| `dotnet-web` | ASP.NET Core/API work with project-local CLI/NuGet state |
+| `go` | Go with gopls, gotools, golangci-lint, and Delve |
+| `node` | Node.js with pnpm, yarn, bun, TypeScript, eslint, and prettier |
+| `python` | Python with uv, ruff, pyright, pytest, and project `.venv` defaults |
+| `rust` | Rust with cargo, rustfmt, clippy, rust-analyzer, bacon, and nextest |
+
+Create a project from any template:
+
+```sh
+nix flake init -t github:DeclanRiedel/nixos-flake#dotnet
+nix flake new -t github:DeclanRiedel/nixos-flake#rust ./my-rust-app
+```
+
+Create a new MAUI Android project from the reusable shell:
 
 ```sh
 nix flake init -t github:DeclanRiedel/nixos-flake#dotnet-maui
@@ -57,6 +78,12 @@ Use the heavier emulator shell only when emulator images are needed:
 
 ```sh
 nix develop .#emulator
+```
+
+Run a full MAUI Android workload smoke test from inside that shell:
+
+```sh
+maui-smoke-test
 ```
 
 ## Structure breakdown

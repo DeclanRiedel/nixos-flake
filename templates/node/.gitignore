@@ -1,0 +1,6 @@
+.direnv/
+.npm/
+.pnpm-store/
+node_modules/
+dist/
+coverage/

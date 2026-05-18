@@ -40,6 +40,7 @@
       homeManagerModule = {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
+        home-manager.backupFileExtension = "backup";
         home-manager.extraSpecialArgs = { inherit inputs; };
         home-manager.users.declan = {
           imports = [
@@ -98,9 +99,49 @@
       };
 
       templates = {
+        c-cpp = {
+          path = ./templates/c-cpp;
+          description = "C/C++ dev shell with GCC, Clang tools, CMake, Ninja, pkg-config, GDB, and Valgrind";
+        };
+
+        dotnet = {
+          path = ./templates/dotnet;
+          description = ".NET SDK dev shell for console, library, test, and F# workflows";
+        };
+
+        dotnet-android = {
+          path = ./templates/dotnet-android;
+          description = "NixOS .NET Android dev shell with project-local writable .NET workloads";
+        };
+
         dotnet-maui = {
           path = ./templates/dotnet-maui;
           description = "NixOS .NET MAUI dev shell with project-local writable .NET workloads";
+        };
+
+        dotnet-web = {
+          path = ./templates/dotnet-web;
+          description = ".NET ASP.NET Core dev shell with HTTPS dev-cert helpers and EF tooling path";
+        };
+
+        go = {
+          path = ./templates/go;
+          description = "Go dev shell with gopls, gotools, golangci-lint, and Delve";
+        };
+
+        node = {
+          path = ./templates/node;
+          description = "Node.js dev shell with pnpm, yarn, bun, TypeScript, and common JS tooling";
+        };
+
+        python = {
+          path = ./templates/python;
+          description = "Python dev shell with uv, ruff, pyright, pytest, and virtualenv defaults";
+        };
+
+        rust = {
+          path = ./templates/rust;
+          description = "Rust dev shell with cargo, rustfmt, clippy, rust-analyzer, bacon, and cargo-nextest";
         };
       };
 

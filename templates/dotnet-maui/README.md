@@ -26,6 +26,23 @@ nix develop .#emulator
 Run `maui-doctor` inside `nix develop` to print the active SDK, workload,
 Android SDK, and Java state.
 
+Run a full temporary project build when you want to prove the workload is
+usable:
+
+```sh
+maui-smoke-test
+```
+
+You can also run commands through the FHS environment without entering an
+interactive shell:
+
+```sh
+nix run .# -- -c 'maui-doctor'
+```
+
+The smoke test calls `maui-bootstrap`, creates a temporary MAUI project, rewrites
+it to `net9.0-android`, and builds it.
+
 Override the project-local SDK channel or workload when you need to test a new
 .NET release:
 

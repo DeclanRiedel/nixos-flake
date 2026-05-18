@@ -90,7 +90,21 @@
         echo "Created Android-only MAUI project: $project"
         echo "Build with: dotnet build $project -f net9.0-android"
       '';
-      mkMauiShell = name: android: (pkgs.buildFHSEnv {
+
+      mauiSmokeTest = pkgs.writeShellScriptBin "maui-smoke-test" ''
+        set -euo pipefail
+
+        maui-bootstrap
+        workdir="$(mktemp -d -p "$PWD" maui-smoke.XXXXXX)"
+        trap 'rm -rf "$workdir"' EXIT
+
+        dotnet new maui -n SmokeMaui -o "$workdir/SmokeMaui" --no-restore
+        project="$workdir/SmokeMaui/SmokeMaui.csproj"
+        sed -i -E 's#<TargetFrameworks>[^<]+</TargetFrameworks>#<TargetFrameworks>net9.0-android</TargetFrameworks>#' "$project"
+        dotnet build "$project" -f net9.0-android
+      '';
+
+      mkMauiEnv = name: android: pkgs.buildFHSEnv {
         inherit name;
 
         targetPkgs = pkgs: with pkgs; [
@@ -108,6 +122,7 @@
           mauiBootstrap
           mauiDoctor
           mauiNewAndroid
+          mauiSmokeTest
         ];
 
         runScript = "bash";
@@ -130,12 +145,20 @@
             echo "Run 'maui-bootstrap' once to install a writable project-local .NET ${dotnetMajor} SDK and MAUI Android workload."
           fi
         '';
-      }).env;
+      };
+
+      mauiBuildEnv = mkMauiEnv "dotnet-maui-fhs" androidBuild;
+      mauiEmulatorEnv = mkMauiEnv "dotnet-maui-emulator-fhs" androidEmulator;
     in
     {
+      packages.${system} = {
+        default = mauiBuildEnv;
+        emulator = mauiEmulatorEnv;
+      };
+
       devShells.${system} = {
-        default = mkMauiShell "dotnet-maui-fhs" androidBuild;
-        emulator = mkMauiShell "dotnet-maui-emulator-fhs" androidEmulator;
+        default = mauiBuildEnv.env;
+        emulator = mauiEmulatorEnv.env;
       };
     };
 }

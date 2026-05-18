@@ -1,0 +1,4 @@
+.direnv/
+.go/
+bin/
+coverage.out
