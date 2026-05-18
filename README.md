@@ -53,7 +53,9 @@ This repo also exposes editable project templates:
 | `dotnet-maui` | MAUI Android builds on NixOS with writable project-local workloads |
 | `dotnet-web` | ASP.NET Core/API work with project-local CLI/NuGet state |
 | `go` | Go with gopls, gotools, golangci-lint, and Delve |
+| `latex` | LaTeX with TeX Live, latexmk, chktex, and PDF build helpers |
 | `node` | Node.js with pnpm, yarn, bun, TypeScript, eslint, and prettier |
+| `postgres` | PostgreSQL with project-local database state and helper scripts |
 | `python` | Python with uv, ruff, pyright, pytest, and project `.venv` defaults |
 | `rust` | Rust with cargo, rustfmt, clippy, rust-analyzer, bacon, and nextest |
 
@@ -62,6 +64,13 @@ Create a project from any template:
 ```sh
 nix flake init -t github:DeclanRiedel/nixos-flake#dotnet
 nix flake new -t github:DeclanRiedel/nixos-flake#rust ./my-rust-app
+```
+
+List and create templates from this checkout:
+
+```sh
+./scripts/new-dev-template.sh --list
+./scripts/new-dev-template.sh dotnet-web ./my-api
 ```
 
 Create a new MAUI Android project from the reusable shell:
@@ -84,6 +93,12 @@ Run a full MAUI Android workload smoke test from inside that shell:
 
 ```sh
 maui-smoke-test
+```
+
+Run the heavier MAUI template smoke test from this checkout:
+
+```sh
+./scripts/test-maui-template.sh
 ```
 
 ## Structure breakdown

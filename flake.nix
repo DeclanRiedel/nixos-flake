@@ -134,6 +134,11 @@
           description = "Node.js dev shell with pnpm, yarn, bun, TypeScript, and common JS tooling";
         };
 
+        postgres = {
+          path = ./templates/postgres;
+          description = "PostgreSQL dev shell with project-local database state and helper scripts";
+        };
+
         python = {
           path = ./templates/python;
           description = "Python dev shell with uv, ruff, pyright, pytest, and virtualenv defaults";
@@ -142,6 +147,11 @@
         rust = {
           path = ./templates/rust;
           description = "Rust dev shell with cargo, rustfmt, clippy, rust-analyzer, bacon, and cargo-nextest";
+        };
+
+        latex = {
+          path = ./templates/latex;
+          description = "LaTeX dev shell with TeX Live, latexmk, chktex, and document build helpers";
         };
       };
 
