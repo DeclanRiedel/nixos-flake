@@ -1,9 +1,33 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+
+let
+  tmuxStart = pkgs.writeShellScript "tmux-start" ''
+    set -euo pipefail
+
+    mkdir -p "$HOME/.local/state/tmux/resurrect"
+
+    if ! ${pkgs.tmux}/bin/tmux has-session 2>/dev/null; then
+      ${pkgs.tmux}/bin/tmux new-session -d -s main
+    fi
+  '';
+
+  tmuxSave = pkgs.writeShellScript "tmux-save" ''
+    set -euo pipefail
+
+    if ${pkgs.tmux}/bin/tmux has-session 2>/dev/null; then
+      ${pkgs.tmux}/bin/tmux run-shell "${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts/save.sh quiet"
+    fi
+  '';
+in
+{
   programs.tmux = {
     enable = true;
-    shortcut = "a";
+    shortcut = "b";
     keyMode = "vi";
-    plugins = [ pkgs.tmuxPlugins.resurrect pkgs.tmuxPlugins.continuum ];
+    plugins = with pkgs.tmuxPlugins; [
+      resurrect
+      continuum
+    ];
 
     extraConfig = ''
       #reference https://hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/
@@ -29,9 +53,18 @@
       # Shorter delay when switching panes
       set -sg escape-time 10
 
-      # --- Plugins ---
-      # Automatically restore sessions on tmux start
+      # --- Persistence ---
+      # tmux-continuum saves through the status-right hook, so keep status enabled.
+      set -g status on
+      set -g @continuum-save-interval '5'
       set -g @continuum-restore 'on'
+
+      # tmux-resurrect stores all sessions, windows, panes, layouts, and cwd.
+      set -g @resurrect-dir '$HOME/.local/state/tmux/resurrect'
+      set -g @resurrect-capture-pane-contents 'on'
+      set -g @resurrect-strategy-vim 'session'
+      set -g @resurrect-strategy-nvim 'session'
+      set -g @resurrect-processes 'ssh mosh-client lazygit yazi ranger btop htop psql sqlite3'
 
       ### rice section
       set -g visual-activity off
@@ -41,6 +74,18 @@
       set -g bell-action none
     '';
 
+  };
+
+  systemd.user.services.tmux = {
+    description = "Start tmux server for automatic session restore";
+    wantedBy = [ "default.target" ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = tmuxStart;
+      ExecStop = tmuxSave;
+    };
   };
 }
 
