@@ -2,7 +2,7 @@
   users.users.declan = {
     isNormalUser = true;
     home = "/home/declan";
-    extraGroups = [ "wheel" "networkmanager" "audio" "video" "input" "docker" ];
+    extraGroups = [ "wheel" "networkmanager" "audio" "video" "input" "render" "seat" "docker" ];
     uid = 1000;
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB36tS6T6hOQ+PlarOlfrF2uwbsSMD9EOBr5KpUo5Bay declan.riedel@protonmail.com" ];

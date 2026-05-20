@@ -1,146 +1,177 @@
-    @import "mocha.css";
-     * {
-        font-family: Iosevka Nerd Font;
-        font-weight: bold;
-        font-size: 14px;
-        min-height: 0;
-        padding: 0;
-        margin: 0;
-        border-radius: 0;
-      }
+@import "mocha.css";
 
-
-  window#waybar {
-background-color: rgba(30, 30, 46, 0);
-transition-property: background-color;
-transition-duration: 0.5s;
+* {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  font-family: Iosevka Nerd Font, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+  min-height: 0;
+  padding: 0;
 }
 
+window#waybar {
+  background-color: rgba(20, 22, 32, 0.56);
+  border-bottom: 1px solid rgba(169, 177, 214, 0.10);
+  color: @text;
+  transition-duration: 180ms;
+  transition-property: background-color, border-color;
+}
 
-      #workspaces {
-        border-radius: 0.75rem;
-        margin: 5px;
-        background-color: rgba(36, 40, 59, 0.7);
-        margin-left: 0.25rem;
-      }
+window#waybar.empty {
+  background-color: rgba(20, 22, 32, 0.42);
+}
 
-      #workspaces button {
-        min-width: 2em;
-        color: @text;
-        border-radius: 0.75rem;
-      }
+tooltip {
+  background-color: rgba(26, 27, 38, 0.96);
+  border: 1px solid rgba(169, 177, 214, 0.16);
+  border-radius: 8px;
+  color: @text;
+  padding: 8px 10px;
+}
 
-      #workspaces button.active {
-        background-color: @rosewater;
-        margin: 2px 2px;
-        color: @base;
-      }
+tooltip label {
+  color: @text;
+}
 
-      #workspaces button.urgent {
-        color: @red;
-      }
+#workspaces,
+#custom-zed-thread-runner,
+#mpris,
+#window,
+#tray,
+#clock,
+#idle_inhibitor,
+#custom-pacman,
+#network,
+#backlight,
+#pulseaudio,
+#battery {
+  background-color: rgba(36, 40, 59, 0.58);
+  border: 1px solid rgba(169, 177, 214, 0.10);
+  border-radius: 999px;
+  margin: 5px 3px;
+  padding: 0 10px;
+}
 
-      #window,
-      #mpris,
-      #tray,
-      #language,
-      #network,
-      #custom-media,
-      #backlight,
-      #clock,
-      #idle_inhibitor,
-      #battery,
-      #custom-pacman,
-      #pulseaudio {
-        background-color: rgba(36, 40, 59, 0.7);
-        margin: 5px 0;
-        padding: 0rem 0.75rem 0rem;
-      }
-      #backlight {
-        color: @red;
-      }
+#workspaces {
+  margin-left: 8px;
+  padding: 0 4px;
+}
 
-      #custom-media {
-        background-color: rgba(158, 206, 106, 0.7);
-        color: @base;
-        border-radius: 1rem;
-        margin-left: 4rem;
-      }
+#workspaces button {
+  background-color: transparent;
+  border-radius: 999px;
+  color: @overlay2;
+  margin: 3px 0;
+  min-width: 24px;
+  padding: 0 2px;
+  transition-duration: 140ms;
+  transition-property: background-color, color;
+}
 
-      #window {
-        color: @mauve;
-        border-radius: 1rem;
-      }
+#workspaces button:hover {
+  background-color: rgba(169, 177, 214, 0.10);
+  color: @text;
+}
 
-      #mpris {
-      color: @mauve;
-      border-radius: 1rem;
-      }
+#workspaces button.active {
+  background-color: rgba(169, 177, 214, 0.18);
+  color: @text;
+}
 
-      window#waybar.empty #window {
-        background-color: transparent;
-      }
-      #language {
-        color: @yellow;
-      }
-
-      #clock {
-        color: @peach;
-        border-radius: 1rem 0px 0px 1rem;
-        margin-left: 1rem;
-      }
-
-      #custom-pacman {
-        color: @teal;
-      }
-
-      #network {
-        color: @teal;
-      }
-
-      #idle_inhibitor {
-      color: @red;
-      }
-
-      #battery.warning:not(.charging) {
-        color: @red;
-      }
-
-      #pulseaudio {
-        color: @yellow;
-      }
-
-      #battery {
-        color: @green;
-        border-radius: 0px 1rem 1rem 0px;
-        margin-right: 0.25rem;
-      }
-
-      #tray {
-        border-radius: 1rem;
-      }
+#workspaces button.urgent {
+  background-color: rgba(247, 118, 142, 0.18);
+  color: @red;
+}
 
 #custom-zed-thread-runner {
-  background-color: rgba(36, 40, 59, 0.7);
+  background-color: rgba(42, 48, 70, 0.84);
+  border-color: rgba(125, 207, 255, 0.22);
   color: @sky;
-  border-radius: 1rem;
-  margin: 5px 0 5px 0.25rem;
-  padding: 0rem 0.75rem 0rem;
+  margin-left: 3px;
+  min-width: 76px;
 }
 
 #custom-zed-thread-runner.running {
+  background-color: rgba(63, 89, 71, 0.74);
+  border-color: rgba(158, 206, 106, 0.28);
   color: @green;
 }
 
 #custom-zed-thread-runner.ssh {
+  border-color: rgba(122, 162, 247, 0.32);
   color: @blue;
 }
 
 #custom-zed-thread-runner.stale {
+  background-color: rgba(91, 48, 60, 0.74);
+  border-color: rgba(247, 118, 142, 0.28);
   color: @red;
 }
 
 #custom-zed-thread-runner.leader {
-  background-color: rgba(137, 180, 250, 0.22);
-  color: @peach;
+  background-color: rgba(79, 67, 94, 0.82);
+  border-color: rgba(224, 175, 104, 0.36);
+  color: @yellow;
+}
+
+#mpris,
+#window {
+  color: @subtext0;
+  padding: 0 12px;
+}
+
+#window {
+  background-color: rgba(36, 40, 59, 0.38);
+  color: @overlay2;
+  min-width: 80px;
+}
+
+window#waybar.empty #window {
+  background-color: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+#tray {
+  padding: 0 8px;
+}
+
+#clock {
+  color: @text;
+  font-weight: 700;
+  margin-left: 8px;
+}
+
+#idle_inhibitor,
+#custom-pacman,
+#network,
+#backlight,
+#pulseaudio,
+#battery {
+  color: @subtext0;
+}
+
+#idle_inhibitor.activated {
+  color: @yellow;
+}
+
+#custom-pacman {
+  color: @teal;
+}
+
+#network.disconnected {
+  color: @red;
+}
+
+#battery.warning:not(.charging) {
+  background-color: rgba(91, 48, 60, 0.74);
+  border-color: rgba(247, 118, 142, 0.28);
+  color: @red;
+}
+
+#battery {
+  margin-right: 8px;
 }

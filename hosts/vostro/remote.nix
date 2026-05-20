@@ -1,6 +1,8 @@
 {
   boot.kernelModules = [ "uinput" ];
 
+  services.seatd.enable = true;
+
   services.udev.extraRules = ''
     KERNEL=="uinput", GROUP="input", MODE="0660", OPTIONS+="static_node=uinput"
   '';
@@ -10,7 +12,7 @@
     openFirewall = true;
     capSysAdmin = true;
     settings = {
-      capture = "kms";
+      capture = "wlr";
     };
   };
 }
