@@ -7,6 +7,8 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL";
+    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:danth/stylix";
     nixvim = {
       url = "github:nix-community/nixvim";
@@ -121,7 +123,7 @@
 
         dotnet-web = {
           path = ./templates/dotnet-web;
-          description = ".NET ASP.NET Core dev shell with HTTPS dev-cert helpers and EF tooling path";
+          description = ".NET ASP.NET Core/API work with HTTPS dev-cert helpers and EF tooling path";
         };
 
         go = {
@@ -165,6 +167,11 @@
         vostro = mkHost [
           ./hosts/vostro/default.nix
           ./modules/default.nix
+        ];
+
+        nixos-vm = mkHost [
+          inputs.nixos-wsl.nixosModules.default
+          ./hosts/nixos-vm/default.nix
         ];
       };
     };
