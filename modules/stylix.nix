@@ -22,8 +22,7 @@
 
   };
 
-  stylix.image =
-    ../wall/sddm-wall.jpg; # i still don't know why this sets the sddm wall
+  stylix.image = ../wall/sddm-macos-style.png;
 
   stylix.targets = {
     nixvim.enable = false;
