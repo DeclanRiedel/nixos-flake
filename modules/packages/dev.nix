@@ -2,6 +2,7 @@
 
 let
   opencodeLatest = import ../../pkgs/opencode-latest.nix { inherit lib pkgs; };
+  prince = pkgs.callPackage ../../pkgs/prince.nix { };
 in
 {
   environment.sessionVariables = {
@@ -13,6 +14,7 @@ in
     gemini-cli
     pkgsCodex.codex
     opencodeLatest
+    prince
 
     lazygit
     diff-so-fancy
