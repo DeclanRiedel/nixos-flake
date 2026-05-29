@@ -25,53 +25,65 @@ in
     shortcut = "b";
     keyMode = "vi";
     plugins = with pkgs.tmuxPlugins; [
+      sensible
+      yank
+      vim-tmux-navigator
       resurrect
       continuum
     ];
 
     extraConfig = ''
-      #reference https://hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/
+        set -g base-index 1
+        setw -g pane-base-index 1
+        set-option -g renumber-windows on
+        set-option -g allow-rename off
 
-      # split panes using | and -
-      bind | split-window -h
-      bind - split-window -v
-      unbind '"'
-      unbind %
+        bind | split-window -h -c "#{pane_current_path}"
+        bind - split-window -v -c "#{pane_current_path}"
+        bind c new-window -c "#{pane_current_path}"
+        unbind '"'
+        unbind %
 
-      # switch panes using Alt-arrow without prefix
-      bind -n M-Left select-pane -L
-      bind -n M-Right select-pane -R
-      bind -n M-Up select-pane -U
-      bind -n M-Down select-pane -D
+        bind -n M-Left select-pane -L
+        bind -n M-Right select-pane -R
+        bind -n M-Up select-pane -U
+        bind -n M-Down select-pane -D
 
-      # don't rename windows automatically
-      set-option -g allow-rename off
+        set -g mouse on
+        set -sg escape-time 10
 
-      # Enable mouse support
-      set -g mouse on
+        set -g status on
+        set -g @continuum-save-interval '5'
+        set -g @continuum-restore 'on'
+        set -g @resurrect-dir '$HOME/.local/state/tmux/resurrect'
+        set -g @resurrect-capture-pane-contents 'on'
+        set -g @resurrect-strategy-vim 'session'
+        set -g @resurrect-strategy-nvim 'session'
+        set -g @resurrect-processes 'ssh mosh-client lazygit yazi ranger btop htop psql sqlite3'
 
-      # Shorter delay when switching panes
-      set -sg escape-time 10
+        set -g visual-activity off
+        set -g visual-bell off
+        set -g visual-silence off
+        setw -g monitor-activity off
+        set -g bell-action none
 
-      # --- Persistence ---
-      # tmux-continuum saves through the status-right hook, so keep status enabled.
-      set -g status on
-      set -g @continuum-save-interval '5'
-      set -g @continuum-restore 'on'
+        set -g status-interval 5
+        set -g status-position bottom
+        set -g status-style 'bg=#050505,fg=#bbbbbb'
+        set -g status-left-length 48
+        set -g status-right-length 120
+        set -g status-left '#[bg=#33ffff,fg=#000000,bold] #S #[bg=#151515,fg=#33ffff]#[bg=#151515,fg=#dddddd] #{pane_current_command} '
+        set -g status-right '#[fg=#777777]#{pane_current_path} #[fg=#ff6666]#(git -C "#{pane_current_path}" branch --show-current 2>/dev/null) #[fg=#33aaff]%H:%M '
 
-      # tmux-resurrect stores all sessions, windows, panes, layouts, and cwd.
-      set -g @resurrect-dir '$HOME/.local/state/tmux/resurrect'
-      set -g @resurrect-capture-pane-contents 'on'
-      set -g @resurrect-strategy-vim 'session'
-      set -g @resurrect-strategy-nvim 'session'
-      set -g @resurrect-processes 'ssh mosh-client lazygit yazi ranger btop htop psql sqlite3'
+        setw -g window-status-separator ""
+        setw -g window-status-format '#[bg=#050505,fg=#777777] #I:#W '
+        setw -g window-status-current-format '#[bg=#ffaa33,fg=#000000,bold] #I:#W '
+        setw -g window-status-activity-style 'bg=#050505,fg=#ff6666,bold'
 
-      ### rice section
-      set -g visual-activity off
-      set -g visual-bell off
-      set -g visual-silence off
-      setw -g monitor-activity off
-      set -g bell-action none
+      set -g pane-border-style 'fg=#333333'
+      set -g pane-active-border-style 'fg=#33ffff'
+      set -g message-style 'bg=#151515,fg=#33ffff'
+      set -g mode-style 'bg=#33ffff,fg=#000000,bold'
     '';
 
   };
@@ -88,58 +100,3 @@ in
     };
   };
 }
-
-#
-# ==============================================================================
-# TMUX CHEATSHEET & PERSISTENCE GUIDE
-# ==============================================================================
-#
-# Your tmux configuration is set up to automatically save your sessions
-# and restore them when you reboot or restart tmux. This is handled by
-# the 'tmux-continuum' plugin, which works with 'tmux-resurrect'.
-#
-# ------------------------------------------------------------------------------
-# KEYBINDINGS (Prefix: Ctrl-b)
-# ------------------------------------------------------------------------------
-#
-# The "prefix" is the first key combination you press before a command.
-# Your Prefix: Ctrl-b (default)
-#
-# Panes (Splits):
-#   - `|`                : Split pane vertically.
-#   - `-`                : Split pane horizontally.
-#   - Alt + Arrow Keys   : Navigate between panes without the prefix.
-#   - `prefix` + x       : Kill the current pane.
-#
-# Windows (Tabs):
-#   - `prefix` + c       : Create a new window.
-#   - `prefix` + n       : Go to the next window.
-#   - `prefix` + p       : Go to the previous window.
-#   - `prefix` + [0-9]   : Go to window number [0-9].
-#   - `prefix` + ,       : Rename the current window.
-#
-# Sessions:
-#   - `tmux ls`          : (In your shell) List all running tmux sessions.
-#   - `tmux a -t [name]` : (In your shell) Attach to a named session.
-#   - `prefix` + d       : Detach from the current session (it keeps running).
-#   - `prefix` + s       : Interactively list and switch between sessions.
-#
-# ------------------------------------------------------------------------------
-# SESSION PERSISTENCE (Automatic)
-# ------------------------------------------------------------------------------
-#
-# This setup uses `tmux-resurrect` and `tmux-continuum` for persistence.
-#
-# - Automatic Saving: `tmux-continuum` saves your sessions every 15 minutes by default.
-# - Automatic Restoring: When you start tmux for the first time after a
-#   reboot, `tmux-continuum` automatically restores your last saved session.
-#
-# You don't need to do anything manually. Just create your sessions, windows,
-# and panes, and they will be there the next time you start tmux.
-#
-# To force a save (e.g., before a reboot):
-#   - `prefix` + Ctrl-s
-#
-# To force a restore (if it doesn't happen automatically):
-#   - `prefix` + Ctrl-r
-#
