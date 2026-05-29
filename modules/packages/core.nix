@@ -5,7 +5,6 @@
     neovim
     ghostty
     ranger
-    zathura
     brightnessctl
     fuzzel
     nh

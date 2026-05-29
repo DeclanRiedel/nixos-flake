@@ -23,6 +23,7 @@
     ./ghostty.nix
     ./zed.nix
     ./floorp.nix
+    ./zathura.nix
   ];
 
   systemd.user.services.mpris-proxy = {
