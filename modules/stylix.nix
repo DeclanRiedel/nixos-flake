@@ -26,7 +26,6 @@
 
   stylix.targets = {
     nixvim.enable = false;
-    regreet.enable = false;
     #ghostty.enable = false;
     #dunst.enable = false;
   };

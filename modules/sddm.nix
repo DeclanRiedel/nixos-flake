@@ -2,6 +2,7 @@
 
 {
   environment.systemPackages = [
+    # Chili login theme: https://store.kde.org/p/1214121
     (pkgs.sddm-chili-theme.override {
       themeConfig = {
         ScreenWidth = 1920;
@@ -9,7 +10,7 @@
         blur = true;
         recursiveBlurLoops = 4;
         recursiveBlurRadius = 12;
-        background = ../wall/sddm-macos-style.png;
+        background = ../wall/sddm-wall.jpg;
         PasswordFieldOutlined = true;
         AvatarPixelSize = 148;
         FontPointSize = 16;
