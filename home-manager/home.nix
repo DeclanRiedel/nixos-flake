@@ -24,6 +24,8 @@
     ./zed.nix
     ./floorp.nix
     ./zathura.nix
+    ./ranger.nix
+    ./yazi.nix
   ];
 
   systemd.user.services.mpris-proxy = {
@@ -31,12 +33,6 @@
     Unit.After = [ "network.target" "sound.target" ];
     Service.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
     Install.WantedBy = [ "default.target" ];
-  };
-
-  programs.ranger = {
-    enable = true;
-    extraConfig =
-      " set preview_images true \n set preview_images_method kitty ";
   };
 
   programs.git = {
@@ -68,6 +64,8 @@
     enableCompletion = true;
     shellAliases = {
       codex = "codex --yolo";
+      ranger = "y";
+      yazi = "y";
     };
   };
 

@@ -4,7 +4,6 @@
   environment.systemPackages = with pkgs; [
     neovim
     ghostty
-    ranger
     brightnessctl
     fuzzel
     nh
