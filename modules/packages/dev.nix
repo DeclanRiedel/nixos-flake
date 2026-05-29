@@ -26,6 +26,7 @@ in
     just
 
     vscode-fhs
+    zed-editor
     dotnet-sdk_9
     jdk17
 

@@ -1,12 +1,14 @@
 { config, inputs, pkgs, ... }:
 
 {
-  # Home Manager needs a bit of information about you and the paths it should
   home.username = "declan";
   home.homeDirectory = "/home/declan";
-  home.stateVersion = "24.05"; # dont touch !!!
+  home.stateVersion = "24.05";
 
-  home.packages = with pkgs; [ fastfetch ];
+  home.packages = [
+    pkgs.fastfetch
+    inputs.zed-thread-tui.packages.${pkgs.stdenv.hostPlatform.system}.default
+  ];
 
   gtk.gtk4.theme = config.gtk.theme;
 
@@ -19,6 +21,8 @@
     ./waybar.nix
     ./fuzzel.nix
     ./ghostty.nix
+    ./zed.nix
+    ./floorp.nix
   ];
 
   systemd.user.services.mpris-proxy = {
@@ -26,12 +30,12 @@
     Unit.After = [ "network.target" "sound.target" ];
     Service.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
     Install.WantedBy = [ "default.target" ];
-  }; # blueooth audio buttons
+  };
 
   programs.ranger = {
     enable = true;
     extraConfig =
-      " set preview_images true \n set preview_images_method kitty "; # formatting matters
+      " set preview_images true \n set preview_images_method kitty ";
   };
 
   programs.git = {
@@ -39,7 +43,7 @@
     settings = {
       user = {
         name = "Declan Riedel";
-        email = "DeclanRiedel@users.noreply.github.com";
+        email = "declan.riedel@protonmail.com";
       };
       init.defaultBranch = "main";
       pull.rebase = false;
@@ -55,10 +59,8 @@
     };
   };
 
-  ##bash 
   programs.bash = { enable = true; };
 
-  #zsh - history + starship (doesnt conflict with zsh.nix)
   programs.zsh = {
     enable = true;
     history.extended = true;
@@ -68,18 +70,6 @@
     };
   };
 
-  ###kitty
-  #programs.kitty = {
-  #  enable = true;
-  #  settings = {
-  #    confirm_os_window_close = 2;
-  #    scrollback_lines = 10000;
-  #    enable_audio_bell = false;
-  #    update_check_interval = 0;
-  #  };
-  #};
-
-  ## starship 
   programs.starship = {
     enable = true;
     enableZshIntegration = true;

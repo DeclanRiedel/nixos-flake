@@ -1,0 +1,59 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-`": ["workspace::NewTerminal", { "local": true }],
+      "shift-alt-t": "workspace::NewTerminal",
+      "alt-2": ["action::Sequence", ["agent::ToggleFocus", "agents_sidebar::ToggleThreadSwitcher"]],
+      "alt-r": ["task::Spawn", { "task_name": "thread runner: stop all then run current worktree" }],
+      "space f 1": ["task::Spawn", { "task_name": "thread runner: focus 1" }],
+      "space r 1": ["task::Spawn", { "task_name": "thread runner: stop all then run 1" }],
+      "space x 1": ["task::Spawn", { "task_name": "thread runner: stop 1" }],
+      "space f 2": ["task::Spawn", { "task_name": "thread runner: focus 2" }],
+      "space r 2": ["task::Spawn", { "task_name": "thread runner: stop all then run 2" }],
+      "space x 2": ["task::Spawn", { "task_name": "thread runner: stop 2" }],
+      "space f 3": ["task::Spawn", { "task_name": "thread runner: focus 3" }],
+      "space r 3": ["task::Spawn", { "task_name": "thread runner: stop all then run 3" }],
+      "space x 3": ["task::Spawn", { "task_name": "thread runner: stop 3" }],
+      "space f 4": ["task::Spawn", { "task_name": "thread runner: focus 4" }],
+      "space r 4": ["task::Spawn", { "task_name": "thread runner: stop all then run 4" }],
+      "space x 4": ["task::Spawn", { "task_name": "thread runner: stop 4" }],
+      "space f 5": ["task::Spawn", { "task_name": "thread runner: focus 5" }],
+      "space r 5": ["task::Spawn", { "task_name": "thread runner: stop all then run 5" }],
+      "space x 5": ["task::Spawn", { "task_name": "thread runner: stop 5" }],
+      "space f 6": ["task::Spawn", { "task_name": "thread runner: focus 6" }],
+      "space r 6": ["task::Spawn", { "task_name": "thread runner: stop all then run 6" }],
+      "space x 6": ["task::Spawn", { "task_name": "thread runner: stop 6" }],
+      "space f 7": ["task::Spawn", { "task_name": "thread runner: focus 7" }],
+      "space r 7": ["task::Spawn", { "task_name": "thread runner: stop all then run 7" }],
+      "space x 7": ["task::Spawn", { "task_name": "thread runner: stop 7" }],
+      "space f 8": ["task::Spawn", { "task_name": "thread runner: focus 8" }],
+      "space r 8": ["task::Spawn", { "task_name": "thread runner: stop all then run 8" }],
+      "space x 8": ["task::Spawn", { "task_name": "thread runner: stop 8" }],
+      "space f 9": ["task::Spawn", { "task_name": "thread runner: focus 9" }],
+      "space r 9": ["task::Spawn", { "task_name": "thread runner: stop all then run 9" }],
+      "space x 9": ["task::Spawn", { "task_name": "thread runner: stop 9" }],
+      // "shift shift": "file_finder::Toggle"
+    },
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "alt-r": ["terminal::SendText", "r"],
+      "alt-z": ["terminal::SendText", "f"],
+    },
+  },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      // "j k": "vim::NormalBefore"
+    },
+  },
+]

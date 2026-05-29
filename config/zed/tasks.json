@@ -1,0 +1,322 @@
+[
+  {
+    "label": "thread runner: current worktree",
+    "command": "zed-thread-tui",
+    "args": ["--focus-zed-on-run", "$ZED_WORKTREE_ROOT"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "always",
+    "hide": "never"
+  },
+  {
+    "label": "thread runner: all git worktrees",
+    "command": "zed-thread-tui",
+    "args": ["--focus-zed-on-run"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "always",
+    "hide": "never"
+  },
+  {
+    "label": "thread runner: stop all then run current worktree",
+    "command": "zed-thread-tui",
+    "args": ["--stop-all-first", "--focus-zed-on-run", "--run-project", "$ZED_WORKTREE_ROOT"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: register current worktree",
+    "command": "zed-thread-tui",
+    "args": ["--add-project", "$ZED_WORKTREE_ROOT"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: sync zed projects",
+    "command": "zed-thread-tui",
+    "args": ["--sync-zed-projects"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: focus 1",
+    "command": "zed-thread-tui",
+    "args": ["--focus-id", "1"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: stop all then run 1",
+    "command": "zed-thread-tui",
+    "args": ["--stop-all-first", "--focus-zed-on-run", "--run-id", "1"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: stop 1",
+    "command": "zed-thread-tui",
+    "args": ["--stop-id", "1"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: focus 2",
+    "command": "zed-thread-tui",
+    "args": ["--focus-id", "2"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: stop all then run 2",
+    "command": "zed-thread-tui",
+    "args": ["--stop-all-first", "--focus-zed-on-run", "--run-id", "2"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: stop 2",
+    "command": "zed-thread-tui",
+    "args": ["--stop-id", "2"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: focus 3",
+    "command": "zed-thread-tui",
+    "args": ["--focus-id", "3"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: stop all then run 3",
+    "command": "zed-thread-tui",
+    "args": ["--stop-all-first", "--focus-zed-on-run", "--run-id", "3"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: stop 3",
+    "command": "zed-thread-tui",
+    "args": ["--stop-id", "3"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: focus 4",
+    "command": "zed-thread-tui",
+    "args": ["--focus-id", "4"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: stop all then run 4",
+    "command": "zed-thread-tui",
+    "args": ["--stop-all-first", "--focus-zed-on-run", "--run-id", "4"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: stop 4",
+    "command": "zed-thread-tui",
+    "args": ["--stop-id", "4"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: focus 5",
+    "command": "zed-thread-tui",
+    "args": ["--focus-id", "5"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: stop all then run 5",
+    "command": "zed-thread-tui",
+    "args": ["--stop-all-first", "--focus-zed-on-run", "--run-id", "5"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: stop 5",
+    "command": "zed-thread-tui",
+    "args": ["--stop-id", "5"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: focus 6",
+    "command": "zed-thread-tui",
+    "args": ["--focus-id", "6"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: stop all then run 6",
+    "command": "zed-thread-tui",
+    "args": ["--stop-all-first", "--focus-zed-on-run", "--run-id", "6"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: stop 6",
+    "command": "zed-thread-tui",
+    "args": ["--stop-id", "6"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: focus 7",
+    "command": "zed-thread-tui",
+    "args": ["--focus-id", "7"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: stop all then run 7",
+    "command": "zed-thread-tui",
+    "args": ["--stop-all-first", "--focus-zed-on-run", "--run-id", "7"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: stop 7",
+    "command": "zed-thread-tui",
+    "args": ["--stop-id", "7"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: focus 8",
+    "command": "zed-thread-tui",
+    "args": ["--focus-id", "8"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: stop all then run 8",
+    "command": "zed-thread-tui",
+    "args": ["--stop-all-first", "--focus-zed-on-run", "--run-id", "8"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: stop 8",
+    "command": "zed-thread-tui",
+    "args": ["--stop-id", "8"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: focus 9",
+    "command": "zed-thread-tui",
+    "args": ["--focus-id", "9"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: stop all then run 9",
+    "command": "zed-thread-tui",
+    "args": ["--stop-all-first", "--focus-zed-on-run", "--run-id", "9"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  },
+  {
+    "label": "thread runner: stop 9",
+    "command": "zed-thread-tui",
+    "args": ["--stop-id", "9"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "no_focus",
+    "hide": "on_success"
+  }
+]
