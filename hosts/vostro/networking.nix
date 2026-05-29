@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
 {
+  networking.firewall.allowedTCPPorts = [ 3000 ];
+
   networking.networkmanager.plugins = with pkgs; [
     networkmanager-openvpn
   ];

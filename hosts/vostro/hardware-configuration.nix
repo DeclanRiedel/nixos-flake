@@ -31,6 +31,12 @@
 
   networking.useDHCP = lib.mkDefault true;
   networking.firewall.allowedTCPPorts = [ 22 4321 5432 5900 ];
+  networking.firewall.allowedTCPPortRanges = [
+    {
+      from = 5000;
+      to = 7999;
+    }
+  ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
