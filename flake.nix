@@ -169,9 +169,9 @@
           ./modules/default.nix
         ];
 
-        nixos-vm = mkHost [
+        nixos-wsl = mkHost [
           inputs.nixos-wsl.nixosModules.default
-          ./hosts/nixos-vm/default.nix
+          ./hosts/nixos-wsl/default.nix
         ];
       };
     };

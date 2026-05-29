@@ -1,5 +1,8 @@
-{ config, inputs, pkgs, ... }:
+{ config, inputs, lib, osConfig, pkgs, ... }:
 
+let
+  isWsl = osConfig.networking.hostName == "nixos-wsl";
+in
 {
   home.username = "declan";
   home.homeDirectory = "/home/declan";
@@ -10,14 +13,16 @@
     inputs.zed-thread-tui.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
-  gtk.gtk4.theme = config.gtk.theme;
-
   imports = [
     ./zsh.nix
+    ./ranger.nix
+    ./yazi.nix
+  ] ++ lib.optionals (!isWsl) [
     ./hyprlock.nix
     ./hypridle.nix
     ./hyprpaper.nix
     ./hyprland.nix
+    ./cursor.nix
     ./waybar.nix
     ./swaync.nix
     ./fuzzel.nix
@@ -25,9 +30,9 @@
     ./zed.nix
     ./floorp.nix
     ./zathura.nix
-    ./ranger.nix
-    ./yazi.nix
   ];
+
+  gtk.gtk4.theme = lib.mkIf (!isWsl) config.gtk.theme;
 
   systemd.user.services.mpris-proxy = {
     Unit.Description = "mpris-proxy";
