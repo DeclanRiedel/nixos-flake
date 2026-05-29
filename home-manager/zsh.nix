@@ -5,69 +5,107 @@ let
 in
 {
   programs.zsh.initContent = ''
-      #used for x11 forwarding on windows?
-      export DISPLAY=:0.0
+    export DISPLAY=:0.0
 
-      # Initialize in the current project
-      nix-init() {
-          if [ -z "$1" ]; then
-              echo "Usage: nix-init <environment>"
-              return 1
-          fi
-          nix flake init --template "https://flakehub.com/f/the-nix-way/dev-templates/*#$1"
-      }
-
-      # Create a new project
-      nix-new() {
-          if [ -z "$1" ] || [ -z "$2" ]; then
-              echo "Usage: nix-new <environment> <project-directory>"
-              return 1
-          fi
-          nix flake new --template "https://flakehub.com/f/the-nix-way/dev-templates/*#$1" "$2"
-      }
-      # to have nix-shell respect $SHELL 
-      alias nix-shell='nix-shell --run $SHELL'
-      path=("${config.programs.worktrunk.package}/bin" $path)
-      nix() {
-      if [[ $1 == "develop" ]]; then
-        shift
-        command nix develop -c $SHELL "$@"
-      else
-        command nix "$@"
-      fi
+    nix-init() {
+        if [ -z "$1" ]; then
+            echo "Usage: nix-init <environment>"
+            return 1
+        fi
+        nix flake init --template "https://flakehub.com/f/the-nix-way/dev-templates/*#$1"
     }
 
-      wtc() {
-          if [ -z "$1" ]; then
-              echo "Usage: wtc <branch>"
-              return 1
-          fi
+    nix-new() {
+        if [ -z "$1" ] || [ -z "$2" ]; then
+            echo "Usage: nix-new <environment> <project-directory>"
+            return 1
+        fi
+        nix flake new --template "https://flakehub.com/f/the-nix-way/dev-templates/*#$1" "$2"
+    }
 
-          local branch="$1"
-          local old_branch before_stash after_stash did_stash
+    alias nix-shell='nix-shell --run $SHELL'
+    path=("${config.programs.worktrunk.package}/bin" $path)
 
-          old_branch="$(git branch --show-current)" || return
-          if [ -z "$old_branch" ]; then
-              echo "wtc: could not determine current branch"
-              return 1
-          fi
+    nix() {
+        if [[ $1 == "develop" ]]; then
+            shift
+            command nix develop -c $SHELL "$@"
+        else
+            command nix "$@"
+        fi
+    }
 
-          before_stash="$(git rev-parse -q --verify refs/stash 2>/dev/null || true)"
-          git stash push -u || return
-          after_stash="$(git rev-parse -q --verify refs/stash 2>/dev/null || true)"
+    wtc() {
+        if [[ $# -lt 1 ]]; then
+            echo "usage: wtc <branch> [wt switch args...]" >&2
+            return 2
+        fi
 
-          did_stash=0
-          if [ "$after_stash" != "$before_stash" ]; then
-              did_stash=1
-          fi
+        local branch="$1"
+        shift
 
-          ${wt} switch --create "$branch" --base=@ || return
+        local root source_branch tmp target
+        root="$(git rev-parse --show-toplevel)" || return
+        source_branch="$(git branch --show-current)" || return
 
-          if [ "$did_stash" -eq 1 ]; then
-              git stash pop || return
-          fi
+        if [[ -z "$source_branch" ]]; then
+            echo "wtc: detached HEAD is not supported" >&2
+            return 1
+        fi
 
-          ${wt} step copy-ignored --from "$old_branch" --to "$branch"
-      }
+        tmp="$(mktemp -d)" || return
+
+        (
+            cd "$root" || exit
+            git diff --binary HEAD > "$tmp/wip.patch"
+            git ls-files --others --exclude-standard -z > "$tmp/untracked.zlist"
+            {
+                find . \
+                    \( -path '*/bin/*' -o -path '*/obj/*' \) -prune -o \
+                    -type f -name 'appsettings*.json' -printf '%P\0' |
+                    while IFS= read -r -d "" relpath; do
+                        git check-ignore -q -- "$relpath" && printf '%s\0' "$relpath"
+                    done
+                true
+            } > "$tmp/ignored-local-config.zlist"
+        ) || return
+
+        ${wt} switch --create "$branch" --base=@ "$@"
+        local switch_status=$?
+        if [[ $switch_status -ne 0 ]]; then
+            return $switch_status
+        fi
+
+        target="$(
+            git worktree list --porcelain |
+            awk -v b="refs/heads/''${branch}" '
+                /^worktree / { path=substr($0, 10) }
+                /^branch / && substr($0, 8) == b { print path; exit }
+            '
+        )"
+
+        if [[ -z "$target" ]]; then
+            echo "wtc: could not find worktree for ''${branch}" >&2
+            return 1
+        fi
+
+        if [[ -s "$tmp/wip.patch" ]]; then
+            (cd "$target" && git apply "$tmp/wip.patch") || return
+        fi
+
+        if [[ -s "$tmp/untracked.zlist" ]]; then
+            (cd "$root" && tar --null -T "$tmp/untracked.zlist" -cf -) |
+                (cd "$target" && tar -xf -) || return
+        fi
+
+        ${wt} step copy-ignored --from "$source_branch" --to "$branch" || return
+
+        if [[ -s "$tmp/ignored-local-config.zlist" ]]; then
+            (cd "$root" && tar --null -T "$tmp/ignored-local-config.zlist" -cf -) |
+                (cd "$target" && tar --overwrite -xf -) || return
+        fi
+
+        rm -rf "$tmp"
+    }
   '';
 }
