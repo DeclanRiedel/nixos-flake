@@ -40,6 +40,7 @@ tooltip label {
 #custom-zed-thread-runner,
 #mpris,
 #window,
+#custom-notifications,
 #tray,
 #clock,
 #idle_inhibitor,
@@ -137,6 +138,47 @@ window#waybar.empty #window {
 
 #tray {
   padding: 0 8px;
+}
+
+#custom-notifications {
+  color: @overlay2;
+  font-weight: 900;
+  min-width: 12px;
+}
+
+#custom-notifications.notification {
+  background-color: rgba(91, 48, 60, 0.74);
+  border-color: rgba(247, 118, 142, 0.32);
+  color: @red;
+  animation: notification-pulse 1s steps(2, start) infinite;
+}
+
+#custom-notifications.dnd-notification,
+#custom-notifications.inhibited-notification,
+#custom-notifications.dnd-inhibited-notification {
+  background-color: rgba(79, 67, 94, 0.82);
+  border-color: rgba(224, 175, 104, 0.36);
+  color: @yellow;
+  animation: notification-pulse 1.4s steps(2, start) infinite;
+}
+
+#custom-notifications.cc-open {
+  background-color: rgba(42, 48, 70, 0.84);
+  border-color: rgba(125, 207, 255, 0.24);
+  color: @sky;
+  animation: none;
+}
+
+@keyframes notification-pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.38;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 #clock {

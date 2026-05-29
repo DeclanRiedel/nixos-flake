@@ -2,7 +2,7 @@
                       // Choose the order of the modulesaround
                       "modules-left": ["hyprland/workspaces", "custom/zed-thread-runner"],
                       "modules-center": ["mpris", "custom/spacer", "hyprland/window"],
-                      "modules-right": ["tray", "clock","idle_inhibitor", "custom/pacman","network", "backlight", "pulseaudio", "battery" ],
+                      "modules-right": ["custom/notifications", "tray", "clock","idle_inhibitor", "custom/pacman","network", "backlight", "pulseaudio", "battery" ],
 
                        "hyprland/workspaces": {
                            "disable-scroll": true,
@@ -61,6 +61,15 @@
                           },
                           "exec-if": "which waybar-updates",
                           "exec": "waybar-updates"
+                      },
+
+                      "custom/notifications": {
+                          "format": "!",
+                          "return-type": "json",
+                          "exec": "swaync-client -swb",
+                          "on-click": "swaync-client -t",
+                          "on-click-right": "swaync-client -C",
+                          "tooltip": true
                       },
 
                       "clock": {

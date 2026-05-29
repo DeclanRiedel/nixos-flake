@@ -19,6 +19,7 @@
     ./hyprpaper.nix
     ./hyprland.nix
     ./waybar.nix
+    ./swaync.nix
     ./fuzzel.nix
     ./ghostty.nix
     ./zed.nix

@@ -43,7 +43,6 @@
     hyprshade
     hyprutils
 
-    dunst
     libnotify
     eww
     wlogout
