@@ -8,7 +8,7 @@
     ./legacy-packages.nix
     ./fonts.nix
     ./rice.nix
-    ./sddm.nix
+    ./regreet.nix
     #./music.nix
     ./postgres-docker.nix
     ./stylix.nix

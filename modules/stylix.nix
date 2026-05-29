@@ -22,10 +22,11 @@
 
   };
 
-  stylix.image = ../wall/sddm-macos-style.png;
+  stylix.image = ../wall/sddm-wall.jpg;
 
   stylix.targets = {
     nixvim.enable = false;
+    regreet.enable = false;
     #ghostty.enable = false;
     #dunst.enable = false;
   };
