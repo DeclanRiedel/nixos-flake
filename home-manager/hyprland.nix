@@ -52,6 +52,72 @@ in
     force = true;
   };
 
+  home.file.".local/bin/start-hyprland" = {
+    executable = true;
+    text = ''
+      #!${pkgs.bash}/bin/bash
+      set -euo pipefail
+
+      export XDG_CURRENT_DESKTOP=Hyprland
+      export XDG_SESSION_DESKTOP=Hyprland
+      export XDG_SESSION_TYPE=wayland
+      export NIXOS_OZONE_WL=1
+
+      if [[ -n "''${WAYLAND_DISPLAY:-}" || -n "''${HYPRLAND_INSTANCE_SIGNATURE:-}" ]]; then
+        echo "start-hyprland must be run from a TTY, not inside an existing Wayland session." >&2
+        exit 1
+      fi
+
+      exec ${pkgs.uwsm}/bin/uwsm start hyprland-uwsm.desktop
+    '';
+  };
+
+  home.file.".local/bin/start-hyprpaper" = {
+    executable = true;
+    text = ''
+      #!${pkgs.bash}/bin/bash
+      set -euo pipefail
+
+      wall_dir="/home/declan/.nixos/wall"
+      state_dir="''${XDG_RUNTIME_DIR:-/tmp}/hyprpaper"
+      config="$state_dir/hyprpaper.conf"
+      wallpaper="$wall_dir/berserk.jpg"
+
+      mkdir -p "$state_dir"
+
+      if [[ ! -f "$wallpaper" ]]; then
+        exit 0
+      fi
+
+      monitors=()
+      for _ in {1..20}; do
+        if monitors_json="$(${pkgs.hyprland}/bin/hyprctl monitors -j 2>/dev/null)"; then
+          mapfile -t monitors < <(printf '%s' "$monitors_json" | ${pkgs.jq}/bin/jq -r '.[].name')
+          ((''${#monitors[@]} > 0)) && break
+        fi
+        sleep 0.1
+      done
+
+      if ((''${#monitors[@]} == 0)); then
+        monitors=(eDP-1)
+      fi
+
+      {
+        printf 'ipc = on\n'
+        for monitor in "''${monitors[@]}"; do
+          printf 'wallpaper {\n'
+          printf '    monitor = %s\n' "$monitor"
+          printf '    path = %s\n' "$wallpaper"
+          printf '    fit_mode = cover\n'
+          printf '}\n\n'
+        done
+      } > "$config"
+
+      ${pkgs.procps}/bin/pkill -x hyprpaper 2>/dev/null || true
+      exec ${pkgs.hyprpaper}/bin/hyprpaper --config "$config"
+    '';
+  };
+
   home.file.".local/bin/zed-thread-leader-action" = {
     executable = true;
     text = ''

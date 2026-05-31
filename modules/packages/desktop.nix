@@ -1,7 +1,10 @@
 { pkgs, lib, ... }:
 
 {
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+  };
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
@@ -42,6 +45,7 @@
     hyprpaper
     hyprshade
     hyprutils
+    uwsm
 
     libnotify
     eww

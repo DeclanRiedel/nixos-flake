@@ -24,7 +24,8 @@
         lsd = "eza -g -D -T";
         lsgit = "eza --git-ignore -T --icons";
         cat = "bat";
-        update = "sudo nixos-rebuild switch --flake ~/.nixos#vostro";
+        switch = "/home/declan/.nixos/scripts/switch.sh";
+        update = "/home/declan/.nixos/scripts/switch.sh vostro";
         c = "clear";
         n = "nvim";
         vim = "nvim";

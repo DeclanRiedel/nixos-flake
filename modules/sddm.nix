@@ -1,30 +1,35 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
+let
+  wallpaper = ../wall/berserk.jpg;
+  chiliTheme = pkgs.sddm-chili-theme.override {
+    themeConfig = {
+      ScreenWidth = 1920;
+      ScreenHeight = 1080;
+      blur = true;
+      recursiveBlurLoops = 4;
+      recursiveBlurRadius = 12;
+      background = "${wallpaper}";
+      PasswordFieldOutlined = true;
+      AvatarPixelSize = 148;
+      FontPointSize = 16;
+    };
+  };
+in
 {
   environment.systemPackages = [
     # Chili login theme: https://store.kde.org/p/1214121
-    (pkgs.sddm-chili-theme.override {
-      themeConfig = {
-        ScreenWidth = 1920;
-        ScreenHeight = 1080;
-        blur = true;
-        recursiveBlurLoops = 4;
-        recursiveBlurRadius = 12;
-        background = ../wall/sddm-wall.jpg;
-        PasswordFieldOutlined = true;
-        AvatarPixelSize = 148;
-        FontPointSize = 16;
-      };
-    })
+    chiliTheme
   ];
 
   services.displayManager = {
-    defaultSession = "hyprland";
+    defaultSession = "hyprland-uwsm";
 
     sddm = {
       enable = true;
+      extraPackages = [ chiliTheme ];
       wayland.enable = false;
-      theme = "chili";
+      theme = lib.mkForce "chili";
     };
   };
 

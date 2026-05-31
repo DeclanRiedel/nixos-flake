@@ -22,7 +22,7 @@
 
   };
 
-  stylix.image = ../wall/sddm-wall.jpg;
+  stylix.image = ../wall/berserk.jpg;
 
   stylix.targets = {
     nixvim.enable = false;

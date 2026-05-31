@@ -1,11 +1,11 @@
-{ lib, ... }: {
+{ lib, pkgs, ... }: {
 
   #systemd bootloader 
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
     timeout = 2;
-    systemd-boot.configurationLimit = lib.mkDefault 8;
+    systemd-boot.configurationLimit = lib.mkDefault 6;
   };
 
   networking = {
@@ -58,8 +58,11 @@
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "-d";
   };
+
+  systemd.services.nix-gc.preStart = ''
+    ${pkgs.nix}/bin/nix-env --profile /nix/var/nix/profiles/system --delete-generations +6
+  '';
 
   system = {
     autoUpgrade = {

@@ -25,116 +25,79 @@
         "$ghostty" -e ${pkgs.zsh}/bin/zsh -lc "$1; exec ${pkgs.zsh}/bin/zsh"
       }
 
-      group="$(choose "group  " \
-        "󰀻 Apps" \
-        "󰅩 Dev / Agents" \
-        "󰈙 View / Open" \
-        "󰘳 Commands" \
-        "󰒓 System" \
-        "󰀻 All apps")"
+      item="$(choose "run  " \
+        "app Floorp" \
+        "app Floorp private" \
+        "app Zed" \
+        "app VS Code" \
+        "app Obsidian" \
+        "app Vesktop" \
+        "app Bitwarden" \
+        "app Settings" \
+        "app All apps" \
+        "dev NixOS flake in Zed" \
+        "dev Work folder in Zed" \
+        "dev Codex in flake" \
+        "dev Opencode in flake" \
+        "dev Lazygit in flake" \
+        "dev Tmux attach" \
+        "open Files" \
+        "open Downloads" \
+        "open NixOS flake" \
+        "open Yazi home" \
+        "open Yazi work" \
+        "open Images" \
+        "open PDF viewer" \
+        "open MPV" \
+        "cmd Rebuild NixOS" \
+        "cmd Check flake" \
+        "cmd Update flake" \
+        "cmd Git status" \
+        "cmd Btop" \
+        "cmd Clipboard history" \
+        "sys Lock" \
+        "sys Logout menu" \
+        "sys Volume" \
+        "sys Bluetooth" \
+        "sys Passwords" \
+        "sys Screenshot region")"
 
-      case "$group" in
-        "󰀻 Apps")
-          item="$(choose "apps  " \
-            "󰈹 Floorp" \
-            "󰈹 Floorp private" \
-            "󰨞 Zed" \
-            "󰊢 VS Code" \
-            "󰊢 Obsidian" \
-            "󰙯 Vesktop" \
-            "󰌾 Bitwarden" \
-            "󰒓 Settings")"
-          case "$item" in
-            "󰈹 Floorp") exec floorp ;;
-            "󰈹 Floorp private") exec floorp --private-window ;;
-            "󰨞 Zed") exec zeditor ;;
-            "󰊢 VS Code") exec code ;;
-            "󰊢 Obsidian") exec obsidian ;;
-            "󰙯 Vesktop") exec vesktop ;;
-            "󰌾 Bitwarden") exec bitwarden ;;
-            "󰒓 Settings") exec xfce4-settings-manager ;;
-          esac
-          ;;
-
-        "󰅩 Dev / Agents")
-          item="$(choose "dev  " \
-            "󰱼 NixOS flake in Zed" \
-            "󱓞 Work folder in Zed" \
-            "󰙨 Codex in flake" \
-            "󰚩 Opencode in flake" \
-            "󰊢 Lazygit in flake" \
-            "󰓓 Tmux attach")"
-          case "$item" in
-            "󰱼 NixOS flake in Zed") exec zeditor "$HOME/.nixos" ;;
-            "󱓞 Work folder in Zed") exec zeditor "$HOME/work" ;;
-            "󰙨 Codex in flake") run_shell 'cd "$HOME/.nixos" && codex --yolo' ;;
-            "󰚩 Opencode in flake") run_shell 'cd "$HOME/.nixos" && opencode' ;;
-            "󰊢 Lazygit in flake") run_shell 'cd "$HOME/.nixos" && lazygit' ;;
-            "󰓓 Tmux attach") run_shell 'tmux attach || tmux new -s main' ;;
-          esac
-          ;;
-
-        "󰈙 View / Open")
-          item="$(choose "view  " \
-            "󰉋 Files" \
-            "󰉋 Downloads" \
-            "󰉋 NixOS flake" \
-            "󰈙 Yazi home" \
-            "󰈙 Yazi work" \
-            "󰋩 Images" \
-            "󰎁 PDF viewer" \
-            "󰕧 MPV")"
-          case "$item" in
-            "󰉋 Files") exec thunar "$HOME" ;;
-            "󰉋 Downloads") exec thunar "$HOME/Downloads" ;;
-            "󰉋 NixOS flake") exec thunar "$HOME/.nixos" ;;
-            "󰈙 Yazi home") run_shell 'yazi "$HOME"' ;;
-            "󰈙 Yazi work") run_shell 'yazi "$HOME/work"' ;;
-            "󰋩 Images") exec imv "$HOME" ;;
-            "󰎁 PDF viewer") exec zathura ;;
-            "󰕧 MPV") exec mpv ;;
-          esac
-          ;;
-
-        "󰘳 Commands")
-          item="$(choose "cmd  " \
-            "󱁤 Rebuild NixOS" \
-            "󰁨 Check flake" \
-            "󰚰 Update flake" \
-            "󰊢 Git status" \
-            "󰍛 Btop" \
-            "󰔛 Clipboard history")"
-          case "$item" in
-            "󱁤 Rebuild NixOS") run_shell 'cd "$HOME/.nixos" && sudo nixos-rebuild switch --flake .#vostro' ;;
-            "󰁨 Check flake") run_shell 'cd "$HOME/.nixos" && nix flake check' ;;
-            "󰚰 Update flake") run_shell 'cd "$HOME/.nixos" && nix flake update' ;;
-            "󰊢 Git status") run_shell 'cd "$HOME/.nixos" && git status && git log --oneline -10' ;;
-            "󰍛 Btop") run_shell 'btop' ;;
-            "󰔛 Clipboard history") cliphist list | "$fuzzel" --dmenu --prompt "clip  " | cliphist decode | wl-copy ;;
-          esac
-          ;;
-
-        "󰒓 System")
-          item="$(choose "sys  " \
-            "󰌾 Lock" \
-            "󰍃 Logout menu" \
-            "󰕾 Volume" \
-            "󰂯 Bluetooth" \
-            "󰌆 Passwords" \
-            "󰅐 Screenshot region")"
-          case "$item" in
-            "󰌾 Lock") exec hyprlock ;;
-            "󰍃 Logout menu") exec wlogout ;;
-            "󰕾 Volume") exec pavucontrol ;;
-            "󰂯 Bluetooth") exec blueman-manager ;;
-            "󰌆 Passwords") exec seahorse ;;
-            "󰅐 Screenshot region") exec hyprshot -m region -o "$HOME/Media/Screenshots/" -z -s ;;
-          esac
-          ;;
-
-        "󰀻 All apps")
-          exec "$fuzzel"
-          ;;
+      case "$item" in
+        "app Floorp") exec floorp ;;
+        "app Floorp private") exec floorp --private-window ;;
+        "app Zed") exec zeditor ;;
+        "app VS Code") exec code ;;
+        "app Obsidian") exec obsidian ;;
+        "app Vesktop") exec vesktop ;;
+        "app Bitwarden") exec bitwarden ;;
+        "app Settings") exec xfce4-settings-manager ;;
+        "app All apps") exec "$fuzzel" ;;
+        "dev NixOS flake in Zed") exec zeditor "$HOME/.nixos" ;;
+        "dev Work folder in Zed") exec zeditor "$HOME/work" ;;
+        "dev Codex in flake") run_shell 'cd "$HOME/.nixos" && codex --yolo' ;;
+        "dev Opencode in flake") run_shell 'cd "$HOME/.nixos" && opencode' ;;
+        "dev Lazygit in flake") run_shell 'cd "$HOME/.nixos" && lazygit' ;;
+        "dev Tmux attach") run_shell 'tmux attach || tmux new -s main' ;;
+        "open Files") exec thunar "$HOME" ;;
+        "open Downloads") exec thunar "$HOME/Downloads" ;;
+        "open NixOS flake") exec thunar "$HOME/.nixos" ;;
+        "open Yazi home") run_shell 'yazi "$HOME"' ;;
+        "open Yazi work") run_shell 'yazi "$HOME/work"' ;;
+        "open Images") exec imv "$HOME" ;;
+        "open PDF viewer") exec zathura ;;
+        "open MPV") exec mpv ;;
+        "cmd Rebuild NixOS") run_shell 'cd "$HOME/.nixos" && sudo nixos-rebuild switch --flake .#vostro' ;;
+        "cmd Check flake") run_shell 'cd "$HOME/.nixos" && nix flake check' ;;
+        "cmd Update flake") run_shell 'cd "$HOME/.nixos" && nix flake update' ;;
+        "cmd Git status") run_shell 'cd "$HOME/.nixos" && git status && git log --oneline -10' ;;
+        "cmd Btop") run_shell 'btop' ;;
+        "cmd Clipboard history") cliphist list | "$fuzzel" --dmenu --prompt "clip  " | cliphist decode | wl-copy ;;
+        "sys Lock") exec hyprlock ;;
+        "sys Logout menu") exec wlogout ;;
+        "sys Volume") exec pavucontrol ;;
+        "sys Bluetooth") exec blueman-manager ;;
+        "sys Passwords") exec seahorse ;;
+        "sys Screenshot region") exec hyprshot -m region -o "$HOME/Media/Screenshots/" -z -s ;;
       esac
     '';
   };

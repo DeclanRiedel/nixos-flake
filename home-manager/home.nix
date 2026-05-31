@@ -71,6 +71,7 @@ in
     shellAliases = {
       codex = "codex --yolo";
       ranger = "y";
+      switch = "/home/declan/.nixos/scripts/switch.sh";
       yazi = "y";
     };
   };
