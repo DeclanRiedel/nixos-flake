@@ -17,6 +17,12 @@ user_pref("browser.download.lastDir", "/home/declan/Downloads");
 // Content
 user_pref("browser.contentblocking.category", "standard");
 user_pref("accessibility.typeaheadfind.flashBar", 0);
+user_pref("keyword.enabled", true);
+user_pref("browser.search.defaultenginename", "DuckDuckGo");
+user_pref("browser.search.selectedEngine", "DuckDuckGo");
+user_pref("browser.urlbar.suggest.searches", true);
+user_pref("browser.urlbar.suggest.history", true);
+user_pref("browser.urlbar.suggest.bookmark", true);
 
 // Floorp design - Photon UI, vertical tabs
 user_pref("floorp.design.configs", "{\"globalConfigs\":{\"userInterface\":\"photon\",\"faviconColor\":false,\"appliedUserJs\":\"\"},\"tabbar\":{\"tabbarStyle\":\"vertical\",\"tabbarPosition\":\"hide-horizontal-tabbar\",\"multiRowTabBar\":{\"maxRowEnabled\":false,\"maxRow\":3}},\"tab\":{\"tabScroll\":{\"enabled\":false,\"reverse\":false,\"wrap\":false},\"tabMinHeight\":30,\"tabMinWidth\":76,\"tabPinTitle\":false,\"tabDubleClickToClose\":false,\"tabOpenPosition\":-1},\"uiCustomization\":{\"navbar\":{\"position\":\"top\",\"searchBarTop\":false},\"display\":{\"disableFullscreenNotification\":false,\"deleteBrowserBorder\":false},\"special\":{\"optimizeForTreeStyleTab\":false,\"hideForwardBackwardButton\":false,\"stgLikeWorkspaces\":false},\"multirowTab\":{\"newtabInsideEnabled\":false},\"bookmarkBar\":{\"focusExpand\":false,\"position\":\"top\"},\"qrCode\":{\"disableButton\":false}}}}");
