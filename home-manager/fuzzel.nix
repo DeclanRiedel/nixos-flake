@@ -14,6 +14,10 @@
 
       fuzzel="${pkgs.fuzzel}/bin/fuzzel"
       ghostty="${pkgs.ghostty}/bin/ghostty"
+      jq="${pkgs.jq}/bin/jq"
+      sqlite="${pkgs.sqlite}/bin/sqlite3"
+      cut="${pkgs.coreutils}/bin/cut"
+      floorp_profile="$HOME/.floorp/g7it090d.default-default"
 
       choose() {
         local prompt="$1"
@@ -25,9 +29,36 @@
         "$ghostty" -e ${pkgs.zsh}/bin/zsh -lc "$1; exec ${pkgs.zsh}/bin/zsh"
       }
 
+      ddg_search() {
+        local query encoded
+        query="$(printf '\n' | "$fuzzel" --dmenu --prompt "ddg  ")"
+        [[ -n "$query" ]] || exit 0
+        encoded="$(printf '%s' "$query" | "$jq" -sRr @uri)"
+        exec floorp "https://duckduckgo.com/?q=$encoded"
+      }
+
+      floorp_history() {
+        local places item url
+        places="$floorp_profile/places.sqlite"
+        [[ -r "$places" ]] || exit 0
+
+        item="$("$sqlite" -readonly "$places" \
+          "SELECT replace(CASE WHEN title IS NULL OR length(title) = 0 THEN url ELSE title END, char(10), ' ') || char(9) || url
+           FROM moz_places
+           WHERE url LIKE 'http%'
+           ORDER BY last_visit_date DESC
+           LIMIT 200;" \
+          | "$fuzzel" --dmenu --prompt "hist  ")"
+        [[ -n "$item" ]] || exit 0
+        url="$(printf '%s' "$item" | "$cut" -f2-)"
+        exec floorp "$url"
+      }
+
       item="$(choose "run  " \
         "app Floorp" \
         "app Floorp private" \
+        "web DuckDuckGo search" \
+        "web Floorp history" \
         "app Zed" \
         "app VS Code" \
         "app Obsidian" \
@@ -65,6 +96,8 @@
       case "$item" in
         "app Floorp") exec floorp ;;
         "app Floorp private") exec floorp --private-window ;;
+        "web DuckDuckGo search") ddg_search ;;
+        "web Floorp history") floorp_history ;;
         "app Zed") exec zeditor ;;
         "app VS Code") exec code ;;
         "app Obsidian") exec obsidian ;;
