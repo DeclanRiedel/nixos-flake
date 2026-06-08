@@ -39,6 +39,7 @@ in
         set-option -g allow-rename off
 
         bind | split-window -h -c "#{pane_current_path}"
+        bind -n C-o split-window -h -c "#{pane_current_path}"
         bind - split-window -v -c "#{pane_current_path}"
         bind c new-window -c "#{pane_current_path}"
         unbind '"'
