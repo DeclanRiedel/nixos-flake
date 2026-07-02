@@ -1,9 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, pkgsStable, ... }:
 
 {
   environment.systemPackages = with pkgs; [
     bitwarden-cli
-    bitwarden-desktop
+    telegram-desktop
+    pkgsStable.bitwarden-desktop
     vesktop
     obsidian
   ];

@@ -3,7 +3,10 @@
 {
   programs.hyprland = {
     enable = true;
-    withUWSM = true;
+    # uwsm-managed session exits with code 127 under SDDM, bouncing the user
+    # back to the greeter. Launch Hyprland directly via its start-hyprland
+    # session entry instead (the only wayland session once uwsm is off).
+    withUWSM = false;
   };
 
   environment.sessionVariables = {

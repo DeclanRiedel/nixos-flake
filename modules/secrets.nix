@@ -8,6 +8,9 @@
     secrets = {
       "declan-password".neededForUsers = true;
       "root-password".neededForUsers = true;
+      "wireguard-private-key" = {
+        sopsFile = ../../secrets/wireguard.yaml;
+      };
     };
   };
 

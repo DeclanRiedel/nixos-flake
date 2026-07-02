@@ -1,8 +1,5 @@
 { lib, pkgs, pkgsCodex, ... }:
 
-let
-  opencodeLatest = import ../../pkgs/opencode-latest.nix { inherit lib pkgs; };
-in
 {
   imports = [
     ../../modules/zsh.nix
@@ -12,7 +9,7 @@ in
 
   system.stateVersion = "25.11";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  networking.hostName = lib.mkForce "nixos-wsl";
+  #networking.hostName = lib.mkForce "nixos-wsl";
 
   wsl = {
     enable = true;
@@ -35,7 +32,8 @@ in
 
   environment.systemPackages = with pkgs; [
     pkgsCodex.codex
-    opencodeLatest
+    pkgsCodex.opencode
+    pkgsCodex.claude-code
     gemini-cli
 
     neovim

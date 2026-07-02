@@ -63,6 +63,7 @@
         "app VS Code" \
         "app Obsidian" \
         "app Vesktop" \
+        "app Telegram" \
         "app Bitwarden" \
         "app Settings" \
         "app All apps" \
@@ -102,6 +103,7 @@
         "app VS Code") exec code ;;
         "app Obsidian") exec obsidian ;;
         "app Vesktop") exec vesktop ;;
+        "app Telegram") exec telegram-desktop ;;
         "app Bitwarden") exec bitwarden ;;
         "app Settings") exec xfce4-settings-manager ;;
         "app All apps") exec "$fuzzel" ;;

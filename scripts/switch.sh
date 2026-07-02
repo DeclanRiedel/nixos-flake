@@ -31,7 +31,11 @@ esac
 
 host="${1:-$(hostname)}"
 
-if ! nix eval ".#nixosConfigurations.${host}.config.system.build.toplevel.drvPath" >/dev/null 2>&1; then
+# Cheap host-name check: only reads the nixosConfigurations attr NAMES without
+# forcing the (expensive) full system evaluation that nixos-rebuild does later.
+if ! nix eval --raw ".#nixosConfigurations" \
+  --apply 'hosts: builtins.concatStringsSep "\n" (builtins.attrNames hosts)' 2>/dev/null \
+  | grep -qx "$host"; then
   echo "Unknown host: $host" >&2
   echo >&2
   usage >&2

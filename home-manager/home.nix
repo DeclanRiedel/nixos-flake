@@ -32,7 +32,8 @@ in
     ./zathura.nix
   ];
 
-  gtk.gtk4.theme = lib.mkIf (!isWsl) config.gtk.theme;
+  # Newer stylix also sets gtk4.theme.package; force ours to resolve the clash.
+  gtk.gtk4.theme = lib.mkIf (!isWsl) (lib.mkForce config.gtk.theme);
 
   systemd.user.services.mpris-proxy = {
     Unit.Description = "mpris-proxy";
@@ -69,6 +70,7 @@ in
     history.extended = true;
     enableCompletion = true;
     shellAliases = {
+      cc = "claude --dangerously-skip-permissions";
       codex = "codex --yolo";
       ranger = "y";
       switch = "/home/declan/.nixos/scripts/switch.sh";

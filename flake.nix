@@ -15,6 +15,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs-codex.url = "github:NixOS/nixpkgs/master";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
     worktrunk = {
       url = "github:max-sixty/worktrunk";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -25,7 +26,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, sops-nix, nixvim, nixpkgs-codex, worktrunk, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, sops-nix, nixvim, nixpkgs-codex, nixpkgs-stable, worktrunk, ... }:
     let
       system = "x86_64-linux";
       pkgsUnfree = import nixpkgs {
@@ -33,9 +34,15 @@
         config = {
           allowUnfree = true;
           android_sdk.accept_license = true;
+          # Pulled in transitively by an Electron app after the nixpkgs bump.
+          permittedInsecurePackages = [ "electron-39.8.10" ];
         };
       };
       pkgsCodex = import nixpkgs-codex {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      pkgsStable = import nixpkgs-stable {
         inherit system;
         config.allowUnfree = true;
       };
@@ -57,7 +64,10 @@
           inherit system;
           pkgs = pkgsUnfree;
           modules = [
-            { _module.args.pkgsCodex = pkgsCodex; }
+            {
+              _module.args.pkgsCodex = pkgsCodex;
+              _module.args.pkgsStable = pkgsStable;
+            }
           ] ++ modules ++ [
             sops-nix.nixosModules.sops
             inputs.stylix.nixosModules.stylix

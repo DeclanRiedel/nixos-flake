@@ -68,7 +68,7 @@ in
         exit 1
       fi
 
-      exec ${pkgs.uwsm}/bin/uwsm start -e -D Hyprland hyprland.desktop
+      exec ${pkgs.hyprland}/bin/Hyprland
     '';
   };
 

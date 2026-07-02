@@ -1,7 +1,6 @@
-{ pkgs, lib, pkgsCodex, ... }:
+{ pkgs, ... }:
 
 let
-  opencodeLatest = import ../../pkgs/opencode-latest.nix { inherit lib pkgs; };
   prince = pkgs.callPackage ../../pkgs/prince.nix { };
 in
 {
@@ -12,8 +11,6 @@ in
 
   environment.systemPackages = with pkgs; [
     gemini-cli
-    pkgsCodex.codex
-    opencodeLatest
     prince
 
     lazygit

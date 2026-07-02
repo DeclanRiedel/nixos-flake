@@ -4,6 +4,18 @@ let
   themeName = "sddm-spiderverse";
   wallpaper = ../wall/sddm-wall.jpg;
 
+  # The hyprland package ships both hyprland.desktop and hyprland-uwsm.desktop;
+  # the SDDM greeter sorts hyprland-uwsm.desktop first and launches it, but the
+  # uwsm session exits 127 and dumps the user back at the greeter. Register a
+  # session package that exposes only the working direct hyprland.desktop entry.
+  hyprlandSessionOnly = pkgs.runCommand "hyprland-session-only"
+    {
+      passthru.providedSessions = [ "hyprland" ];
+    } ''
+    mkdir -p "$out/share/wayland-sessions"
+    cp ${pkgs.hyprland}/share/wayland-sessions/hyprland.desktop "$out/share/wayland-sessions/"
+  '';
+
   spiderverseTheme = pkgs.sddm-astronaut.overrideAttrs (_: {
     pname = themeName;
     name = themeName;
@@ -138,6 +150,9 @@ in
     # the user back to the greeter. Use Hyprland's direct session entry, which
     # runs the same start-hyprland launcher that works from a TTY.
     defaultSession = lib.mkForce "hyprland";
+
+    # Drop the broken hyprland-uwsm.desktop entry; offer only the direct session.
+    sessionPackages = lib.mkForce [ hyprlandSessionOnly ];
 
     sddm = {
       enable = true;
