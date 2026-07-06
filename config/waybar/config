@@ -2,7 +2,7 @@
                       // Choose the order of the modulesaround
                       "modules-left": ["hyprland/workspaces", "custom/zed-thread-runner"],
                       "modules-center": ["mpris", "custom/spacer", "hyprland/window"],
-                      "modules-right": ["custom/notifications", "tray", "clock","idle_inhibitor", "custom/pacman","network", "backlight", "pulseaudio", "battery" ],
+                       "modules-right": ["custom/notifications", "tray", "clock","idle_inhibitor", "custom/pacman","custom/vpn","network", "backlight", "pulseaudio", "battery" ],
 
                        "hyprland/workspaces": {
                            "disable-scroll": true,
@@ -92,6 +92,19 @@
 "custom/spacer": { 
 "format": " "
 },
+
+                       "custom/vpn": {
+                           "format": "{icon}",
+                           "return-type": "json",
+                           "format-icons": {
+                               "on": "VPN",
+                               "off": "VPN"
+                           },
+                           "exec": "$HOME/.config/waybar/vpn-status",
+                           "on-click": "$HOME/.config/waybar/vpn-toggle",
+                           "interval": 2,
+                           "tooltip": true
+                       },
                       "idle_inhibitor": {
                 "format": "{icon}",
                 "format-icons": {

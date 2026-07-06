@@ -2,14 +2,14 @@
 
 {
   sops = {
-    defaultSopsFile = ../../secrets/default.yaml;
+    defaultSopsFile = ../secrets/default.yaml;
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
     secrets = {
       "declan-password".neededForUsers = true;
       "root-password".neededForUsers = true;
       "wireguard-private-key" = {
-        sopsFile = ../../secrets/wireguard.yaml;
+        sopsFile = ../secrets/wireguard.yaml;
       };
     };
   };

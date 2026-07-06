@@ -45,6 +45,7 @@ tooltip label {
 #clock,
 #idle_inhibitor,
 #custom-pacman,
+#custom-vpn,
 #network,
 #backlight,
 #pulseaudio,
@@ -202,6 +203,16 @@ window#waybar.empty #window {
 
 #custom-pacman {
   color: @teal;
+}
+
+#custom-vpn {
+  color: @overlay2;
+}
+
+#custom-vpn.active {
+  background-color: rgba(63, 89, 71, 0.74);
+  border-color: rgba(158, 206, 106, 0.28);
+  color: @green;
 }
 
 #network.disconnected {

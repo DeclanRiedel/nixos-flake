@@ -145,4 +145,28 @@ in
       }))
     '';
   };
+
+  home.file.".config/waybar/vpn-status" = {
+    executable = true;
+    text = ''
+      #!${pkgs.bash}/bin/bash
+      if systemctl is-active --quiet wireguard-wg0.service; then
+        printf '{"text":"VPN","alt":"on","class":"active","tooltip":"WireGuard: connected (wg0) - click to disconnect"}\n'
+      else
+        printf '{"text":"VPN","alt":"off","class":"inactive","tooltip":"WireGuard: disconnected - click to connect"}\n'
+      fi
+    '';
+  };
+
+  home.file.".config/waybar/vpn-toggle" = {
+    executable = true;
+    text = ''
+      #!${pkgs.bash}/bin/bash
+      if systemctl is-active --quiet wireguard-wg0.service; then
+        sudo /run/current-system/sw/bin/systemctl stop wireguard-wg0.service
+      else
+        sudo /run/current-system/sw/bin/systemctl start wireguard-wg0.service
+      fi
+    '';
+  };
 }
