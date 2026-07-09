@@ -79,6 +79,30 @@
     {
       formatter.${system} = pkgsUnfree.nixpkgs-fmt;
 
+      apps.${system} = {
+        # `nix run .#switch [host]` — build and activate the config for the
+        # given host (defaults to the current hostname) via nh. Runs against
+        # the working tree (`.`) so uncommitted edits are picked up.
+        switch = {
+          type = "app";
+          program = toString (pkgsUnfree.writeShellScript "switch" ''
+            set -euo pipefail
+            host="''${1:-$(hostname)}"
+            exec ${pkgsUnfree.nh}/bin/nh os switch --hostname "$host" .
+          '');
+        };
+
+        # `nix run .#boot [host]` — same, but stage for next boot.
+        boot = {
+          type = "app";
+          program = toString (pkgsUnfree.writeShellScript "boot" ''
+            set -euo pipefail
+            host="''${1:-$(hostname)}"
+            exec ${pkgsUnfree.nh}/bin/nh os boot --hostname "$host" .
+          '');
+        };
+      };
+
       checks.${system} = {
         format = pkgsUnfree.runCommand "nixos-format-check"
           {
