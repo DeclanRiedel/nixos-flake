@@ -19,9 +19,22 @@ jobs:
         with:
           extra_nix_config: |
             experimental-features = nix-command flakes
+            accept-flake-config = true
 
-      - name: Check root flake
-        run: nix flake check --print-build-logs
+      - name: Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: nixpkgs-fmt
+        run: nix build --print-build-logs .#checks.x86_64-linux.format
+
+      - name: deadnix
+        run: nix build --print-build-logs .#checks.x86_64-linux.deadnix
+
+      - name: statix
+        run: nix build --print-build-logs .#checks.x86_64-linux.statix
+
+      - name: nix flake check
+        run: nix flake check --print-build-logs --no-build
 
       - name: Evaluate templates
         run: ./scripts/check-templates.sh
