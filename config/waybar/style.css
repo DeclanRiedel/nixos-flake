@@ -46,6 +46,9 @@ tooltip label {
 #idle_inhibitor,
 #custom-pacman,
 #custom-vpn,
+#custom-spotify-prev,
+#custom-spotify-toggle,
+#custom-spotify-next,
 #network,
 #backlight,
 #pulseaudio,
@@ -55,6 +58,22 @@ tooltip label {
   border-radius: 999px;
   margin: 5px 3px;
   padding: 0 10px;
+}
+
+#custom-spotify-prev,
+#custom-spotify-toggle,
+#custom-spotify-next {
+  color: @green;
+  margin: 5px 1px;
+  padding: 0 8px;
+  font-size: 14px;
+}
+
+#custom-spotify-prev:hover,
+#custom-spotify-toggle:hover,
+#custom-spotify-next:hover {
+  background-color: rgba(158, 206, 106, 0.18);
+  color: @text;
 }
 
 #workspaces {

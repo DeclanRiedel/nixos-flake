@@ -30,6 +30,7 @@ in
     ./zed.nix
     ./floorp.nix
     ./zathura.nix
+    ./spotifyd.nix
   ];
 
   # Newer stylix also sets gtk4.theme.package; force ours to resolve the clash.

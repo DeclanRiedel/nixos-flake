@@ -1,7 +1,7 @@
                   {
                       // Choose the order of the modulesaround
                       "modules-left": ["hyprland/workspaces", "custom/zed-thread-runner"],
-                      "modules-center": ["mpris", "custom/spacer", "hyprland/window"],
+                      "modules-center": ["custom/spotify-prev", "custom/spotify-toggle", "custom/spotify-next", "mpris", "custom/spacer", "hyprland/window"],
                        "modules-right": ["custom/notifications", "tray", "clock","idle_inhibitor", "custom/pacman","custom/vpn","network", "backlight", "pulseaudio", "battery" ],
 
                        "hyprland/workspaces": {
@@ -40,17 +40,43 @@
                       },
 
                       "mpris": {
-      	"format": "{status_icon} {title}",
-      	"format-paused": "{status_icon} {title}",
+      	"format": "{status_icon} {dynamic}",
+      	"format-paused": "{status_icon} {dynamic}",
+      	"dynamic-order": ["title", "artist"],
+      	"dynamic-separator": " – ",
       	"player-icons": {
       		"default": "▶",
-      		"mpv": "🎵"
+      		"mpv": "🎵",
+      		"spotify": "",
+      		"spotifyd": ""
       	},
       	"status-icons": {
-      		"paused": "⏸"
+      		"playing": "▶",
+      		"paused": "⏸",
+      		"stopped": "⏹"
       	},
-        "max-length": 35
+        "max-length": 45
       },
+
+                      "custom/spotify-prev": {
+                          "format": "⏮",
+                          "tooltip": false,
+                          "on-click": "playerctl -p spotify,spotifyd previous"
+                      },
+
+                      "custom/spotify-toggle": {
+                          "format": "⏯",
+                          "tooltip": false,
+                          "on-click": "playerctl -p spotify,spotifyd play-pause",
+                          "on-click-right": "spotify"
+                      },
+
+                      "custom/spotify-next": {
+                          "format": "⏭",
+                          "tooltip": false,
+                          "on-click": "playerctl -p spotify,spotifyd next"
+                      },
+
 
                       "custom/pacman": {
                           "format": "{icon} {}",
