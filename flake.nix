@@ -24,6 +24,10 @@
       url = "github:DeclanRiedel/zed-thread-tui";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    opencode = {
+      url = "github:sst/opencode/v1.17.14";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, sops-nix, nixvim, nixpkgs-codex, nixpkgs-stable, worktrunk, ... }:
@@ -34,13 +38,12 @@
         config = {
           allowUnfree = true;
           android_sdk.accept_license = true;
-          # Pulled in transitively by an Electron app after the nixpkgs bump.
-          permittedInsecurePackages = [ "electron-39.8.10" ];
         };
       };
       pkgsCodex = import nixpkgs-codex {
         inherit system;
         config.allowUnfree = true;
+        overlays = [ inputs.opencode.overlays.default ];
       };
       pkgsStable = import nixpkgs-stable {
         inherit system;
