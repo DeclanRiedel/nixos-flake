@@ -45,5 +45,10 @@
     fcitx5
     gnome-disk-utility
     dpkg
+
+    nodejs_24
+    python3
+    gnumake
+    gcc
   ];
 }

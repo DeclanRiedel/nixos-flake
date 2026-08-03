@@ -65,6 +65,7 @@
         "app Vesktop" \
         "app Telegram" \
         "app Bitwarden" \
+        "app Spotify" \
         "app Settings" \
         "app All apps" \
         "dev NixOS flake in Zed" \
@@ -105,6 +106,7 @@
         "app Vesktop") exec vesktop ;;
         "app Telegram") exec telegram-desktop ;;
         "app Bitwarden") exec bitwarden ;;
+        "app Spotify") run_shell 'spotify_player' ;;
         "app Settings") exec xfce4-settings-manager ;;
         "app All apps") exec "$fuzzel" ;;
         "dev NixOS flake in Zed") exec zeditor "$HOME/.nixos" ;;

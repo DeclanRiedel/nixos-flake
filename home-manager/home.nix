@@ -75,6 +75,7 @@ in
       codex = "codex --yolo";
       ranger = "y";
       switch = "/home/declan/.nixos/scripts/switch.sh";
+      update-ai = "cd ~/.nixos && nix flake update nixpkgs-codex && /home/declan/.nixos/scripts/switch.sh";
       yazi = "y";
     };
   };

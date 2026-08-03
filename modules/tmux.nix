@@ -1,13 +1,25 @@
 { pkgs, ... }:
 
 let
+  resurrectDir = "/home/declan/.local/state/tmux/resurrect";
+  resurrectScripts = "${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts";
+
   tmuxStart = pkgs.writeShellScript "tmux-start" ''
     set -euo pipefail
 
-    mkdir -p "$HOME/.local/state/tmux/resurrect"
+    mkdir -p "${resurrectDir}"
 
+    # Ensure a server + fallback session first: this sources the config so
+    # @resurrect-dir and friends are set before we restore. Guarantees
+    # `tmux attach` always succeeds even if the restore below finds nothing.
     if ! ${pkgs.tmux}/bin/tmux has-session 2>/dev/null; then
       ${pkgs.tmux}/bin/tmux new-session -d -s main
+    fi
+
+    # Deterministic restore (continuum-restore is off so this is the only path).
+    # Layers the saved sessions on top of the fallback `main`.
+    if [ -e "${resurrectDir}/last" ]; then
+      ${pkgs.tmux}/bin/tmux run-shell "${resurrectScripts}/restore.sh"
     fi
   '';
 
@@ -15,7 +27,7 @@ let
     set -euo pipefail
 
     if ${pkgs.tmux}/bin/tmux has-session 2>/dev/null; then
-      ${pkgs.tmux}/bin/tmux run-shell "${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts/save.sh quiet"
+      ${pkgs.tmux}/bin/tmux run-shell "${resurrectScripts}/save.sh quiet"
     fi
   '';
 in
@@ -55,8 +67,8 @@ in
 
         set -g status on
         set -g @continuum-save-interval '5'
-        set -g @continuum-restore 'on'
-        set -g @resurrect-dir '$HOME/.local/state/tmux/resurrect'
+        set -g @continuum-restore 'off'
+        set -g @resurrect-dir '${resurrectDir}'
         set -g @resurrect-capture-pane-contents 'on'
         set -g @resurrect-strategy-vim 'session'
         set -g @resurrect-strategy-nvim 'session'

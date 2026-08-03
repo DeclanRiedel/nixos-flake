@@ -4,6 +4,12 @@
   networking.firewall.allowedTCPPorts = [ 443 80 3000 5173 ];
   networking.firewall.allowedUDPPorts = [ 51820 ];
 
+  # This network hands out a link-local IPv6 address but has no IPv6 route,
+  # so DNS returns AAAA records that glibc/browsers try first and hang on
+  # until they time out (the "hard-refresh every tab" symptom). IPv6 is
+  # unroutable here, so disable it on this host and force IPv4-only.
+  networking.enableIPv6 = false;
+
   networking.networkmanager.plugins = with pkgs; [
     networkmanager-openvpn
   ];
@@ -29,7 +35,9 @@
     peers = [
       {
         publicKey = "SL8XRNCJc4iKT3VE2p7zwoL0+FPKMS+dJzaWGvjeozE=";
-        allowedIPs = [ "::/0" ];
+        # IPv4 full tunnel. Was "::/0" (IPv6-only) which routed no IPv4 traffic
+        # and would fail to add its route now that IPv6 is disabled on this host.
+        allowedIPs = [ "0.0.0.0/0" ];
         endpoint = "office.revo.in.na:13231";
         persistentKeepalive = 10;
       }
