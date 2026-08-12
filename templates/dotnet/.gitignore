@@ -1,7 +1,15 @@
 .direnv/
+.dotnet/
 .dotnet-home/
 .nuget/
 bin/
 obj/
 TestResults/
 coverage/
+android-smoke.*/
+maui-smoke.*/
+appsettings.Development.local.json
+*.user
+*.suo
+*.userosscache
+*.sln.docstates

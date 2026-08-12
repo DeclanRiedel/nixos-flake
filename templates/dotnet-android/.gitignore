@@ -1,7 +1,0 @@
-.direnv/
-.dotnet/
-.dotnet-home/
-.nuget/
-bin/
-obj/
-android-smoke.*/

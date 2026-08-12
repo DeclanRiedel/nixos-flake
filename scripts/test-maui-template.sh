@@ -8,7 +8,7 @@ trap 'rm -rf "$workdir"' EXIT
 echo "using temp dir: $workdir"
 cd "$workdir"
 
-nix flake init -t "$repo_root#dotnet-maui"
+nix flake init -t "$repo_root#dotnet"
 git init --quiet
 git add .
-nix run --no-write-lock-file .# -- -c 'maui-smoke-test'
+nix run --no-write-lock-file .#maui -- -c 'maui-smoke-test'

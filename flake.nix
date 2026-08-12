@@ -163,22 +163,7 @@
 
         dotnet = {
           path = ./templates/dotnet;
-          description = ".NET SDK dev shell for console, library, test, and F# workflows";
-        };
-
-        dotnet-android = {
-          path = ./templates/dotnet-android;
-          description = "NixOS .NET Android dev shell with project-local writable .NET workloads";
-        };
-
-        dotnet-maui = {
-          path = ./templates/dotnet-maui;
-          description = "NixOS .NET MAUI dev shell with project-local writable .NET workloads";
-        };
-
-        dotnet-web = {
-          path = ./templates/dotnet-web;
-          description = ".NET ASP.NET Core/API work with HTTPS dev-cert helpers and EF tooling path";
+          description = ".NET 10 shells for console, web, Android, and MAUI Android projects";
         };
 
         node = {

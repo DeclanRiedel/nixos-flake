@@ -1,8 +1,0 @@
-.direnv/
-.dotnet-home/
-.nuget/
-bin/
-obj/
-TestResults/
-coverage/
-appsettings.Development.local.json
