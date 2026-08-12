@@ -50,6 +50,12 @@
             ./hosts/nixos-wsl/default.nix
           ];
         };
+        bedrock = {
+          homeManager = false;
+          modules = [
+            ./hosts/bedrock/default.nix
+          ];
+        };
       };
       mkPkgs = system: import nixpkgs {
         inherit system;
@@ -97,6 +103,7 @@
               networking.hostName = nixpkgs.lib.mkDefault hostName;
             }
             sops-nix.nixosModules.sops
+          ] ++ nixpkgs.lib.optionals (host.homeManager or true) [
             inputs.stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             (mkHomeManagerModule hostConfig)
