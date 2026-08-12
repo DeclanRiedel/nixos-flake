@@ -30,7 +30,7 @@
     lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   networking.useDHCP = lib.mkDefault true;
-  networking.firewall.allowedTCPPorts = [ 22 4321 5432 5900 3000 8080];
+  networking.firewall.allowedTCPPorts = [ 22 4321 5432 5900 3000 8080 ];
   networking.firewall.allowedTCPPortRanges = [
     {
       from = 5000;
