@@ -33,9 +33,7 @@
       hosts = {
         machine = {
           modules = [
-            ./misc/config.nix
-            ./modules/default.nix
-            ./server/default.nix
+            ./hosts/machine/default.nix
           ];
         };
         vostro = {
@@ -43,7 +41,7 @@
             ./hosts/vostro/default.nix
             ./modules/default.nix
             ./modules/ai-auto-update.nix
-            ./modules/memory.nix
+            ./hosts/vostro/memory.nix
           ];
         };
         nixos-wsl = {
@@ -188,11 +186,6 @@
         dotnet-web = {
           path = ./templates/dotnet-web;
           description = ".NET ASP.NET Core/API work with HTTPS dev-cert helpers and EF tooling path";
-        };
-
-        go = {
-          path = ./templates/go;
-          description = "Go dev shell with gopls, gotools, golangci-lint, and Delve";
         };
 
         node = {
