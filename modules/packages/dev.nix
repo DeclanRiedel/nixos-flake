@@ -10,6 +10,10 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    vim
+    htop
+    gnugrep
+
     gemini-cli
     prince
 

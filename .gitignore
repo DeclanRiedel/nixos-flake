@@ -1,9 +1,8 @@
-# each repo inside server/src/ should be ignored from flake and listed seperately below.
-server/src/portfolio/
+# Production source repositories are managed separately from this flake.
+hosts/machine/server/src/
 
 # nix build outputs
-result
-result-*
+result*
 
 # local plaintext secret material
 secrets/*

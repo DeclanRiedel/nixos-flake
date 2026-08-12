@@ -5,7 +5,6 @@
     ./system-settings.nix
     ./fhs.nix
     ./packages
-    ./legacy-packages.nix
     ./fonts.nix
     ./rice.nix
     ./sddm.nix
