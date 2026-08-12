@@ -35,13 +35,10 @@
     pkgsCodex.claude-code
     gemini-cli
 
-    neovim
     git
     git-lfs
-    gh
     lazygit
     diff-so-fancy
-    tmux
     just
 
     ripgrep
@@ -75,7 +72,6 @@
     ncdu
     dust
     tldr
-    fastfetch
     hyperfine
 
     dotnet-sdk_9

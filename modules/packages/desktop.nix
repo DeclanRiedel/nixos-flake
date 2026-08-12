@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ lib, pkgs, pkgsStable, ... }:
 
 {
   programs.hyprland = {
@@ -26,15 +26,15 @@
   };
 
   environment.systemPackages = with pkgs; [
+    ghostty
+    brightnessctl
+    fuzzel
     udiskie
     xwayland
-    waypipe
-    wlroots
     wayvnc
 
     wl-clipboard
     wl-clip-persist
-    clipman
     cliphist
     wl-screenrec
     imv
@@ -47,17 +47,31 @@
     hyprpicker
     hyprpaper
     hyprshade
-    hyprutils
-    uwsm
 
     libnotify
-    eww
     wlogout
 
     cheese
     swappy
+    gnome-disk-utility
+    fcitx5
     floorp-bin
     firefox-devedition
     networkmanagerapplet
+
+    vscode-fhs
+    zed-editor
+
+    telegram-desktop
+    pkgsStable.bitwarden-desktop
+    vesktop
+    obsidian
+
+    mpv
+    spotify
+    spotify-player
+    vlc
+    ffmpeg
+    atomicparsley
   ];
 }
