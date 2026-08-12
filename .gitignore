@@ -1,6 +1,3 @@
-# Production source repositories are managed separately from this flake.
-hosts/machine/server/src/
-
 # nix build outputs
 result*
 

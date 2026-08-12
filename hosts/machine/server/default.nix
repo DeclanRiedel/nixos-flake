@@ -1,5 +1,0 @@
-{
-  imports = [
-    # ./declanriedel-dev.nix
-  ];
-}

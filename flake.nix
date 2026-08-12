@@ -31,11 +31,6 @@
       defaultSystem = "x86_64-linux";
       defaultUser = { name = "declan"; home = "/home/declan"; };
       hosts = {
-        machine = {
-          modules = [
-            ./hosts/machine/default.nix
-          ];
-        };
         vostro = {
           modules = [
             ./hosts/vostro/default.nix
