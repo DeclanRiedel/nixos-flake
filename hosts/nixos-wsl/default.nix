@@ -75,15 +75,8 @@
     tldr
     hyperfine
 
-    dotnet-sdk_9
-    jdk17
     docker-client
   ];
-
-  environment.sessionVariables = {
-    DOTNET_ROOT = "${pkgs.dotnet-sdk_9.unwrapped}/share/dotnet";
-    JAVA_HOME = pkgs.jdk17.home;
-  };
 
   services.openssh.enable = true;
 

@@ -1,14 +1,6 @@
 { pkgs, pkgsCodex, ... }:
 
-let
-  prince = pkgs.callPackage ../../pkgs/prince.nix { };
-in
 {
-  environment.sessionVariables = {
-    DOTNET_ROOT = "${pkgs.dotnet-sdk_9.unwrapped}/share/dotnet";
-    JAVA_HOME = pkgs.jdk17.home;
-  };
-
   environment.systemPackages = with pkgs; [
     # Shell and everyday terminal tools
     vim
@@ -49,21 +41,13 @@ in
     dust
     dpkg
 
-    # Development runtimes and tooling
-    nodejs_24
-    python3
-    gnumake
-    gcc
-    dotnet-sdk_9
-    jdk17
+    # Nix development tooling
     nixd
     nil
     nixpkgs-fmt
     alejandra
     deadnix
     statix
-    gemini-cli
-    prince
 
     # AI command-line tools
     pkgsCodex.opencode
