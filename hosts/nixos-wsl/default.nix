@@ -1,7 +1,8 @@
-{ hostConfig, pkgs, pkgsCodex, ... }:
+{ hostConfig, inputs, pkgs, pkgsCodex, ... }:
 
 {
   imports = [
+    inputs.nixos-wsl.nixosModules.default
     ../../modules/zsh.nix
     ../../modules/user-settings.nix
     ../../modules/tmux.nix

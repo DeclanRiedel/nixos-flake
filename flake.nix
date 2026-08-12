@@ -26,30 +26,21 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, sops-nix, nixvim, nixpkgs-codex, nixpkgs-stable, worktrunk, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, nixvim, nixpkgs-codex, nixpkgs-stable, worktrunk, ... }:
     let
       defaultSystem = "x86_64-linux";
       defaultUser = { name = "declan"; home = "/home/declan"; };
       hosts = {
         vostro = {
-          modules = [
-            ./hosts/vostro/default.nix
-            ./modules/default.nix
-            ./modules/ai-auto-update.nix
-            ./hosts/vostro/memory.nix
-          ];
+          module = ./hosts/vostro/default.nix;
+          homeModule = ./home-manager/desktop.nix;
         };
         nixos-wsl = {
-          modules = [
-            inputs.nixos-wsl.nixosModules.default
-            ./hosts/nixos-wsl/default.nix
-          ];
+          module = ./hosts/nixos-wsl/default.nix;
         };
         mc-bedrock = {
           homeManager = false;
-          modules = [
-            ./hosts/mc-bedrock/default.nix
-          ];
+          module = ./hosts/mc-bedrock/default.nix;
         };
       };
       mkPkgs = system: import nixpkgs {
@@ -66,7 +57,7 @@
         home-manager.extraSpecialArgs = { inherit inputs hostConfig; };
         home-manager.users.${hostConfig.user.name} = {
           imports = [
-            ./home-manager/home.nix
+            (hostConfig.homeModule or ./home-manager/home.nix)
             nixvim.homeModules.nixvim
             worktrunk.homeModules.default
           ];
@@ -93,13 +84,12 @@
           inherit system;
           pkgs = pkgsUnfree;
           specialArgs = { inherit inputs hostConfig pkgsCodex pkgsStable; };
-          modules = host.modules ++ [
+          modules = [
+            host.module
             {
               networking.hostName = nixpkgs.lib.mkDefault hostName;
             }
-            sops-nix.nixosModules.sops
           ] ++ nixpkgs.lib.optionals (host.homeManager or true) [
-            inputs.stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             (mkHomeManagerModule hostConfig)
           ];

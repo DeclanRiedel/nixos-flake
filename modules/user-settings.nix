@@ -2,7 +2,6 @@
   users.users.${hostConfig.user.name} = {
     isNormalUser = true;
     home = hostConfig.user.home;
-    extraGroups = [ "wheel" "networkmanager" "audio" "video" "input" "render" "seat" "docker" "dialout" ];
     uid = 1000;
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB36tS6T6hOQ+PlarOlfrF2uwbsSMD9EOBr5KpUo5Bay declan.riedel@protonmail.com" ];

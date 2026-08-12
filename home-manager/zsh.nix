@@ -5,8 +5,6 @@ let
 in
 {
   programs.zsh.initContent = ''
-    export DISPLAY=:0.0
-
     nix-init() {
         if [ -z "$1" ]; then
             echo "Usage: nix-init <environment>"
