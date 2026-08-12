@@ -89,14 +89,4 @@
   systemd.services.nix-gc.preStart = ''
     ${pkgs.nix}/bin/nix-env --profile /nix/var/nix/profiles/system --delete-generations +6
   '';
-
-  system = {
-    autoUpgrade = {
-      enable = true;
-      operation = "boot";
-      flake = "github:DeclanRiedel/nixos-flake";
-      dates = "weekly";
-    };
-
-  };
 }
