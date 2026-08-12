@@ -1,5 +1,6 @@
 # nix build outputs
-result*
+result
+result-*
 
 # local plaintext secret material
 secrets/*

@@ -4,8 +4,6 @@ let
   prince = pkgs.callPackage ../../pkgs/prince.nix { };
 in
 {
-  imports = [ ./desktop.nix ];
-
   environment.sessionVariables = {
     DOTNET_ROOT = "${pkgs.dotnet-sdk_9.unwrapped}/share/dotnet";
     JAVA_HOME = pkgs.jdk17.home;

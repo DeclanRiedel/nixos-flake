@@ -30,6 +30,7 @@
     let
       defaultSystem = "x86_64-linux";
       defaultUser = { name = "declan"; home = "/home/declan"; };
+      sshKeys = import ./lib/ssh-keys.nix;
       hosts = {
         vostro = {
           module = ./hosts/vostro/default.nix;
@@ -83,7 +84,7 @@
         nixpkgs.lib.nixosSystem {
           inherit system;
           pkgs = pkgsUnfree;
-          specialArgs = { inherit inputs hostConfig pkgsCodex pkgsStable; };
+          specialArgs = { inherit inputs hostConfig pkgsCodex pkgsStable sshKeys; };
           modules = [
             host.module
             {

@@ -6,6 +6,7 @@
     ../../modules/zsh.nix
     ../../modules/user-settings.nix
     ../../modules/tmux.nix
+    ../../modules/ai-auto-update.nix
   ];
 
   system.stateVersion = "25.11";
@@ -85,7 +86,6 @@
   };
 
   services.openssh.enable = true;
-  programs.ssh.startAgent = true;
 
   users.users.${hostConfig.user.name}.linger = true;
   users.users.root.shell = pkgs.zsh;

@@ -3,15 +3,38 @@
 {
   programs.hyprland = {
     enable = true;
-    # uwsm-managed session exits with code 127 under SDDM, bouncing the user
-    # back to the greeter. Launch Hyprland directly via its start-hyprland
-    # session entry instead (the only wayland session once uwsm is off).
+    # The UWSM-managed session exits with code 127 under SDDM. Launch
+    # Hyprland directly through its start-hyprland session entry.
     withUWSM = false;
   };
 
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
+  programs.waybar.enable = true;
+  programs.hyprlock.enable = true;
+  services.hypridle.enable = true;
+
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
   };
+  services.blueman.enable = true;
+
+  # SDDM runs on X11 while the user session runs on Wayland.
+  services.xserver.enable = true;
+
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    wireplumber.enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
+
+  services.printing.enable = true;
+  services.libinput.enable = true;
+
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   programs.seahorse.enable = true;
   programs.chromium.enable = lib.mkForce false;

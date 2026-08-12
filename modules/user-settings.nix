@@ -1,11 +1,13 @@
-{ hostConfig, pkgs, ... }: {
+{ hostConfig, pkgs, sshKeys, ... }: {
   users.users.${hostConfig.user.name} = {
     isNormalUser = true;
     home = hostConfig.user.home;
     uid = 1000;
     shell = pkgs.zsh;
-    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB36tS6T6hOQ+PlarOlfrF2uwbsSMD9EOBr5KpUo5Bay declan.riedel@protonmail.com" ];
+    openssh.authorizedKeys.keys = [ sshKeys.personal ];
   };
+
+  programs.ssh.startAgent = true;
 
   time.timeZone = "Africa/Windhoek";
   #services.automatic-timezoned.enable = true;

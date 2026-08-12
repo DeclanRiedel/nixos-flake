@@ -1,4 +1,4 @@
-{ hostConfig, inputs, pkgs, ... }:
+{ hostConfig, inputs, pkgs, sshKeys, ... }:
 
 {
   imports = [
@@ -9,22 +9,25 @@
     ./power.nix
     ./remote.nix
     ./memory.nix
-    ../../modules/default.nix
+    ./system.nix
+    ./secrets.nix
+    ./development.nix
+    ../../modules/zsh.nix
+    ../../modules/user-settings.nix
+    ../../modules/fhs.nix
+    ../../modules/packages
+    ../../modules/desktop.nix
+    ../../modules/fonts.nix
+    ../../modules/sddm.nix
+    ../../modules/stylix.nix
+    ../../modules/tmux.nix
     ../../modules/ai-auto-update.nix
-    ../../modules/secrets.nix
   ];
 
   system.stateVersion = "25.11";
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-
   users.users.${hostConfig.user.name} = {
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM6L3iyvr7PKLMkieNUsDVuywKC3xP12uobeMo5L8chv declan@declan-NucBox-K7-PLUS"
-    ];
+    openssh.authorizedKeys.keys = [ sshKeys.nucBox ];
     extraGroups = [
       "wheel"
       "networkmanager"

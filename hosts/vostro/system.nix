@@ -1,6 +1,6 @@
-{ hostConfig, lib, pkgs, ... }: {
+{ hostConfig, lib, pkgs, ... }:
 
-  #systemd bootloader 
+{
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
@@ -8,12 +8,8 @@
     systemd-boot.configurationLimit = lib.mkDefault 6;
   };
 
-  networking = {
-    networkmanager.enable = true;
-  };
+  networking.networkmanager.enable = true;
 
-  ##ssh 
-  programs.ssh.startAgent = true;
   services.openssh = {
     enable = true;
     settings = {
@@ -23,36 +19,6 @@
       PermitRootLogin = "no";
     };
   };
-
-  ## bluetooth
-
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-  };
-  services.blueman.enable = true;
-
-  services.xserver.enable = true; # xorg
-
-  ## sound
-
-  #sound.enable = true; -deprecated?
-  security.rtkit.enable = true;
-
-  services.pipewire = {
-    enable = true;
-    wireplumber.enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-  };
-
-  ## cups for printing
-  services.printing.enable = true;
-
-  ## touchpad support? hyprland does it already?
-  services.libinput.enable = true;
 
   nix = {
     gc = {
