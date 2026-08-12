@@ -50,10 +50,10 @@
             ./hosts/nixos-wsl/default.nix
           ];
         };
-        bedrock = {
+        mc-bedrock = {
           homeManager = false;
           modules = [
-            ./hosts/bedrock/default.nix
+            ./hosts/mc-bedrock/default.nix
           ];
         };
       };

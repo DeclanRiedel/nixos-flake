@@ -10,8 +10,9 @@ Usage:
   scripts/switch.sh --list
 
 Hosts:
-  vostro     Laptop/desktop Hyprland system.
-  nixos-wsl  Terminal-first WSL2 development system.
+  vostro      Laptop/desktop Hyprland system.
+  nixos-wsl   Terminal-first WSL2 development system.
+  mc-bedrock  Minimal headless Minecraft Bedrock server.
 
 If no host is provided, the current hostname is used.
 EOF

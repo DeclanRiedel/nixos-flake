@@ -1,4 +1,4 @@
-# Bedrock host
+# Minecraft Bedrock host
 
 This host was migrated from `DeclanRiedel/mc-bedrock-nixos`.
 
@@ -10,5 +10,5 @@ This host was migrated from `DeclanRiedel/mc-bedrock-nixos`.
 Deploy from this flake with:
 
 ```sh
-sudo nixos-rebuild switch --flake .#bedrock
+sudo nixos-rebuild switch --flake .#mc-bedrock
 ```

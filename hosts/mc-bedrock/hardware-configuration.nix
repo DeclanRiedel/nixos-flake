@@ -1,4 +1,4 @@
-# Generated on the Bedrock server. Regenerate this file if its hardware or
+# Generated on the mc-bedrock server. Regenerate this file if its hardware or
 # disk layout changes.
 { config, lib, modulesPath, ... }:
 
