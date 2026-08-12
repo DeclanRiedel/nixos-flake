@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ hostConfig, pkgs, ... }:
 
 {
   imports = [
@@ -16,9 +16,7 @@
     "flakes"
   ];
 
-  networking.hostName = lib.mkForce "vostro";
-
-  users.users.declan.openssh.authorizedKeys.keys = [
+  users.users.${hostConfig.user.name}.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM6L3iyvr7PKLMkieNUsDVuywKC3xP12uobeMo5L8chv declan@declan-NucBox-K7-PLUS"
   ];
 

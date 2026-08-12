@@ -28,28 +28,44 @@
 
   outputs = inputs@{ self, nixpkgs, home-manager, sops-nix, nixvim, nixpkgs-codex, nixpkgs-stable, worktrunk, ... }:
     let
-      system = "x86_64-linux";
-      pkgsUnfree = import nixpkgs {
+      defaultSystem = "x86_64-linux";
+      defaultUser = { name = "declan"; home = "/home/declan"; };
+      hosts = {
+        machine = {
+          modules = [
+            ./misc/config.nix
+            ./modules/default.nix
+            ./server/default.nix
+          ];
+        };
+        vostro = {
+          modules = [
+            ./hosts/vostro/default.nix
+            ./modules/default.nix
+            ./modules/ai-auto-update.nix
+            ./modules/memory.nix
+          ];
+        };
+        nixos-wsl = {
+          modules = [
+            inputs.nixos-wsl.nixosModules.default
+            ./hosts/nixos-wsl/default.nix
+          ];
+        };
+      };
+      mkPkgs = system: import nixpkgs {
         inherit system;
         config = {
           allowUnfree = true;
           android_sdk.accept_license = true;
         };
       };
-      pkgsCodex = import nixpkgs-codex {
-        inherit system;
-        config.allowUnfree = true;
-      };
-      pkgsStable = import nixpkgs-stable {
-        inherit system;
-        config.allowUnfree = true;
-      };
-      homeManagerModule = {
+      mkHomeManagerModule = hostConfig: {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.backupFileExtension = "backup";
-        home-manager.extraSpecialArgs = { inherit inputs; };
-        home-manager.users.declan = {
+        home-manager.extraSpecialArgs = { inherit inputs hostConfig; };
+        home-manager.users.${hostConfig.user.name} = {
           imports = [
             ./home-manager/home.nix
             nixvim.homeModules.nixvim
@@ -57,27 +73,43 @@
           ];
         };
       };
-      mkHost = modules:
+      mkHost = hostName: host:
+        let
+          system = host.system or defaultSystem;
+          pkgsUnfree = mkPkgs system;
+          pkgsCodex = import nixpkgs-codex {
+            inherit system;
+            config.allowUnfree = true;
+          };
+          pkgsStable = import nixpkgs-stable {
+            inherit system;
+            config.allowUnfree = true;
+          };
+          hostConfig = host // {
+            inherit hostName system;
+            user = host.user or defaultUser;
+          };
+        in
         nixpkgs.lib.nixosSystem {
           inherit system;
           pkgs = pkgsUnfree;
-          modules = [
+          specialArgs = { inherit inputs hostConfig pkgsCodex pkgsStable; };
+          modules = host.modules ++ [
             {
-              _module.args.pkgsCodex = pkgsCodex;
-              _module.args.pkgsStable = pkgsStable;
+              networking.hostName = nixpkgs.lib.mkDefault hostName;
             }
-          ] ++ modules ++ [
             sops-nix.nixosModules.sops
             inputs.stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
-            homeManagerModule
+            (mkHomeManagerModule hostConfig)
           ];
         };
+      pkgsUnfree = mkPkgs defaultSystem;
     in
     {
-      formatter.${system} = pkgsUnfree.nixpkgs-fmt;
+      formatter.${defaultSystem} = pkgsUnfree.nixpkgs-fmt;
 
-      apps.${system} = {
+      apps.${defaultSystem} = {
         # `nix run .#switch [host]` — build and activate the config for the
         # given host (defaults to the current hostname) via nh. Runs against
         # the working tree (`.`) so uncommitted edits are picked up.
@@ -101,7 +133,7 @@
         };
       };
 
-      checks.${system} = {
+      checks.${defaultSystem} = {
         format = pkgsUnfree.runCommand "nixos-format-check"
           {
             nativeBuildInputs = [ pkgsUnfree.nixpkgs-fmt ];
@@ -189,22 +221,6 @@
         };
       };
 
-      nixosConfigurations = {
-        machine = mkHost [
-          ./misc/config.nix
-          ./modules/default.nix
-          ./server/default.nix
-        ];
-
-        vostro = mkHost [
-          ./hosts/vostro/default.nix
-          ./modules/default.nix
-        ];
-
-        nixos-wsl = mkHost [
-          inputs.nixos-wsl.nixosModules.default
-          ./hosts/nixos-wsl/default.nix
-        ];
-      };
+      nixosConfigurations = nixpkgs.lib.mapAttrs mkHost hosts;
     };
 }

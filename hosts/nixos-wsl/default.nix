@@ -1,4 +1,4 @@
-{ pkgs, pkgsCodex, ... }:
+{ hostConfig, pkgs, pkgsCodex, ... }:
 
 {
   imports = [
@@ -9,11 +9,9 @@
 
   system.stateVersion = "25.11";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  #networking.hostName = lib.mkForce "nixos-wsl";
-
   wsl = {
     enable = true;
-    defaultUser = "declan";
+    defaultUser = hostConfig.user.name;
     useWindowsDriver = true;
     startMenuLaunchers = false;
     wslConf = {
@@ -92,6 +90,6 @@
   services.openssh.enable = true;
   programs.ssh.startAgent = true;
 
-  users.users.declan.linger = true;
+  users.users.${hostConfig.user.name}.linger = true;
   users.users.root.shell = pkgs.zsh;
 }

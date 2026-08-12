@@ -1,4 +1,4 @@
-{ inputs, lib, pkgs, ... }:
+{ hostConfig, inputs, lib, pkgs, ... }:
 
 let
   zedThreadRunner = inputs.zed-thread-tui.packages.${pkgs.stdenv.hostPlatform.system}.default;
@@ -78,7 +78,7 @@ in
       #!${pkgs.bash}/bin/bash
       set -euo pipefail
 
-      wall_dir="/home/declan/.nixos/wall"
+      wall_dir="${hostConfig.user.home}/.nixos/wall"
       state_dir="''${XDG_RUNTIME_DIR:-/tmp}/hyprpaper"
       config="$state_dir/hyprpaper.conf"
       wallpaper="$wall_dir/berserk.jpg"
@@ -168,7 +168,7 @@ in
       address=$address
       port=$port
       enable_auth=true
-      username=declan
+      username=${hostConfig.user.name}
       password=$(cat "$password_file")
       private_key_file=$tls_key
       certificate_file=$tls_cert

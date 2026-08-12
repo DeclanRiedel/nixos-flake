@@ -1,11 +1,12 @@
-{ config, inputs, lib, osConfig, pkgs, ... }:
+{ config, hostConfig, inputs, lib, pkgs, ... }:
 
 let
-  isWsl = osConfig.networking.hostName == "nixos-wsl";
+  isWsl = hostConfig.hostName == "nixos-wsl";
+  flakeDir = "${hostConfig.user.home}/.nixos";
 in
 {
-  home.username = "declan";
-  home.homeDirectory = "/home/declan";
+  home.username = hostConfig.user.name;
+  home.homeDirectory = hostConfig.user.home;
   home.stateVersion = "24.05";
 
   home.packages = [
@@ -74,8 +75,8 @@ in
       cc = "claude --dangerously-skip-permissions";
       codex = "codex --yolo";
       ranger = "y";
-      switch = "/home/declan/.nixos/scripts/switch.sh";
-      update-ai = "cd ~/.nixos && nix flake update nixpkgs-codex && /home/declan/.nixos/scripts/switch.sh";
+      switch = "${flakeDir}/scripts/switch.sh";
+      update-ai = "cd ${flakeDir} && nix flake update nixpkgs-codex && ${flakeDir}/scripts/switch.sh";
       yazi = "y";
     };
   };
@@ -104,6 +105,7 @@ in
 
   programs.nixvim = {
     enable = true;
+    nixpkgs.source = inputs.nixpkgs;
     imports = [ ../nixvim/config/default.nix ];
   };
 }

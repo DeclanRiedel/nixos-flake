@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, hostConfig, lib, pkgs, ... }:
 
 {
   networking.firewall.allowedTCPPorts = [ 443 80 3000 5173 ];
@@ -49,12 +49,12 @@
   # only comes up when toggled on demand from Waybar.
   systemd.targets."wireguard-wg0".wantedBy = lib.mkForce [ ];
 
-  # Allow declan to toggle the VPN from Waybar without a password prompt.
+  # Allow the primary user to toggle the VPN from Waybar without a password prompt.
   # Starting/stopping wireguard-wg0.service brings the peer up and down too,
   # because the peer unit both Requires and is WantedBy the interface service.
   security.sudo.extraRules = [
     {
-      users = [ "declan" ];
+      users = [ hostConfig.user.name ];
       commands = [
         { command = "/run/current-system/sw/bin/systemctl start wireguard-wg0.service"; options = [ "NOPASSWD" ]; }
         { command = "/run/current-system/sw/bin/systemctl stop wireguard-wg0.service"; options = [ "NOPASSWD" ]; }
@@ -68,7 +68,7 @@
     dumpcap.enable = true;
   };
 
-  users.users.declan.extraGroups = [ "wireshark" ];
+  users.users.${hostConfig.user.name}.extraGroups = [ "wireshark" ];
 
   environment.systemPackages = with pkgs; [
     wireguard-tools

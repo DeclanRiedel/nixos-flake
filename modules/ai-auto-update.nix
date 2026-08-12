@@ -1,14 +1,16 @@
-{ pkgs, ... }:
+{ hostConfig, pkgs, ... }:
 
 let
-  flakeDir = "/home/declan/.nixos";
+  inherit (hostConfig) hostName;
+  inherit (hostConfig.user) home name;
+  flakeDir = "${home}/.nixos";
   aiAutoUpdate = pkgs.writeShellScript "ai-auto-update" ''
     set -euo pipefail
     cd ${flakeDir}
-    ${pkgs.util-linux}/bin/runuser -u declan -- \
-      env HOME=/home/declan ${pkgs.nix}/bin/nix flake update nixpkgs-codex
+    ${pkgs.util-linux}/bin/runuser -u ${name} -- \
+      env HOME=${home} ${pkgs.nix}/bin/nix flake update nixpkgs-codex
     ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch \
-      --flake "path:${flakeDir}#$(hostname)"
+      --flake "path:${flakeDir}#${hostName}"
   '';
 in
 {

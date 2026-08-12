@@ -1,3 +1,8 @@
+{ hostConfig, ... }:
+
+let
+  flakeDir = "${hostConfig.user.home}/.nixos";
+in
 {
   programs = {
     zsh = {
@@ -24,8 +29,8 @@
         lsd = "eza -g -D -T";
         lsgit = "eza --git-ignore -T --icons";
         cat = "bat";
-        switch = "/home/declan/.nixos/scripts/switch.sh";
-        update = "/home/declan/.nixos/scripts/switch.sh vostro";
+        switch = "${flakeDir}/scripts/switch.sh";
+        update = "${flakeDir}/scripts/switch.sh ${hostConfig.hostName}";
         c = "clear";
         n = "nvim";
         vim = "nvim";

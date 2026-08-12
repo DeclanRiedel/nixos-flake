@@ -1,7 +1,7 @@
-{ pkgs, ... }: {
-  users.users.declan = {
+{ hostConfig, pkgs, ... }: {
+  users.users.${hostConfig.user.name} = {
     isNormalUser = true;
-    home = "/home/declan";
+    home = hostConfig.user.home;
     extraGroups = [ "wheel" "networkmanager" "audio" "video" "input" "render" "seat" "docker" "dialout" ];
     uid = 1000;
     shell = pkgs.zsh;

@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ hostConfig, pkgs, ... }:
 
 let
-  resurrectDir = "/home/declan/.local/state/tmux/resurrect";
+  resurrectDir = "${hostConfig.user.home}/.local/state/tmux/resurrect";
   resurrectScripts = "${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts";
 
   tmuxStart = pkgs.writeShellScript "tmux-start" ''

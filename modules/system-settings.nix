@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ hostConfig, lib, pkgs, ... }: {
 
   #systemd bootloader 
   boot.loader = {
@@ -10,7 +10,6 @@
 
   networking = {
     networkmanager.enable = true;
-    hostName = "machine";
   };
 
   ##ssh 
@@ -69,7 +68,7 @@
 
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "declan" ];
+      trusted-users = [ "root" hostConfig.user.name ];
       auto-optimise-store = true;
       substituters = [
         "https://cache.nixos.org"

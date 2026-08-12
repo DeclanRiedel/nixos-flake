@@ -3,9 +3,7 @@
     ./zsh.nix
     ./user-settings.nix
     ./system-settings.nix
-    ./ai-auto-update.nix
     ./fhs.nix
-    ./memory.nix
     ./packages
     ./legacy-packages.nix
     ./fonts.nix
