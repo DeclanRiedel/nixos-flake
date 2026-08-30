@@ -2,10 +2,14 @@
 
 let
   codexbar = pkgs.callPackage ../packages/codexbar.nix { };
+  t3codeNightly = pkgs.callPackage ../packages/t3code-nightly.nix { };
   zedThreadRunner = inputs.zed-thread-tui.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 {
-  home.packages = [ zedThreadRunner ];
+  home.packages = [
+    t3codeNightly
+    zedThreadRunner
+  ];
 
   home.file.".config/waybar/config" = {
     source = ../config/waybar/config;
@@ -22,128 +26,218 @@ in
     force = true;
   };
 
-  home.file.".config/waybar/zed-thread-summary" = {
+  home.file.".config/waybar/t3code-attention" = {
     executable = true;
     text = ''
       #!${pkgs.python3}/bin/python3
+      import fcntl
       import json
       import os
+      import sqlite3
       import subprocess
+      import sys
       from pathlib import Path
+      from urllib.parse import quote
 
-      runner = "${zedThreadRunner}/bin/zed-thread-runner"
-      state_dir = Path(os.environ.get("XDG_STATE_HOME", Path.home() / ".local" / "state")) / "zed-thread-runner"
-      processes_path = state_dir / "processes.json"
+      home = Path.home()
+      t3_dir = home / ".t3" / "userdata"
+      database = t3_dir / "state.sqlite"
+      environment_file = t3_dir / "environment-id"
+      state_dir = Path(os.environ.get("XDG_STATE_HOME", home / ".local" / "state")) / "waybar"
+      state_file = state_dir / "t3code-attention.json"
+      lock_file = state_dir / "t3code-attention.lock"
+      t3code = "${t3codeNightly}/bin/t3code-nightly"
 
-      def current_submap():
+      PROVIDERS = {
+          "codex": ("C", "Codex"),
+          "claude": ("Cl", "Claude"),
+      }
+
+      def provider_key(value):
+          name = str(value or "").lower()
+          if name.startswith("codex"):
+              return "codex"
+          if name.startswith("claude"):
+              return "claude"
+          return None
+
+      def load_state():
           try:
-              value = subprocess.run(
-                  ["${pkgs.hyprland}/bin/hyprctl", "submap"],
-                  check=False,
-                  text=True,
-                  stdout=subprocess.PIPE,
-                  stderr=subprocess.DEVNULL,
-                  timeout=0.5,
-              ).stdout.strip()
+              payload = json.loads(state_file.read_text())
+              if payload.get("version") == 1 and isinstance(payload.get("acknowledged"), dict):
+                  return payload
           except Exception:
-              return ""
-          if "HYPRLAND_INSTANCE_SIGNATURE" in value or "not set" in value:
-              return ""
-          if value in ("", "default"):
-              return ""
-          return value
+              pass
+          return {"version": 1, "initialized": False, "acknowledged": {}}
 
-      def pgid_alive(pgid):
+      def save_state(state):
+          state_dir.mkdir(parents=True, exist_ok=True)
+          temporary = state_file.with_suffix(".tmp")
+          temporary.write_text(json.dumps(state, separators=(",", ":")))
+          os.chmod(temporary, 0o600)
+          temporary.replace(state_file)
+
+      def snapshot():
+          if not database.is_file():
+              return []
+          connection = sqlite3.connect(f"file:{database}?mode=ro", uri=True, timeout=0.2)
+          connection.row_factory = sqlite3.Row
           try:
-              os.killpg(int(pgid), 0)
-          except ProcessLookupError:
-              return False
-          except PermissionError:
-              return True
-          except Exception:
-              return False
-          return True
+              rows = connection.execute(
+                  """
+                  SELECT
+                    t.thread_id,
+                    t.title,
+                    COALESCE(s.provider_name, json_extract(t.model_selection_json, '$.provider')) AS provider,
+                    t.updated_at,
+                    t.pending_approval_count,
+                    t.pending_user_input_count,
+                    v.turn_id,
+                    v.state AS turn_state,
+                    v.completed_at,
+                    s.status AS session_status,
+                    s.updated_at AS session_updated_at
+                  FROM projection_threads AS t
+                  LEFT JOIN projection_thread_sessions AS s USING (thread_id)
+                  LEFT JOIN projection_turns AS v
+                    ON v.thread_id = t.thread_id AND v.turn_id = t.latest_turn_id
+                  WHERE t.deleted_at IS NULL AND t.archived_at IS NULL
+                  """
+              ).fetchall()
+          finally:
+              connection.close()
 
-      def load_json(path, default):
-          try:
-              return json.loads(path.read_text())
-          except Exception:
-              return default
+          result = []
+          for row in rows:
+              provider = provider_key(row["provider"])
+              if provider is None:
+                  continue
+              approval_count = int(row["pending_approval_count"] or 0)
+              input_count = int(row["pending_user_input_count"] or 0)
+              kind = None
+              fingerprint = None
+              if approval_count or input_count:
+                  kind = "input"
+                  fingerprint = "input:{}:{}:{}".format(
+                      approval_count,
+                      input_count,
+                      row["updated_at"] or "",
+                  )
+              elif row["turn_state"] == "completed" or (
+                  row["turn_state"] == "interrupted" and row["completed_at"]
+              ):
+                  kind = "done"
+                  fingerprint = "done:{}:{}".format(
+                      row["turn_id"] or "",
+                      row["completed_at"] or row["updated_at"] or "",
+                  )
+              elif row["session_status"] in ("ready", "idle"):
+                  kind = "done"
+                  fingerprint = "done:ready:{}".format(row["session_updated_at"] or "")
 
-      processes = load_json(processes_path, {})
-      running = []
-      stale = []
-      ssh_running = []
-      for key, data in processes.items():
-          pgid = data.get("pgid")
-          alive = isinstance(pgid, int) and pgid_alive(pgid)
-          if alive:
-              running.append((key, data))
-              if key.startswith("ssh-connection:"):
-                  ssh_running.append((key, data))
-          else:
-              stale.append((key, data))
+              result.append({
+                  "thread_id": row["thread_id"],
+                  "title": row["title"],
+                  "provider": provider,
+                  "kind": kind,
+                  "fingerprint": fingerprint,
+                  "updated_at": row["updated_at"] or "",
+                  "approval_count": approval_count,
+                  "input_count": input_count,
+              })
+          return result
 
-      try:
-          slots = subprocess.run(
-              [runner, "--list-slots"],
-              check=False,
-              text=True,
-              stdout=subprocess.PIPE,
+      def unread_items(rows, state):
+          acknowledged = state["acknowledged"]
+          return [
+              row for row in rows
+              if row["fingerprint"] is not None
+              and acknowledged.get(row["thread_id"]) != row["fingerprint"]
+          ]
+
+      def render(items):
+          if not items:
+              print(json.dumps({"text": "", "tooltip": "", "class": "empty"}))
+              return
+          counts = {provider: 0 for provider in PROVIDERS}
+          for item in items:
+              counts[item["provider"]] += 1
+          text = " ".join(
+              "!{}{}".format(PROVIDERS[provider][0], counts[provider])
+              for provider in PROVIDERS if counts[provider]
+          )
+          lines = ["T3 Code needs attention"]
+          for item in sorted(items, key=lambda row: (row["kind"] != "input", row["updated_at"])):
+              reason = "input required" if item["kind"] == "input" else "work finished"
+              lines.append("{} · {} · {}".format(
+                  PROVIDERS[item["provider"]][1], reason, item["title"]
+              ))
+          lines.extend(["", "Click: view next thread", "Right-click: mark all viewed"])
+          css_class = "input" if any(item["kind"] == "input" for item in items) else "done"
+          print(json.dumps({"text": text, "tooltip": "\n".join(lines), "class": css_class}))
+
+      def launch_thread(item=None):
+          command = [t3code]
+          if item is not None:
+              try:
+                  environment_id = environment_file.read_text().strip()
+              except Exception:
+                  environment_id = ""
+              if environment_id:
+                  command.append("t3code://threads/{}/{}".format(
+                      quote(environment_id, safe=""),
+                      quote(item["thread_id"], safe=""),
+                  ))
+          subprocess.Popen(
+              command,
+              stdin=subprocess.DEVNULL,
+              stdout=subprocess.DEVNULL,
               stderr=subprocess.DEVNULL,
-              timeout=1.5,
-          ).stdout.strip().splitlines()
-      except Exception:
-          slots = []
+              start_new_session=True,
+          )
 
-      classes = []
-      if running:
-          classes.append("running")
-      if stale:
-          classes.append("stale")
-      if ssh_running:
-          classes.append("ssh")
-      submap = current_submap()
-      if submap:
-          classes.append("leader")
-      if not classes:
-          classes.append("idle")
+      def refresh_waybar():
+          subprocess.run(
+              ["${pkgs.procps}/bin/pkill", "-RTMIN+10", "waybar"],
+              check=False,
+              stdout=subprocess.DEVNULL,
+              stderr=subprocess.DEVNULL,
+          )
 
-      text_parts = ["TR"]
-      if submap:
-          text_parts.append("LDR")
-      if running:
-          text_parts.append(f"{len(running)}r")
-      if ssh_running:
-          text_parts.append(f"{len(ssh_running)}ssh")
-      if stale:
-          text_parts.append(f"{len(stale)}stale")
-      if len(text_parts) == 1:
-          text_parts.append("idle")
+      action = sys.argv[1] if len(sys.argv) > 1 else "status"
+      state_dir.mkdir(parents=True, exist_ok=True)
+      with lock_file.open("a+") as lock:
+          fcntl.flock(lock, fcntl.LOCK_EX)
+          rows = snapshot()
+          state = load_state()
+          if not state["initialized"] and database.is_file():
+              state["acknowledged"] = {
+                  row["thread_id"]: row["fingerprint"]
+                  for row in rows if row["fingerprint"] is not None
+              }
+              state["initialized"] = True
+              save_state(state)
 
-      tooltip_lines = ["zed-thread-runner"]
-      if submap:
-          tooltip_lines.append(f"leader: {submap}")
-      if running:
-          tooltip_lines.append("running:")
-          for key, data in running[:8]:
-              command = str(data.get("command", ""))[:80]
-              tooltip_lines.append(f"  {key} :: {command}")
-      if stale:
-          tooltip_lines.append("stale:")
-          for key, data in stale[:5]:
-              tooltip_lines.append(f"  {key}")
-      if slots:
-          tooltip_lines.append("slots:")
-          tooltip_lines.extend(f"  {line}" for line in slots[:10])
-      if len(tooltip_lines) == 1:
-          tooltip_lines.append("no tracked processes")
-
-      print(json.dumps({
-          "text": " ".join(text_parts),
-          "tooltip": "\n".join(tooltip_lines),
-          "class": classes,
-      }))
+          items = unread_items(rows, state)
+          if action == "status":
+              render(items)
+          elif action == "view":
+              item = sorted(
+                  items,
+                  key=lambda row: (row["kind"] != "input", row["updated_at"]),
+              )[0] if items else None
+              if item is not None:
+                  state["acknowledged"][item["thread_id"]] = item["fingerprint"]
+                  save_state(state)
+              launch_thread(item)
+              refresh_waybar()
+          elif action == "clear":
+              for item in items:
+                  state["acknowledged"][item["thread_id"]] = item["fingerprint"]
+              save_state(state)
+              refresh_waybar()
+          else:
+              raise SystemExit("usage: t3code-attention {status|view|clear}")
     '';
   };
 

@@ -2,7 +2,7 @@
                       // Choose the order of the modulesaround
                       "modules-left": ["hyprland/workspaces"],
                       "modules-center": ["custom/spotify-prev", "custom/spotify-toggle", "custom/spotify-next", "mpris", "custom/spotify-like", "custom/spacer", "hyprland/window"],
-                       "modules-right": ["custom/ai-usage", "custom/notifications", "tray", "clock","idle_inhibitor", "custom/pacman","custom/vpn","network", "backlight", "pulseaudio", "battery" ],
+                       "modules-right": ["custom/t3code-attention", "custom/ai-usage", "custom/notifications", "tray", "clock","idle_inhibitor", "custom/pacman","custom/vpn","network", "backlight", "pulseaudio", "battery" ],
 
                        "hyprland/workspaces": {
                            "disable-scroll": true,
@@ -119,22 +119,22 @@
                           "tooltip": true
                       },
 
+                      "custom/t3code-attention": {
+                          "return-type": "json",
+                          "exec": "$HOME/.config/waybar/t3code-attention status",
+                          "on-click": "$HOME/.config/waybar/t3code-attention view",
+                          "on-click-right": "$HOME/.config/waybar/t3code-attention clear",
+                          "interval": 2,
+                          "signal": 10,
+                          "tooltip": true
+                      },
+
                       "clock": {
                           // "timezone": "Africa/Windhoek",
                           "tooltip-format": "<tt><small>{calendar}</small></tt>",
                           "format-alt": "{:%m-%d-%Y}",
                   	"format": "{:%I:%M %p}"
                       },
-
-"custom/zed-thread-runner": {
-  "return-type": "json",
-  "interval": 2,
-  "exec": "$HOME/.config/waybar/zed-thread-summary",
-  "on-click": "ghostty -e zed-thread-runner",
-  "on-click-right": "zed-thread-runner --stop-all",
-  "on-click-middle": "zed-thread-runner --list-slots",
-  "tooltip": true
-},
 
 "custom/spacer": { 
 "format": " "

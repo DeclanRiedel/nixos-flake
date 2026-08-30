@@ -37,7 +37,7 @@ tooltip label {
 }
 
 #workspaces,
-#custom-zed-thread-runner,
+#custom-t3code-attention,
 #mpris,
 #window,
 #custom-ai-usage,
@@ -66,6 +66,27 @@ tooltip label {
   color: @sky;
   font-weight: 700;
   min-width: 94px;
+}
+
+#custom-t3code-attention {
+  background-color: rgba(91, 48, 60, 0.82);
+  border-color: rgba(247, 118, 142, 0.38);
+  color: @red;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+#custom-t3code-attention.input {
+  border-color: rgba(224, 175, 104, 0.46);
+  color: @yellow;
+}
+
+#custom-t3code-attention.empty {
+  background-color: transparent;
+  border-color: transparent;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
 }
 
 #custom-ai-usage.warning {
@@ -132,37 +153,6 @@ tooltip label {
 #workspaces button.urgent {
   background-color: rgba(247, 118, 142, 0.18);
   color: @red;
-}
-
-#custom-zed-thread-runner {
-  background-color: rgba(42, 48, 70, 0.84);
-  border-color: rgba(125, 207, 255, 0.22);
-  color: @sky;
-  margin-left: 3px;
-  min-width: 76px;
-}
-
-#custom-zed-thread-runner.running {
-  background-color: rgba(63, 89, 71, 0.74);
-  border-color: rgba(158, 206, 106, 0.28);
-  color: @green;
-}
-
-#custom-zed-thread-runner.ssh {
-  border-color: rgba(122, 162, 247, 0.32);
-  color: @blue;
-}
-
-#custom-zed-thread-runner.stale {
-  background-color: rgba(91, 48, 60, 0.74);
-  border-color: rgba(247, 118, 142, 0.28);
-  color: @red;
-}
-
-#custom-zed-thread-runner.leader {
-  background-color: rgba(79, 67, 94, 0.82);
-  border-color: rgba(224, 175, 104, 0.36);
-  color: @yellow;
 }
 
 #mpris,
