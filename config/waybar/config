@@ -1,6 +1,6 @@
                   {
                       // Choose the order of the modulesaround
-                      "modules-left": ["hyprland/workspaces", "custom/zed-thread-runner"],
+                      "modules-left": ["hyprland/workspaces"],
                       "modules-center": ["custom/spotify-prev", "custom/spotify-toggle", "custom/spotify-next", "mpris", "custom/spacer", "hyprland/window"],
                        "modules-right": ["custom/notifications", "tray", "clock","idle_inhibitor", "custom/pacman","custom/vpn","network", "backlight", "pulseaudio", "battery" ],
 
