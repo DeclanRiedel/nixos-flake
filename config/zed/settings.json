@@ -1,4 +1,5 @@
 {
+  "theme": "Ayu Dark",
   "vim": {
     "toggle_relative_line_numbers": true
   },
