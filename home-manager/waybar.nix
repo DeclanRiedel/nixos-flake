@@ -155,4 +155,79 @@ in
     source = ../scripts/waybar-vpn-toggle.sh;
     executable = true;
   };
+
+  home.file.".config/waybar/spotify-library-status" = {
+    executable = true;
+    text = ''
+      #!${pkgs.runtimeShell}
+      set -u
+
+      state_dir="''${XDG_RUNTIME_DIR:-/tmp}/waybar-spotify"
+      state_file="$state_dir/library-state"
+      uri="$(${pkgs.playerctl}/bin/playerctl -p spotify,spotifyd metadata xesam:url 2>/dev/null || true)"
+      liked=false
+
+      if [[ -n "$uri" && -s "$state_file" ]]; then
+        read -r saved_uri < "$state_file" || true
+        [[ "$saved_uri" == "$uri" ]] && liked=true
+      fi
+
+      if $liked; then
+        printf '{"text":"♥","tooltip":"Saved to Liked Songs · right-click to remove","class":"liked"}\n'
+      elif [[ -n "$uri" ]]; then
+        printf '{"text":"♡","tooltip":"Save to Liked Songs · right-click to remove","class":"available"}\n'
+      else
+        printf '{"text":"♡","tooltip":"No active Spotify track","class":"inactive"}\n'
+      fi
+    '';
+  };
+
+  home.file.".config/waybar/spotify-library" = {
+    executable = true;
+    text = ''
+      #!${pkgs.runtimeShell}
+      set -u
+
+      action="''${1:-like}"
+      cache_dir="''${XDG_CACHE_HOME:-$HOME/.cache}/spotify-player"
+      state_dir="''${XDG_RUNTIME_DIR:-/tmp}/waybar-spotify"
+      state_file="$state_dir/library-state"
+      uri="$(${pkgs.playerctl}/bin/playerctl -p spotify,spotifyd metadata xesam:url 2>/dev/null || true)"
+
+      notify() {
+        ${pkgs.libnotify}/bin/notify-send -a "Spotify Bar" "$1" "$2"
+      }
+
+      # Library actions use the Web API token. The separate credentials.json
+      # file is only needed by spotify_player's integrated audio client.
+      if [[ ! -s "$cache_dir/user_client_token.json" ]]; then
+        notify "Spotify authentication required" "Run: spotify_player authenticate"
+        exit 1
+      fi
+
+      args=()
+      message="Saved current track to Liked Songs"
+      if [[ "$action" == "unlike" ]]; then
+        args=(--unlike)
+        message="Removed current track from Liked Songs"
+      elif [[ "$action" != "like" ]]; then
+        notify "Spotify Bar" "Unknown library action: $action"
+        exit 2
+      fi
+
+      if output="$(${pkgs.coreutils}/bin/timeout 15 ${pkgs.spotify-player}/bin/spotify_player like "''${args[@]}" 2>&1)"; then
+        mkdir -p "$state_dir"
+        if [[ "$action" == "like" && -n "$uri" ]]; then
+          printf '%s\n' "$uri" > "$state_file"
+        else
+          rm -f "$state_file"
+        fi
+        notify "Spotify" "$message"
+        ${pkgs.procps}/bin/pkill -RTMIN+8 waybar 2>/dev/null || true
+      else
+        notify "Spotify library update failed" "''${output:-Check playback and run spotify_player authenticate}"
+        exit 1
+      fi
+    '';
+  };
 }

@@ -1,7 +1,7 @@
                   {
                       // Choose the order of the modulesaround
                       "modules-left": ["hyprland/workspaces"],
-                      "modules-center": ["custom/spotify-prev", "custom/spotify-toggle", "custom/spotify-next", "mpris", "custom/spacer", "hyprland/window"],
+                      "modules-center": ["custom/spotify-prev", "custom/spotify-toggle", "custom/spotify-next", "mpris", "custom/spotify-like", "custom/spacer", "hyprland/window"],
                        "modules-right": ["custom/notifications", "tray", "clock","idle_inhibitor", "custom/pacman","custom/vpn","network", "backlight", "pulseaudio", "battery" ],
 
                        "hyprland/workspaces": {
@@ -55,7 +55,9 @@
       		"paused": "⏸",
       		"stopped": "⏹"
       	},
-        "max-length": 45
+        "max-length": 45,
+        "on-click": "playerctl -p spotify,spotifyd play-pause",
+        "on-click-right": "spotify"
       },
 
                       "custom/spotify-prev": {
@@ -75,6 +77,16 @@
                           "format": "⏭",
                           "tooltip": false,
                           "on-click": "playerctl -p spotify,spotifyd next"
+                      },
+
+                      "custom/spotify-like": {
+                          "return-type": "json",
+                          "exec": "$HOME/.config/waybar/spotify-library-status",
+                          "on-click": "$HOME/.config/waybar/spotify-library like",
+                          "on-click-right": "$HOME/.config/waybar/spotify-library unlike",
+                          "interval": 3,
+                          "signal": 8,
+                          "tooltip": true
                       },
 
 
