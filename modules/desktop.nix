@@ -1,5 +1,8 @@
 { lib, pkgs, pkgsStable, ... }:
 
+let
+  codexbar = pkgs.callPackage ../packages/codexbar.nix { };
+in
 {
   programs.hyprland = {
     enable = true;
@@ -65,6 +68,7 @@
     pavucontrol
     pamixer
     playerctl
+    codexbar
 
     hyprshot
     hyprpicker

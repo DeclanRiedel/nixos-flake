@@ -40,6 +40,7 @@ tooltip label {
 #custom-zed-thread-runner,
 #mpris,
 #window,
+#custom-ai-usage,
 #custom-notifications,
 #tray,
 #clock,
@@ -59,6 +60,23 @@ tooltip label {
   border-radius: 999px;
   margin: 5px 3px;
   padding: 0 10px;
+}
+
+#custom-ai-usage {
+  color: @sky;
+  font-weight: 700;
+  min-width: 94px;
+}
+
+#custom-ai-usage.warning {
+  border-color: rgba(224, 175, 104, 0.36);
+  color: @yellow;
+}
+
+#custom-ai-usage.critical,
+#custom-ai-usage.error {
+  border-color: rgba(247, 118, 142, 0.36);
+  color: @red;
 }
 
 #custom-spotify-prev,

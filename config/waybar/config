@@ -2,7 +2,7 @@
                       // Choose the order of the modulesaround
                       "modules-left": ["hyprland/workspaces"],
                       "modules-center": ["custom/spotify-prev", "custom/spotify-toggle", "custom/spotify-next", "mpris", "custom/spotify-like", "custom/spacer", "hyprland/window"],
-                       "modules-right": ["custom/notifications", "tray", "clock","idle_inhibitor", "custom/pacman","custom/vpn","network", "backlight", "pulseaudio", "battery" ],
+                       "modules-right": ["custom/ai-usage", "custom/notifications", "tray", "clock","idle_inhibitor", "custom/pacman","custom/vpn","network", "backlight", "pulseaudio", "battery" ],
 
                        "hyprland/workspaces": {
                            "disable-scroll": true,
@@ -107,6 +107,15 @@
                           "exec": "swaync-client -swb",
                           "on-click": "swaync-client -t",
                           "on-click-right": "swaync-client -C",
+                          "tooltip": true
+                      },
+
+                      "custom/ai-usage": {
+                          "return-type": "json",
+                          "exec": "$HOME/.config/waybar/ai-usage",
+                          "interval": 240,
+                          "signal": 9,
+                          "on-click": "pkill -RTMIN+9 waybar",
                           "tooltip": true
                       },
 

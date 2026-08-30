@@ -1,6 +1,7 @@
 { inputs, pkgs, ... }:
 
 let
+  codexbar = pkgs.callPackage ../packages/codexbar.nix { };
   zedThreadRunner = inputs.zed-thread-tui.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 {
@@ -179,6 +180,64 @@ in
       else
         printf '{"text":"♡","tooltip":"No active Spotify track","class":"inactive"}\n'
       fi
+    '';
+  };
+
+  home.file.".config/waybar/ai-usage" = {
+    executable = true;
+    text = ''
+      #!${pkgs.python3}/bin/python3
+      import json
+      import subprocess
+
+      providers = {"claude": "Cla", "codex": "Cod"}
+
+      try:
+          result = subprocess.run(
+              ["${codexbar}/bin/codexbar", "usage", "--provider", "both", "--format", "json"],
+              check=True,
+              capture_output=True,
+              text=True,
+              timeout=60,
+          )
+          payload = json.loads(result.stdout)
+          entries = payload if isinstance(payload, list) else [payload]
+          usage = []
+          for entry in entries:
+              name = str(entry.get("provider", "")).lower()
+              windows = entry.get("usage") or {}
+              weekly = windows.get("secondary") or {}
+              session = windows.get("primary") or {}
+              used = weekly.get("usedPercent")
+              remaining = None if used is None else max(0, round(100 - used))
+              session_used = session.get("usedPercent")
+              session_left = None if session_used is None else max(0, round(100 - session_used))
+              if name in providers and not entry.get("error"):
+                  usage.append((name, remaining, session_left, weekly.get("resetDescription", "")))
+
+          if not usage:
+              raise RuntimeError("no usage data")
+
+          usage.sort(key=lambda item: list(providers).index(item[0]))
+          text = "  ".join(
+              f"{providers[name]} {'–' if weekly is None else str(weekly) + '%'}"
+              for name, weekly, _session, _reset in usage
+          )
+          tooltip = ["AI subscription usage"]
+          for name, weekly, session, reset in usage:
+              tooltip.append(
+                  f"{name.title()}: session {'—' if session is None else str(session) + '%'} · "
+                  f"weekly {'—' if weekly is None else str(weekly) + '%'}"
+              )
+              if reset:
+                  tooltip.append(f"  resets {reset}")
+
+          known = [weekly for _name, weekly, _session, _reset in usage if weekly is not None]
+          lowest = min(known) if known else 100
+          css_class = "critical" if lowest <= 20 else "warning" if lowest <= 45 else "ok"
+          print(json.dumps({"text": text, "tooltip": "\n".join(tooltip), "class": css_class}))
+      except Exception as error:
+          print(json.dumps({"text": "AI —", "tooltip": f"CodexBar: {error}", "class": "error"}))
     '';
   };
 
