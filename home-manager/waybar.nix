@@ -419,9 +419,9 @@ in
           liked = is_liked(uri)
           if action == "status":
               if liked:
-                  print(json.dumps({"text": "♥", "tooltip": "Remove from Your Library", "class": "liked"}))
+                  print(json.dumps({"text": "", "tooltip": "Remove from Your Library", "class": "liked"}))
               else:
-                  print(json.dumps({"text": "♡", "tooltip": "Save to Your Library", "class": "available"}))
+                  print(json.dumps({"text": "", "tooltip": "Save to Your Library", "class": "available"}))
           elif action in ("toggle", "like", "unlike"):
               should_like = not liked if action == "toggle" else action == "like"
               if should_like != liked:
@@ -432,12 +432,12 @@ in
               raise SystemExit("usage: spotify-library {status|toggle|like|unlike}")
       except AuthenticationRequired:
           if action == "status":
-              print(json.dumps({"text": "♡?", "tooltip": "Spotify login required", "class": "auth"}))
+              print(json.dumps({"text": "?", "tooltip": "Spotify login required", "class": "auth"}))
           else:
               authenticate()
       except Exception as error:
           if action == "status":
-              print(json.dumps({"text": "♡!", "tooltip": str(error), "class": "error"}))
+              print(json.dumps({"text": "!", "tooltip": str(error), "class": "error"}))
           else:
               notify("Spotify library update failed", str(error))
     '';

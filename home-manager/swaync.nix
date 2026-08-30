@@ -1,19 +1,21 @@
 { pkgs, ... }:
 
 let
+  swaync = pkgs.swaynotificationcenter.overrideAttrs (old: {
+    patches = (old.patches or [ ]) ++ [ ./patches/swaync-text-only-empty-state.patch ];
+  });
   symbolicIcons = "${pkgs.adwaita-icon-theme}/share/icons/Adwaita/symbolic";
   bellIcon = "${symbolicIcons}/legacy/preferences-system-notifications-symbolic.svg";
   bellOffIcon = "${symbolicIcons}/status/notifications-disabled-symbolic.svg";
-  trashIcon = "${symbolicIcons}/actions/edit-delete-symbolic.svg";
   closeIcon = "${symbolicIcons}/ui/window-close-symbolic.svg";
   alertIcon = "${symbolicIcons}/status/dialog-warning-symbolic.svg";
 in
 {
   services.swaync = {
     enable = true;
-    package = pkgs.swaynotificationcenter;
+    package = swaync;
     settings = {
-      "$schema" = "${pkgs.swaynotificationcenter}/etc/xdg/swaync/configSchema.json";
+      "$schema" = "${swaync}/etc/xdg/swaync/configSchema.json";
       "ignore-gtk-theme" = true;
       "positionX" = "right";
       "positionY" = "top";
@@ -24,7 +26,7 @@ in
       "control-center-margin-top" = 10;
       "control-center-margin-right" = 10;
       "control-center-width" = 380;
-      "control-center-height" = 560;
+      "control-center-height" = -1;
       "notification-window-width" = 380;
       "notification-body-image-height" = 150;
       "notification-body-image-width" = 310;
@@ -42,21 +44,15 @@ in
         };
       };
       "widgets" = [
-        "title"
         "dnd"
         "notifications"
       ];
       "widget-config" = {
-        "title" = {
-          "text" = "Notifications";
-          "clear-all-button" = true;
-          "button-text" = "";
-        };
         "dnd" = {
-          "text" = "Quiet mode";
+          "text" = "Notifications  ·  Quiet mode";
         };
         "notifications" = {
-          "vexpand" = true;
+          "vexpand" = false;
         };
       };
     };
@@ -87,6 +83,16 @@ in
       .control-center .control-center-list,
       .control-center .control-center-list-placeholder {
         background: transparent;
+      }
+
+      .control-center .control-center-list-placeholder {
+        color: #6c7380;
+        min-height: 34px;
+        padding: 4px 0 2px;
+      }
+
+      .control-center .control-center-list-placeholder label {
+        font-size: 13px;
       }
 
       .notification-row {
@@ -178,64 +184,43 @@ in
         background-color: rgba(255, 51, 102, 0.24);
       }
 
-      .widget-title,
       .widget-dnd {
         background-color: rgba(19, 23, 33, 0.92);
         border: 1px solid rgba(89, 194, 255, 0.12);
         border-radius: 12px;
-        margin: 0 0 7px;
-        padding: 8px 9px 8px 38px;
-      }
-
-      .widget-title {
-        background-image: url("${bellIcon}");
-        background-position: 11px center;
-        background-repeat: no-repeat;
-        background-size: 22px 22px;
+        margin: 0 0 5px;
+        padding: 6px 8px 6px 34px;
       }
 
       .widget-dnd {
         background-image: url("${bellOffIcon}");
-        background-position: 11px center;
+        background-position: 10px center;
         background-repeat: no-repeat;
-        background-size: 22px 22px;
-      }
-
-      .widget-title label {
-        color: #e6e1cf;
-        font-weight: 700;
-      }
-
-      .widget-title button {
-        background-color: rgba(255, 51, 102, 0.12);
-        background-image: url("${trashIcon}");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: 14px 14px;
-        border-radius: 999px;
-        color: transparent;
-        min-height: 28px;
-        min-width: 28px;
-        padding: 0;
-      }
-
-      .widget-title button:hover {
-        background-color: rgba(255, 51, 102, 0.22);
+        background-size: 19px 19px;
       }
 
       .widget-dnd label {
         color: #bfbdb6;
+        font-size: 13px;
+        font-weight: 700;
       }
 
       .widget-dnd switch {
         background: rgba(108, 115, 128, 0.30);
         border-radius: 999px;
-        min-height: 24px;
-        min-width: 44px;
       }
 
       .widget-dnd switch:checked {
         background: rgba(255, 143, 64, 0.70);
+      }
+
+      .widget-dnd switch slider {
+        background: #bfbdb6;
+        border-radius: 999px;
+      }
+
+      .widget-dnd switch:checked slider {
+        background: #e6e1cf;
       }
 
       .notification-action > button,

@@ -1,0 +1,11 @@
+diff --git a/data/ui/notifications_widget.blp b/data/ui/notifications_widget.blp
+index 0458bf1..4c06120 100644
+--- a/data/ui/notifications_widget.blp
++++ b/data/ui/notifications_widget.blp
+@@ -50,6 +50,0 @@ template $SwayNotificationCenterWidgetsNotifications: $SwayNotificationCenterWid
+-        Image {
+-          pixel-size: 96;
+-          icon-name: "preferences-system-notifications-symbolic";
+-          use-fallback: true;
+-        }
+-

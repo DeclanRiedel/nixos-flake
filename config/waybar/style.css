@@ -127,6 +127,11 @@ tooltip label {
   color: @green;
 }
 
+#custom-spotify-like {
+  font-family: "Iosevka Nerd Font";
+  font-size: 12px;
+}
+
 #custom-spotify-like.auth,
 #custom-spotify-like.error {
   border-color: rgba(224, 175, 104, 0.34);
