@@ -8,8 +8,6 @@
     systemd-boot.configurationLimit = lib.mkDefault 6;
   };
 
-  networking.networkmanager.enable = true;
-
   services.openssh = {
     enable = true;
     settings = {

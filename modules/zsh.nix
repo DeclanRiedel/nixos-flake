@@ -33,6 +33,7 @@ in
         update = "${flakeDir}/scripts/switch.sh ${hostConfig.hostName}";
         c = "clear";
         n = "nvim";
+        nmtui = "impala";
         vim = "nvim";
         ndev = "nix develop . -c $SHELL";
         todo = "nvim ~/Zettelkasten/03_Misc/Todo.md";

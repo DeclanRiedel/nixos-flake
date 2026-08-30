@@ -13,12 +13,27 @@
   # The router's DNS proxy fails intermittently even while the Internet route
   # remains healthy. Ignore DNS received over DHCP and use reliable upstreams;
   # the WireGuard hook below can still prepend the office DNS while connected.
-  networking.networkmanager.dns = "none";
   networking.nameservers = [ "1.1.1.1" "9.9.9.9" ];
 
-  networking.networkmanager.plugins = with pkgs; [
-    networkmanager-openvpn
-  ];
+  # iwd's built-in client owns DHCP on Wi-Fi. Keep dhcpcd available only for
+  # the physical Ethernet interface so the two clients never race on wlp2s0.
+  networking.useDHCP = false;
+  networking.interfaces.enp1s0.useDHCP = true;
+
+  # Impala controls iwd directly, so iwd must own Wi-Fi instead of
+  # NetworkManager/wpa_supplicant. Its built-in DHCP client configures the
+  # address and routes while static resolvconf entries above remain authoritative.
+  networking.wireless.iwd = {
+    enable = true;
+    settings = {
+      General.EnableNetworkConfiguration = true;
+      Settings.AutoConnect = true;
+      Network = {
+        EnableIPv6 = false;
+        NameResolvingService = "none";
+      };
+    };
+  };
 
   # WireGuard VPN client. Does NOT auto-start on boot so it can never
   # take the host offline by itself - toggle it from the Waybar VPN button.
@@ -79,6 +94,5 @@
 
   environment.systemPackages = with pkgs; [
     wireguard-tools
-    openvpn
   ];
 }

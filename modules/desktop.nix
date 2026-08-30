@@ -80,7 +80,7 @@
     fcitx5
     floorp-bin
     firefox-devedition
-    networkmanagerapplet
+    impala
 
     vscode-fhs
     zed-editor
