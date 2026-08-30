@@ -1,41 +1,12 @@
 { pkgs, ... }:
 
 let
-  bellIcon = pkgs.writeText "swaync-bell.svg" ''
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7dcfff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
-      <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
-    </svg>
-  '';
-  bellOffIcon = pkgs.writeText "swaync-bell-off.svg" ''
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e0af68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M9.346 5.353c.21 -.129 .428 -.246 .654 -.353a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3m-1 3h-13a4 4 0 0 0 2 -3v-3a6.996 6.996 0 0 1 1.273 -3.707" />
-      <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
-      <path d="M3 3l18 18" />
-    </svg>
-  '';
-  trashIcon = pkgs.writeText "swaync-trash.svg" ''
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f7768e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M4 7l16 0" />
-      <path d="M10 11l0 6" />
-      <path d="M14 11l0 6" />
-      <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-      <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-    </svg>
-  '';
-  closeIcon = pkgs.writeText "swaync-close.svg" ''
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f7768e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M18 6l-12 12" />
-      <path d="M6 6l12 12" />
-    </svg>
-  '';
-  alertIcon = pkgs.writeText "swaync-alert.svg" ''
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f7768e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 9v4" />
-      <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0" />
-      <path d="M12 16h.01" />
-    </svg>
-  '';
+  symbolicIcons = "${pkgs.adwaita-icon-theme}/share/icons/Adwaita/symbolic";
+  bellIcon = "${symbolicIcons}/legacy/preferences-system-notifications-symbolic.svg";
+  bellOffIcon = "${symbolicIcons}/status/notifications-disabled-symbolic.svg";
+  trashIcon = "${symbolicIcons}/actions/edit-delete-symbolic.svg";
+  closeIcon = "${symbolicIcons}/ui/window-close-symbolic.svg";
+  alertIcon = "${symbolicIcons}/status/dialog-warning-symbolic.svg";
 in
 {
   services.swaync = {
@@ -50,10 +21,14 @@ in
       "control-center-layer" = "overlay";
       "control-center-positionX" = "right";
       "control-center-positionY" = "top";
-      "control-center-margin-top" = 8;
-      "control-center-margin-right" = 8;
-      "control-center-width" = 430;
-      "control-center-height" = 620;
+      "control-center-margin-top" = 14;
+      "control-center-margin-right" = 14;
+      "control-center-width" = 440;
+      "control-center-height" = 680;
+      "notification-window-width" = 440;
+      "notification-body-image-height" = 180;
+      "notification-body-image-width" = 360;
+      "transition-time" = 160;
       "fit-to-screen" = false;
       "keyboard-shortcuts" = true;
       "notification-grouping" = true;
@@ -90,131 +65,191 @@ in
       * {
         border: none;
         border-radius: 0;
-        box-shadow: none;
         font-family: Iosevka Nerd Font, sans-serif;
-        font-size: 13px;
+        font-size: 14px;
+      }
+
+      notificationwindow,
+      blankwindow,
+      .floating-notifications {
+        background: transparent;
       }
 
       .control-center {
-        background: rgba(12, 14, 22, 0.98);
-        border: 1px solid rgba(125, 207, 255, 0.20);
-        border-radius: 8px;
-        color: #c0caf5;
-        padding: 12px;
+        background: rgba(11, 14, 20, 0.97);
+        border: 1px solid rgba(89, 194, 255, 0.20);
+        border-radius: 18px;
+        box-shadow: 0 18px 46px rgba(0, 0, 0, 0.48);
+        color: #bfbdb6;
+        padding: 14px;
       }
 
-      .control-center-list {
+      .control-center .control-center-list,
+      .control-center .control-center-list-placeholder {
         background: transparent;
       }
 
-      .control-center .notification-row {
+      .notification-row {
+        background: transparent;
         outline: none;
       }
 
-      .control-center .notification-row:focus,
-      .control-center .notification-row:hover {
-        background: rgba(125, 207, 255, 0.08);
-        border-radius: 8px;
+      .notification-row .notification-background {
+        padding: 6px 8px;
       }
 
-      .notification {
-        background: rgba(28, 31, 46, 0.92);
-        border: 1px solid rgba(169, 177, 214, 0.13);
-        border-radius: 8px;
-        margin: 7px 0;
-        padding: 9px;
+      .notification-row .notification-background .notification {
+        background: rgba(19, 23, 33, 0.98);
+        border: 1px solid rgba(191, 189, 182, 0.12);
+        border-radius: 14px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.34);
+        padding: 0;
       }
 
-      .notification.normal {
+      .notification-row .notification-background .notification.normal {
         background-image: url("${bellIcon}");
-        background-position: 12px 12px;
+        background-position: 14px 14px;
         background-repeat: no-repeat;
-        background-size: 18px 18px;
+        background-size: 22px 22px;
       }
 
-      .notification.critical {
+      .notification-row .notification-background .notification.critical {
+        border-color: rgba(255, 51, 102, 0.42);
         background-image: url("${alertIcon}");
-        background-position: 12px 12px;
+        background-position: 14px 14px;
         background-repeat: no-repeat;
-        background-size: 18px 18px;
+        background-size: 22px 22px;
       }
 
-      .notification-content {
+      .notification-row .notification-default-action {
         background: transparent;
-        padding: 0 0 0 28px;
+        border-radius: 14px;
+        color: #bfbdb6;
+        padding: 10px 12px;
       }
 
-      .summary {
-        color: #c0caf5;
+      .notification-row .notification-default-action:hover {
+        background: rgba(89, 194, 255, 0.07);
+      }
+
+      .notification-row .notification-content {
+        background: transparent;
+        padding: 0 0 0 30px;
+      }
+
+      .notification-row .notification-content .image {
+        -gtk-icon-size: 56px;
+        border-radius: 10px;
+        margin: 4px 8px 4px 4px;
+      }
+
+      .notification-row .summary {
+        color: #e6e1cf;
+        font-size: 15px;
         font-weight: 700;
       }
 
-      .body,
-      .time {
-        color: #a9b1d6;
+      .notification-row .body {
+        color: #bfbdb6;
+        font-size: 14px;
+      }
+
+      .notification-row .time {
+        color: #6c7380;
+        font-size: 12px;
+        margin-right: 30px;
       }
 
       .close-button {
-        background-color: rgba(247, 118, 142, 0.14);
+        background-color: rgba(255, 51, 102, 0.12);
         background-image: url("${closeIcon}");
         background-position: center;
         background-repeat: no-repeat;
-        background-size: 13px 13px;
+        background-size: 14px 14px;
         border-radius: 999px;
-        min-height: 22px;
-        min-width: 22px;
+        box-shadow: none;
+        margin: 10px 10px 0 0;
+        min-height: 26px;
+        min-width: 26px;
+        padding: 0;
+      }
+
+      .close-button:hover {
+        background-color: rgba(255, 51, 102, 0.24);
       }
 
       .widget-title,
       .widget-dnd {
-        background-color: rgba(28, 31, 46, 0.84);
-        border: 1px solid rgba(125, 207, 255, 0.12);
-        border-radius: 8px;
-        margin: 0 0 8px;
-        padding: 9px 10px 9px 38px;
+        background-color: rgba(19, 23, 33, 0.92);
+        border: 1px solid rgba(89, 194, 255, 0.12);
+        border-radius: 12px;
+        margin: 0 0 10px;
+        padding: 11px 12px 11px 44px;
       }
 
       .widget-title {
         background-image: url("${bellIcon}");
-        background-position: 12px center;
+        background-position: 14px center;
         background-repeat: no-repeat;
-        background-size: 18px 18px;
+        background-size: 22px 22px;
       }
 
       .widget-dnd {
         background-image: url("${bellOffIcon}");
-        background-position: 12px center;
+        background-position: 14px center;
         background-repeat: no-repeat;
-        background-size: 18px 18px;
+        background-size: 22px 22px;
       }
 
       .widget-title label {
-        color: #c0caf5;
+        color: #e6e1cf;
         font-weight: 700;
       }
 
       .widget-title button {
-        background-color: rgba(247, 118, 142, 0.14);
+        background-color: rgba(255, 51, 102, 0.12);
         background-image: url("${trashIcon}");
-        background-position: 8px center;
+        background-position: 10px center;
         background-repeat: no-repeat;
-        background-size: 14px 14px;
-        border-radius: 6px;
-        color: #f7768e;
-        padding: 4px 10px 4px 28px;
+        background-size: 16px 16px;
+        border-radius: 9px;
+        color: #ff3366;
+        padding: 6px 12px 6px 34px;
+      }
+
+      .widget-title button:hover {
+        background-color: rgba(255, 51, 102, 0.22);
       }
 
       .widget-dnd label {
-        color: #a9b1d6;
+        color: #bfbdb6;
       }
 
       .widget-dnd switch {
-        background: rgba(169, 177, 214, 0.18);
+        background: rgba(108, 115, 128, 0.30);
         border-radius: 999px;
+        min-height: 24px;
+        min-width: 44px;
       }
 
       .widget-dnd switch:checked {
-        background: rgba(224, 175, 104, 0.42);
+        background: rgba(255, 143, 64, 0.70);
+      }
+
+      .notification-action > button,
+      .inline-reply-button,
+      .inline-reply-entry {
+        background: rgba(89, 194, 255, 0.10);
+        border: 1px solid rgba(89, 194, 255, 0.18);
+        border-radius: 9px;
+        color: #e6e1cf;
+        margin: 4px;
+        padding: 7px 10px;
+      }
+
+      .notification-action > button:hover,
+      .inline-reply-button:hover {
+        background: rgba(89, 194, 255, 0.20);
       }
     '';
   };
