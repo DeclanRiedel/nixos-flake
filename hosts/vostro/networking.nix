@@ -10,6 +10,12 @@
   # unroutable here, so disable it on this host and force IPv4-only.
   networking.enableIPv6 = false;
 
+  # The router's DNS proxy fails intermittently even while the Internet route
+  # remains healthy. Ignore DNS received over DHCP and use reliable upstreams;
+  # the WireGuard hook below can still prepend the office DNS while connected.
+  networking.networkmanager.dns = "none";
+  networking.nameservers = [ "1.1.1.1" "9.9.9.9" ];
+
   networking.networkmanager.plugins = with pkgs; [
     networkmanager-openvpn
   ];
