@@ -23,7 +23,9 @@
   # WireGuard VPN client. Does NOT auto-start on boot so it can never
   # take the host offline by itself - toggle it from the Waybar VPN button.
   networking.wireguard.interfaces.wg0 = {
-    ips = [ "192.168.48.1/24" ];
+    # Keep the tunnel address separate from the office LAN; using an address
+    # inside 192.168.48.0/24 makes return routing ambiguous on that network.
+    ips = [ "10.77.0.2/32" ];
     listenPort = 51820;
     privateKeyFile = config.sops.secrets."wireguard-private-key".path;
     # Re-resolve the endpoint periodically so DNS/hostname changes are picked
@@ -41,9 +43,8 @@
     peers = [
       {
         publicKey = "SL8XRNCJc4iKT3VE2p7zwoL0+FPKMS+dJzaWGvjeozE=";
-        # IPv4 full tunnel. Was "::/0" (IPv6-only) which routed no IPv4 traffic
-        # and would fail to add its route now that IPv6 is disabled on this host.
-        allowedIPs = [ "0.0.0.0/0" ];
+        # Only send traffic for the office LAN through this tunnel.
+        allowedIPs = [ "192.168.48.0/24" ];
         endpoint = "office.revo.in.na:13231";
         persistentKeepalive = 10;
       }
