@@ -42,13 +42,11 @@ tooltip label {
 #window,
 #custom-ai-usage,
 #custom-notifications,
-#tray,
 #clock,
 #idle_inhibitor,
 #custom-pacman,
 #custom-vpn,
 #custom-spotify-prev,
-#custom-spotify-toggle,
 #custom-spotify-next,
 #custom-spotify-like,
 #network,
@@ -109,9 +107,11 @@ tooltip label {
 #custom-spotify-next,
 #custom-spotify-like {
   color: @green;
-  margin: 5px 1px;
-  padding: 0 8px;
-  font-size: 14px;
+  font-size: 13px;
+  margin: 5px 2px;
+  min-height: 22px;
+  min-width: 22px;
+  padding: 0;
 }
 
 #custom-spotify-prev:hover,
@@ -122,8 +122,8 @@ tooltip label {
 }
 
 #custom-spotify-like.liked {
-  background-color: rgba(158, 206, 106, 0.18);
-  border-color: rgba(158, 206, 106, 0.34);
+  background-color: rgba(158, 206, 106, 0.12);
+  border-color: rgba(158, 206, 106, 0.28);
   color: @green;
 }
 
@@ -170,6 +170,10 @@ tooltip label {
   padding: 0 12px;
 }
 
+#mpris {
+  margin-left: 4px;
+}
+
 #window {
   background-color: rgba(36, 40, 59, 0.38);
   color: @overlay2;
@@ -182,14 +186,14 @@ window#waybar.empty #window {
   color: transparent;
 }
 
-#tray {
-  padding: 0 8px;
-}
-
 #custom-notifications {
   color: @overlay2;
+  font-size: 13px;
   font-weight: 900;
-  min-width: 12px;
+  margin: 5px 2px;
+  min-height: 22px;
+  min-width: 22px;
+  padding: 0;
 }
 
 #custom-notifications.notification {

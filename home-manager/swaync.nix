@@ -21,13 +21,13 @@ in
       "control-center-layer" = "overlay";
       "control-center-positionX" = "right";
       "control-center-positionY" = "top";
-      "control-center-margin-top" = 14;
-      "control-center-margin-right" = 14;
-      "control-center-width" = 440;
-      "control-center-height" = 680;
-      "notification-window-width" = 440;
-      "notification-body-image-height" = 180;
-      "notification-body-image-width" = 360;
+      "control-center-margin-top" = 10;
+      "control-center-margin-right" = 10;
+      "control-center-width" = 380;
+      "control-center-height" = 560;
+      "notification-window-width" = 380;
+      "notification-body-image-height" = 150;
+      "notification-body-image-width" = 310;
       "transition-time" = 160;
       "fit-to-screen" = false;
       "keyboard-shortcuts" = true;
@@ -50,7 +50,7 @@ in
         "title" = {
           "text" = "Notifications";
           "clear-all-button" = true;
-          "button-text" = "Clear";
+          "button-text" = "";
         };
         "dnd" = {
           "text" = "Quiet mode";
@@ -81,7 +81,7 @@ in
         border-radius: 18px;
         box-shadow: 0 18px 46px rgba(0, 0, 0, 0.48);
         color: #bfbdb6;
-        padding: 14px;
+        padding: 10px;
       }
 
       .control-center .control-center-list,
@@ -95,13 +95,13 @@ in
       }
 
       .notification-row .notification-background {
-        padding: 6px 8px;
+        padding: 4px 5px;
       }
 
       .notification-row .notification-background .notification {
         background: rgba(19, 23, 33, 0.98);
         border: 1px solid rgba(191, 189, 182, 0.12);
-        border-radius: 14px;
+        border-radius: 12px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.34);
         padding: 0;
       }
@@ -123,9 +123,9 @@ in
 
       .notification-row .notification-default-action {
         background: transparent;
-        border-radius: 14px;
+        border-radius: 12px;
         color: #bfbdb6;
-        padding: 10px 12px;
+        padding: 8px 10px;
       }
 
       .notification-row .notification-default-action:hover {
@@ -183,20 +183,20 @@ in
         background-color: rgba(19, 23, 33, 0.92);
         border: 1px solid rgba(89, 194, 255, 0.12);
         border-radius: 12px;
-        margin: 0 0 10px;
-        padding: 11px 12px 11px 44px;
+        margin: 0 0 7px;
+        padding: 8px 9px 8px 38px;
       }
 
       .widget-title {
         background-image: url("${bellIcon}");
-        background-position: 14px center;
+        background-position: 11px center;
         background-repeat: no-repeat;
         background-size: 22px 22px;
       }
 
       .widget-dnd {
         background-image: url("${bellOffIcon}");
-        background-position: 14px center;
+        background-position: 11px center;
         background-repeat: no-repeat;
         background-size: 22px 22px;
       }
@@ -209,12 +209,14 @@ in
       .widget-title button {
         background-color: rgba(255, 51, 102, 0.12);
         background-image: url("${trashIcon}");
-        background-position: 10px center;
+        background-position: center;
         background-repeat: no-repeat;
-        background-size: 16px 16px;
-        border-radius: 9px;
-        color: #ff3366;
-        padding: 6px 12px 6px 34px;
+        background-size: 14px 14px;
+        border-radius: 999px;
+        color: transparent;
+        min-height: 28px;
+        min-width: 28px;
+        padding: 0;
       }
 
       .widget-title button:hover {
