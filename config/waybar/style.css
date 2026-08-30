@@ -106,7 +106,6 @@ tooltip label {
 }
 
 #custom-spotify-prev,
-#custom-spotify-toggle,
 #custom-spotify-next,
 #custom-spotify-like {
   color: @green;
@@ -116,7 +115,6 @@ tooltip label {
 }
 
 #custom-spotify-prev:hover,
-#custom-spotify-toggle:hover,
 #custom-spotify-next:hover,
 #custom-spotify-like:hover {
   background-color: rgba(158, 206, 106, 0.18);
@@ -127,6 +125,12 @@ tooltip label {
   background-color: rgba(158, 206, 106, 0.18);
   border-color: rgba(158, 206, 106, 0.34);
   color: @green;
+}
+
+#custom-spotify-like.auth,
+#custom-spotify-like.error {
+  border-color: rgba(224, 175, 104, 0.34);
+  color: @yellow;
 }
 
 #workspaces {

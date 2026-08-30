@@ -1,7 +1,7 @@
                   {
                       // Choose the order of the modulesaround
                       "modules-left": ["hyprland/workspaces", "custom/t3code-attention"],
-                      "modules-center": ["custom/spotify-prev", "custom/spotify-toggle", "custom/spotify-next", "mpris", "custom/spotify-like", "custom/spacer", "hyprland/window"],
+                      "modules-center": ["custom/spotify-prev", "mpris", "custom/spotify-next", "custom/spotify-like", "custom/spacer", "hyprland/window"],
                        "modules-right": ["custom/ai-usage", "custom/notifications", "tray", "clock","idle_inhibitor", "custom/pacman","custom/vpn","network", "backlight", "pulseaudio", "battery" ],
 
                        "hyprland/workspaces": {
@@ -40,23 +40,16 @@
                       },
 
                       "mpris": {
-      	"format": "{status_icon} {dynamic}",
-      	"format-paused": "{status_icon} {dynamic}",
-      	"dynamic-order": ["title", "artist"],
-      	"dynamic-separator": " – ",
-      	"player-icons": {
-      		"default": "▶",
-      		"mpv": "🎵",
-      		"spotify": "",
-      		"spotifyd": ""
-      	},
-      	"status-icons": {
-      		"playing": "▶",
-      		"paused": "⏸",
-      		"stopped": "⏹"
-      	},
+	"player": "spotify",
+	"format": "{dynamic}",
+	"format-paused": "{dynamic}",
+	"dynamic-order": ["title", "artist"],
+	"dynamic-separator": " – ",
+	"title-len": 45,
+	"dynamic-len": 45,
+	"interval": 1,
         "max-length": 45,
-        "on-click": "playerctl -p spotify,spotifyd play-pause",
+        "on-click": "playerctl -p spotify play-pause",
         "on-click-right": "spotify"
       },
 
@@ -64,13 +57,6 @@
                           "format": "⏮",
                           "tooltip": false,
                           "on-click": "playerctl -p spotify,spotifyd previous"
-                      },
-
-                      "custom/spotify-toggle": {
-                          "format": "⏯",
-                          "tooltip": false,
-                          "on-click": "playerctl -p spotify,spotifyd play-pause",
-                          "on-click-right": "spotify"
                       },
 
                       "custom/spotify-next": {
@@ -81,10 +67,10 @@
 
                       "custom/spotify-like": {
                           "return-type": "json",
-                          "exec": "$HOME/.config/waybar/spotify-library-status",
-                          "on-click": "$HOME/.config/waybar/spotify-library like",
+                          "exec": "$HOME/.config/waybar/spotify-library status",
+                          "on-click": "$HOME/.config/waybar/spotify-library toggle",
                           "on-click-right": "$HOME/.config/waybar/spotify-library unlike",
-                          "interval": 3,
+                          "interval": 10,
                           "signal": 8,
                           "tooltip": true
                       },

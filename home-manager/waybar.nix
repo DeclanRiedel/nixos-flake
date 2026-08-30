@@ -2,6 +2,7 @@
 
 let
   codexbar = pkgs.callPackage ../packages/codexbar.nix { };
+  spotifyPlayer = inputs.nixpkgs-codex.legacyPackages.${pkgs.stdenv.hostPlatform.system}.spotify-player;
   t3codeNightly = pkgs.callPackage ../packages/t3code-nightly.nix { };
   zedThreadRunner = inputs.zed-thread-tui.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
@@ -245,32 +246,6 @@ in
     executable = true;
   };
 
-  home.file.".config/waybar/spotify-library-status" = {
-    executable = true;
-    text = ''
-      #!${pkgs.runtimeShell}
-      set -u
-
-      state_dir="''${XDG_RUNTIME_DIR:-/tmp}/waybar-spotify"
-      state_file="$state_dir/library-state"
-      uri="$(${pkgs.playerctl}/bin/playerctl -p spotify,spotifyd metadata xesam:url 2>/dev/null || true)"
-      liked=false
-
-      if [[ -n "$uri" && -s "$state_file" ]]; then
-        read -r saved_uri < "$state_file" || true
-        [[ "$saved_uri" == "$uri" ]] && liked=true
-      fi
-
-      if $liked; then
-        printf '{"text":"♥","tooltip":"Saved to Liked Songs · right-click to remove","class":"liked"}\n'
-      elif [[ -n "$uri" ]]; then
-        printf '{"text":"♡","tooltip":"Save to Liked Songs · right-click to remove","class":"available"}\n'
-      else
-        printf '{"text":"♡","tooltip":"No active Spotify track","class":"inactive"}\n'
-      fi
-    '';
-  };
-
   home.file.".config/waybar/ai-usage" = {
     executable = true;
     text = ''
@@ -332,49 +307,139 @@ in
   home.file.".config/waybar/spotify-library" = {
     executable = true;
     text = ''
-      #!${pkgs.runtimeShell}
-      set -u
+      #!${pkgs.python3}/bin/python3
+      import json
+      import os
+      import re
+      import subprocess
+      import sys
+      import urllib.error
+      import urllib.parse
+      import urllib.request
+      from pathlib import Path
 
-      action="''${1:-like}"
-      cache_dir="''${XDG_CACHE_HOME:-$HOME/.cache}/spotify-player"
-      state_dir="''${XDG_RUNTIME_DIR:-/tmp}/waybar-spotify"
-      state_file="$state_dir/library-state"
-      uri="$(${pkgs.playerctl}/bin/playerctl -p spotify,spotifyd metadata xesam:url 2>/dev/null || true)"
+      playerctl = "${pkgs.playerctl}/bin/playerctl"
+      spotify_player = "${spotifyPlayer}/bin/spotify_player"
+      token_file = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "spotify-player" / "user_client_token.json"
+      api_root = "https://api.spotify.com/v1/me/library"
 
-      notify() {
-        ${pkgs.libnotify}/bin/notify-send -a "Spotify Bar" "$1" "$2"
-      }
+      class AuthenticationRequired(Exception):
+          pass
 
-      # Library actions use the Web API token. The separate credentials.json
-      # file is only needed by spotify_player's integrated audio client.
-      if [[ ! -s "$cache_dir/user_client_token.json" ]]; then
-        notify "Spotify authentication required" "Run: spotify_player authenticate"
-        exit 1
-      fi
+      def current_uri():
+          result = subprocess.run(
+              [playerctl, "-p", "spotify", "metadata", "xesam:url"],
+              check=False,
+              capture_output=True,
+              text=True,
+              timeout=2,
+          )
+          match = re.fullmatch(
+              r"https?://open\.spotify\.com/track/([A-Za-z0-9]{22})(?:[/?].*)?",
+              result.stdout.strip(),
+          )
+          return None if match is None else "spotify:track:" + match.group(1)
 
-      args=()
-      message="Saved current track to Liked Songs"
-      if [[ "$action" == "unlike" ]]; then
-        args=(--unlike)
-        message="Removed current track from Liked Songs"
-      elif [[ "$action" != "like" ]]; then
-        notify "Spotify Bar" "Unknown library action: $action"
-        exit 2
-      fi
+      def access_token():
+          try:
+              token = json.loads(token_file.read_text()).get("access_token")
+          except Exception as error:
+              raise AuthenticationRequired from error
+          if not isinstance(token, str) or not token:
+              raise AuthenticationRequired
+          return token
 
-      if output="$(${pkgs.coreutils}/bin/timeout 15 ${pkgs.spotify-player}/bin/spotify_player like "''${args[@]}" 2>&1)"; then
-        mkdir -p "$state_dir"
-        if [[ "$action" == "like" && -n "$uri" ]]; then
-          printf '%s\n' "$uri" > "$state_file"
-        else
-          rm -f "$state_file"
-        fi
-        notify "Spotify" "$message"
-        ${pkgs.procps}/bin/pkill -RTMIN+8 waybar 2>/dev/null || true
-      else
-        notify "Spotify library update failed" "''${output:-Check playback and run spotify_player authenticate}"
-        exit 1
-      fi
+      def refresh_token():
+          subprocess.run(
+              [spotify_player, "get", "key", "playback"],
+              check=False,
+              stdin=subprocess.DEVNULL,
+              stdout=subprocess.DEVNULL,
+              stderr=subprocess.DEVNULL,
+              timeout=15,
+          )
+
+      def request(method, uri, retry=True):
+          query = urllib.parse.urlencode({"uris": uri})
+          endpoint = api_root + ("/contains" if method == "GET" else "") + "?" + query
+          call = urllib.request.Request(
+              endpoint,
+              method=method,
+              headers={"Authorization": "Bearer " + access_token()},
+          )
+          try:
+              with urllib.request.urlopen(call, timeout=8) as response:
+                  return response.read()
+          except urllib.error.HTTPError as error:
+              if error.code == 401 and retry:
+                  refresh_token()
+                  return request(method, uri, retry=False)
+              if error.code == 401:
+                  raise AuthenticationRequired from error
+              raise RuntimeError("Spotify API returned HTTP {}".format(error.code)) from error
+
+      def is_liked(uri):
+          payload = json.loads(request("GET", uri))
+          return bool(payload and payload[0])
+
+      def notify(summary, body):
+          subprocess.run(
+              ["${pkgs.libnotify}/bin/notify-send", "-a", "Spotify Bar", summary, body],
+              check=False,
+          )
+
+      def authenticate():
+          notify("Spotify authentication required", "Complete the login in the terminal, then click the heart again")
+          subprocess.Popen(
+              ["${pkgs.ghostty}/bin/ghostty", "-e", spotify_player, "authenticate"],
+              stdin=subprocess.DEVNULL,
+              stdout=subprocess.DEVNULL,
+              stderr=subprocess.DEVNULL,
+              start_new_session=True,
+          )
+
+      def refresh_waybar():
+          subprocess.run(
+              ["${pkgs.procps}/bin/pkill", "-RTMIN+8", "waybar"],
+              check=False,
+              stdout=subprocess.DEVNULL,
+              stderr=subprocess.DEVNULL,
+          )
+
+      action = sys.argv[1] if len(sys.argv) > 1 else "status"
+      uri = current_uri()
+      if uri is None:
+          if action == "status":
+              print(json.dumps({"text": "", "tooltip": "", "class": "inactive"}))
+          else:
+              notify("Spotify", "No Spotify track is selected")
+          raise SystemExit(0)
+
+      try:
+          liked = is_liked(uri)
+          if action == "status":
+              if liked:
+                  print(json.dumps({"text": "♥", "tooltip": "Remove from Your Library", "class": "liked"}))
+              else:
+                  print(json.dumps({"text": "♡", "tooltip": "Save to Your Library", "class": "available"}))
+          elif action in ("toggle", "like", "unlike"):
+              should_like = not liked if action == "toggle" else action == "like"
+              if should_like != liked:
+                  request("PUT" if should_like else "DELETE", uri)
+              notify("Spotify", "Saved to Your Library" if should_like else "Removed from Your Library")
+              refresh_waybar()
+          else:
+              raise SystemExit("usage: spotify-library {status|toggle|like|unlike}")
+      except AuthenticationRequired:
+          if action == "status":
+              print(json.dumps({"text": "♡?", "tooltip": "Spotify login required", "class": "auth"}))
+          else:
+              authenticate()
+      except Exception as error:
+          if action == "status":
+              print(json.dumps({"text": "♡!", "tooltip": str(error), "class": "error"}))
+          else:
+              notify("Spotify library update failed", str(error))
     '';
   };
 }

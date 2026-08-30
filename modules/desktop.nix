@@ -1,4 +1,4 @@
-{ lib, pkgs, pkgsStable, ... }:
+{ lib, pkgs, pkgsCodex, pkgsStable, ... }:
 
 let
   codexbar = pkgs.callPackage ../packages/codexbar.nix { };
@@ -96,7 +96,7 @@ in
 
     mpv
     spotify
-    spotify-player
+    pkgsCodex.spotify-player
     vlc
     ffmpeg
     atomicparsley
