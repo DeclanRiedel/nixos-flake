@@ -159,13 +159,7 @@ in
           if not items:
               print(json.dumps({"text": "", "tooltip": "", "class": "empty"}))
               return
-          counts = {provider: 0 for provider in PROVIDERS}
-          for item in items:
-              counts[item["provider"]] += 1
-          text = " ".join(
-              "!{}{}".format(PROVIDERS[provider][0], counts[provider])
-              for provider in PROVIDERS if counts[provider]
-          )
+          text = "!{}".format(len(items))
           lines = ["T3 Code needs attention"]
           for item in sorted(items, key=lambda row: (row["kind"] != "input", row["updated_at"])):
               reason = "input required" if item["kind"] == "input" else "work finished"

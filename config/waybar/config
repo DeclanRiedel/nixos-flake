@@ -1,8 +1,8 @@
                   {
                       // Choose the order of the modulesaround
-                      "modules-left": ["hyprland/workspaces"],
+                      "modules-left": ["hyprland/workspaces", "custom/t3code-attention"],
                       "modules-center": ["custom/spotify-prev", "custom/spotify-toggle", "custom/spotify-next", "mpris", "custom/spotify-like", "custom/spacer", "hyprland/window"],
-                       "modules-right": ["custom/t3code-attention", "custom/ai-usage", "custom/notifications", "tray", "clock","idle_inhibitor", "custom/pacman","custom/vpn","network", "backlight", "pulseaudio", "battery" ],
+                       "modules-right": ["custom/ai-usage", "custom/notifications", "tray", "clock","idle_inhibitor", "custom/pacman","custom/vpn","network", "backlight", "pulseaudio", "battery" ],
 
                        "hyprland/workspaces": {
                            "disable-scroll": true,

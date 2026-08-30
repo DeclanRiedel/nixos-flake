@@ -74,9 +74,14 @@ tooltip label {
   color: @red;
   font-weight: 800;
   letter-spacing: 0.2px;
+  margin-left: 2px;
+  margin-right: 8px;
+  min-width: 18px;
+  padding: 0 7px;
 }
 
 #custom-t3code-attention.input {
+  background-color: rgba(79, 67, 47, 0.82);
   border-color: rgba(224, 175, 104, 0.46);
   color: @yellow;
 }
